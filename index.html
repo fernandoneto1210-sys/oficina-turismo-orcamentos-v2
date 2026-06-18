@@ -547,7 +547,7 @@
       });
     }
 
-    ffunction slugify(text) {
+    function slugify(text) {
       return text.toString().toLowerCase()
         .replace(/\s+/g, '-')           // Substitui espaços por -
         .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
