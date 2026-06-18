@@ -4,187 +4,112 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Orçamento de Viagem — Oficina de Turismo</title>
+
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    /* (seu CSS praticamente idêntico, mantendo IDs específicos) */
     :root{
-      --azul:#1B3A6B;--azul2:#2E5FA3;--verde:#2D6A4F;--dourado:#C9A84C;--cinza:#F5F6FA;
-      --sombra:0 4px 20px rgba(0,0,0,.10);--radius:12px;
+      --azul:#1B3A6B;--azul2:#2E5FA3;--verde:#2D6A4F;--dourado:#C9A84C;--cinza:#F5F6FA;--radius:12px;
     }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cinza);color:#444;line-height:1.6;}
-    a{text-decoration:none;color:inherit;}
-    img{max-width:100%;height:auto;display:block;}
-
-    .orc-header{background:linear-gradient(135deg,var(--azul) 0%,var(--verde) 100%);padding:20px;text-align:center;color:#fff;box-shadow:0 3px 16px rgba(0,0,0,.28);position:relative;overflow:hidden;}
-    .orc-header .capa-bg{position:absolute;top:0;left:0;width:100%;height:100%;background-size:cover;background-position:center;filter:brightness(0.5) blur(3px);z-index:0;transition:background-image .5s ease-in-out;}
-    .orc-header .header-content{position:relative;z-index:1;}
-    .orc-header .logo{height:80px;margin-bottom:15px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));}
-    .orc-header h1{font-size:2.2rem;margin-bottom:10px;font-weight:700;}
-    .orc-header h2{font-size:1.3rem;font-weight:400;opacity:.9;}
-    .orc-header .meta{font-size:.9rem;margin-top:15px;opacity:.8;}
-
-    .container{max-width:900px;margin:30px auto;padding:0 20px;}
-
-    .section{background:#fff;border-radius:var(--radius);box-shadow:var(--sombra);padding:25px;margin-bottom:25px;}
-    .section h3{font-size:1.5rem;color:var(--azul);margin-bottom:20px;border-bottom:2px solid #eee;padding-bottom:10px;}
-    .section h3 i{margin-right:10px;color:var(--dourado);}
-
-    .lista-itens ul{list-style:none;padding-left:0;}
-    .lista-itens li{margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;flex-direction:row;flex-wrap:nowrap;}
-    .lista-itens li i{font-size:1.1rem;flex-shrink:0;}
-    .lista-itens.incluidos li i{color:var(--verde);}
-    .lista-itens.nao-incluidos li i{color:#e74c3c;}
-
-    .roteiro-dia{margin-bottom:30px;padding-bottom:20px;border-bottom:1px dashed #eee;}
-    .roteiro-dia:last-child{border-bottom:none;margin-bottom:0;}
-    .roteiro-dia h4{font-size:1.2rem;color:var(--azul2);margin-bottom:10px;}
-    .roteiro-dia p{margin-bottom:10px;}
-    .roteiro-dia img{border-radius:8px;margin-top:10px;max-height:250px;object-fit:cover;width:100%;}
-
-    .valores-opcoes{margin-bottom:20px;}
-    .valor-opcao{background:var(--cinza);padding:15px;border-radius:var(--radius);margin-bottom:15px;}
-    .valor-opcao h4{font-size:1.1rem;color:var(--azul);margin-bottom:5px;}
-    .valor-opcao .preco{font-size:1.4rem;font-weight:700;color:var(--dourado);margin-bottom:5px;}
-    .valor-opcao .descricao{font-size:.9rem;color:#666;}
-    .detalhes-pagamento p{margin-bottom:8px;}
-    .detalhes-pagamento strong{color:var(--azul);}
-
-    .adicional-item{background:var(--cinza);padding:15px;border-radius:var(--radius);margin-bottom:15px;}
-    .adicional-item h4{font-size:1.1rem;color:var(--azul);margin-bottom:5px;}
-    .adicional-item p{font-size:.9rem;color:#666;}
-
-    .orc-footer{text-align:center;padding:30px 20px;background:#f0f0f0;color:#777;font-size:.85rem;margin-top:30px;}
-    .orc-footer .contatos{margin-top:15px;}
-    .orc-footer .contatos a{margin:0 8px;color:var(--azul);transition:color .3s;}
-    .orc-footer .contatos a:hover{color:var(--dourado);}
-
-    .status-message{text-align:center;padding:50px;font-size:1.2rem;color:#666;background:#fff;border-radius:var(--radius);box-shadow:var(--sombra);margin:50px auto;max-width:600px;}
-    .status-message i{font-size:3rem;color:var(--dourado);margin-bottom:20px;display:block;}
-
-    .swiper-container{width:100%;height:350px;border-radius:var(--radius);overflow:hidden;box-shadow:var(--sombra);margin-top:20px;}
-    .swiper-slide{display:flex;justify-content:center;align-items:center;background:#fff;}
-    .swiper-slide img{width:100%;height:100%;object-fit:cover;}
-    .swiper-button-next,.swiper-button-prev{color:#fff;background-color:rgba(0,0,0,0.4);border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;transition:background-color .3s}
-    .swiper-button-next:hover,.swiper-button-prev:hover{background-color:rgba(0,0,0,0.6)}
-    .swiper-pagination-bullet{background-color:#fff;opacity:.7}
-    .swiper-pagination-bullet-active{background-color:var(--dourado);opacity:1}
-
-    @media(max-width:768px){
-      .orc-header h1{font-size:1.8rem;}
-      .orc-header h2{font-size:1.1rem;}
-      .container{margin:20px auto;padding:0 15px;}
-      .section{padding:20px;}
-      .section h3{font-size:1.3rem;}
-      .swiper-container{height:250px;}
-    }
+    *,*::before,*::after{box-sizing:border-box}
+    body{font-family:'Segoe UI',system-ui,Roboto,Arial;background:var(--cinza);color:#333;margin:0;line-height:1.6}
+    .orc-header{background:linear-gradient(135deg,var(--azul),var(--verde));padding:20px;text-align:center;color:#fff;position:relative;overflow:hidden}
+    .orc-header .capa-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(0.45);z-index:0;transition:background-image .4s}
+    .orc-header .header-content{position:relative;z-index:1;max-width:1000px;margin:0 auto}
+    .orc-header img.logo{height:70px;margin-bottom:12px}
+    .container{max-width:1000px;margin:30px auto;padding:0 16px}
+    .section{background:#fff;border-radius:12px;padding:22px;margin-bottom:22px;box-shadow:0 6px 18px rgba(0,0,0,0.06)}
+    .section h3{margin:0 0 12px;color:var(--azul)}
+    .lista-itens ul{list-style:none;padding-left:0}
+    .lista-itens li{display:flex;gap:8px;align-items:flex-start;margin-bottom:8px}
+    .lista-itens li i{flex-shrink:0}
+    .lista-itens.incluidos li i{color:var(--verde)}
+    .lista-itens.nao-incluidos li i{color:#e74c3c}
+    .roteiro-dia{margin-bottom:20px;padding-bottom:14px;border-bottom:1px dashed #eee}
+    .roteiro-dia img{border-radius:8px;margin-top:10px;max-height:300px;object-fit:cover;width:100%}
+    .valores-opcoes{margin-bottom:12px}
+    .valor-opcao{background:var(--cinza);padding:12px;border-radius:10px;margin-bottom:10px}
+    .adicional-item{background:var(--cinza);padding:12px;border-radius:10px;margin-bottom:10px}
+    .btns-top{display:flex;gap:8px;justify-content:center;margin-top:12px}
+    .btn{padding:10px 14px;border-radius:8px;border:none;cursor:pointer;font-weight:700}
+    .btn-wpp{background:#128C7E;color:#fff}
+    .btn-pdf{background:#e74c3c;color:#fff}
+    .hide{display:none}
+    @media(max-width:720px){ .container{padding:0 12px} .orc-header h1{font-size:1.6rem} }
   </style>
 </head>
 <body>
-
-  <div id="loading-message" class="status-message">
-    <i class="fas fa-spinner fa-spin"></i>
-    <p>Carregando seu orçamento...</p>
-  </div>
-
-  <div id="error-message" class="status-message" style="display:none;">
-    <i class="fas fa-exclamation-triangle"></i>
-    <p>Não foi possível carregar o orçamento. Verifique o link ou tente novamente mais tarde.</p>
-  </div>
-
-  <div id="orcamento-content" style="display:none;">
-    <header class="orc-header">
-      <div id="capa-bg" class="capa-bg" style="background-image: url('assets/images/placeholder-capa.jpg');"></div>
-      <div class="header-content">
-        <img src="assets/images/logo.png" alt="Oficina de Turismo" class="logo"/>
-        <h1 id="tituloViagem"></h1>
-        <h2 id="datasViagem"></h2>
-        <p class="meta" id="subtituloViagem"></p>
+  <header class="orc-header">
+    <div class="capa-bg" id="capa-bg"></div>
+    <div class="header-content">
+      <img class="logo" src="assets/images/logo.png" alt="Logo Oficina">
+      <h1 id="tituloViagem">Carregando...</h1>
+      <h2 id="subtituloViagem"></h2>
+      <div id="datasViagem" style="margin-top:8px;opacity:.9"></div>
+      <div class="btns-top">
+        <button class="btn btn-wpp" id="btn-wpp-public"><i class="fab fa-whatsapp"></i> Enviar WhatsApp</button>
+        <button class="btn btn-pdf" id="btn-download-pdf"><i class="fas fa-file-pdf"></i> Baixar PDF</button>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <div class="container">
-      <section id="galeria-section" class="section" style="display:none;">
+  <main class="container">
+    <div id="loading-message" style="text-align:center;padding:24px">Carregando orçamento...</div>
+    <div id="error-message" class="hide section"><p>Orçamento não encontrado</p></div>
+
+    <div id="orcamento-content" class="hide">
+      <div id="galeria-section" class="section hide">
         <h3><i class="fas fa-images"></i> Galeria</h3>
-        <div class="swiper-container" id="orcamento-swiper" style="display:none;">
-          <div class="swiper-wrapper" id="galeria-wrapper"></div>
-          <div class="swiper-pagination"></div>
-          <div class="swiper-button-next"></div>
-          <div class="swiper-button-prev"></div>
+        <div id="orcamento-swiper" style="display:none">
+          <div class="swiper"><div class="swiper-wrapper" id="galeria-wrapper"></div>
+            <div class="swiper-pagination"></div>
+            <div class="swiper-button-prev"></div><div class="swiper-button-next"></div>
+          </div>
         </div>
-      </section>
+      </div>
 
-      <section id="incluidos-section" class="section lista-itens" style="display:none;">
+      <div id="incluidos-section" class="section hide">
         <h3><i class="fas fa-check-circle"></i> Incluídos</h3>
-        <div id="incluidos-lista"><ul></ul></div>
-      </section>
+        <div id="incluidos-lista" class="lista-itens incluidos"><ul></ul></div>
+      </div>
 
-      <section id="nao-incluidos-section" class="section lista-itens" style="display:none;">
+      <div id="nao-incluidos-section" class="section hide">
         <h3><i class="fas fa-times-circle"></i> Não Incluídos</h3>
-        <div id="nao-incluidos-lista"><ul></ul></div>
-      </section>
+        <div id="nao-incluidos-lista" class="lista-itens nao-incluidos"><ul></ul></div>
+      </div>
 
-      <section id="roteiro-section" class="section" style="display:none;">
-        <h3><i class="fas fa-route"></i> Roteiro Dia a Dia</h3>
+      <div id="roteiro-section" class="section hide">
+        <h3><i class="fas fa-map"></i> Roteiro</h3>
         <div id="roteiroTexto"></div>
-      </section>
+      </div>
 
-      <section id="valores-section" class="section" style="display:none;">
-        <h3><i class="fas fa-dollar-sign"></i> Valores</h3>
-        <div id="opcoes-valores-container" class="valores-opcoes"></div>
+      <div id="valores-section" class="section hide">
+        <h3><i class="fas fa-money-bill-wave"></i> Valores</h3>
+        <div id="opcoes-valores-container"></div>
         <div id="detalhes-pagamento" class="detalhes-pagamento"></div>
-      </section>
+      </div>
 
-      <section id="aereo-section" class="section" style="display:none;">
-        <h3><i class="fas fa-plane"></i> Parte Aérea</h3>
-        <div id="aereo-container"></div>
-      </section>
+      <div id="aereo-section" class="section hide"><h3><i class="fas fa-plane"></i> Parte Aérea</h3><div id="aereo-container"></div></div>
+      <div id="carro-section" class="section hide"><h3><i class="fas fa-car"></i> Aluguel de Carro</h3><div id="carro-container"></div></div>
 
-      <section id="carro-section" class="section" style="display:none;">
-        <h3><i class="fas fa-car"></i> Aluguel de Carro</h3>
-        <div id="carro-container"></div>
-      </section>
+      <div id="hoteis-section" class="section hide"><h3><i class="fas fa-hotel"></i> Hotéis</h3><div id="hoteis-container-public"></div></div>
 
-      <section id="hoteis-section" class="section" style="display:none;">
-        <h3><i class="fas fa-hotel"></i> Hotéis</h3>
-        <div id="hoteis-container-public"></div>
-      </section>
+      <div id="adicionais-section" class="section hide"><h3><i class="fas fa-list"></i> Adicionais</h3><div id="adicionais-container"></div></div>
 
-      <section id="adicionais-section" class="section" style="display:none;">
-        <h3><i class="fas fa-plus-circle"></i> Adicionais</h3>
-        <div id="adicionais-container"></div>
-      </section>
+      <div id="observacoes-section" class="section hide"><h3><i class="fas fa-sticky-note"></i> Observações</h3><div id="observacoes"></div></div>
 
-      <section id="observacoes-section" class="section" style="display:none;">
-        <h3><i class="fas fa-info-circle"></i> Observações</h3>
-        <div id="observacoes"></div>
-      </section>
+      <div id="links-section" class="section hide"><h3><i class="fas fa-link"></i> Links Úteis</h3><div id="links-uteis"></div></div>
 
-      <section id="links-section" class="section" style="display:none;">
-        <h3><i class="fas fa-link"></i> Links Úteis</h3>
-        <div id="links-uteis"></div>
-      </section>
-
-      <div style="text-align:center;margin-top:20px">
-        <button id="btn-download-pdf" class="btn" style="background:#e74c3c;color:#fff;padding:10px 16px;border-radius:8px;border:none"><i class="fas fa-file-pdf"></i> Baixar PDF do Roteiro</button>
-        <a id="linkRoteiroPdf" href="#" target="_blank" style="margin-left:12px;display:none">Abrir PDF</a>
+      <div class="section orc-footer">
+        <div><strong>Oficina de Turismo</strong></div>
+        <div>WhatsApp: +55 35 98862-2943 | oficinadeturismo@oficinatur.com.br</div>
+        <div>@oficinadeturismo | www.oficinatur.com.br</div>
       </div>
     </div>
+  </main>
 
-    <div class="orc-footer">
-      <div><strong>Oficina de Turismo</strong></div>
-      <div class="contatos">
-        <a href="https://wa.me/5535988622943" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-        <a href="mailto:oficinadeturismo@oficinatur.com.br"><i class="fas fa-envelope"></i> Email</a>
-        <a href="https://instagram.com/oficinadeturismo" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
-        <a href="https://www.oficinatur.com.br" target="_blank"><i class="fas fa-globe"></i> Site</a>
-      </div>
-    </div>
-  </div>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 
   <script>
     const JSONBIN_ID = '6a318e1eda38895dfecb475a';
@@ -199,149 +124,135 @@
       if(!id){ showError('ID do orçamento não informado'); return; }
       try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, { headers: { 'X-Master-Key': JSONBIN_KEY } });
-        if(!res.ok) throw new Error('Falha JSONBin');
+        if(!res.ok) throw new Error('Falha JSONBin: ' + res.status);
         const j = await res.json();
-        const arr = j.record || [];
+        const arr = Array.isArray(j.record) ? j.record : (j.record?.orcamentos || []);
         const orc = arr.find(x=>x.id === id);
         if(!orc){ showError('Orçamento não encontrado'); return; }
         renderOrcamentoPublic(orc);
       } catch(err){
         console.error(err);
-        showError('Erro ao carregar orçamento');
+        showError('Erro ao carregar orçamento (JSONBin). Verifique se está servido por HTTP/HTTPS.');
       }
     }
 
     function showError(msg){
-      document.getElementById('loading-message').style.display = 'none';
+      document.getElementById('loading-message').style.display='none';
       const err = document.getElementById('error-message');
-      err.style.display = 'block';
-      err.querySelector('p').textContent = msg;
+      err.classList.remove('hide'); err.querySelector('p').textContent = msg;
     }
 
     function renderOrcamentoPublic(orc){
-      document.getElementById('loading-message').style.display = 'none';
-      document.getElementById('orcamento-content').style.display = 'block';
+      document.getElementById('loading-message').style.display='none';
+      document.getElementById('orcamento-content').classList.remove('hide');
 
-      // Header
       document.getElementById('tituloViagem').textContent = orc.titulo || 'Orçamento';
-      document.getElementById('datasViagem').textContent = orc.periodo || `${orc.dataInicio || ''} — ${orc.dataFim || ''}`;
+      document.getElementById('datasViagem').textContent = orc.periodo || (orc.dataInicio && orc.dataFim ? orc.dataInicio + ' — ' + orc.dataFim : '');
       document.getElementById('subtituloViagem').textContent = orc.subtitulo || '';
       const capaUrl = orc.capa || (BASE_URL + '/assets/images/roteiros/2.png');
       document.getElementById('capa-bg').style.backgroundImage = `url('${capaUrl}')`;
-      document.getElementById('imgCapaViagem')?.setAttribute('src', capaUrl);
 
-      // Galeria (Swiper)
+      // Galeria
       const imagens = (orc.galeria && orc.galeria.length) ? orc.galeria : (orc.roteiro && orc.roteiro.length ? orc.roteiro.map((d,i)=>d.imagem || (BASE_URL + '/assets/images/roteiros/' + (((i%8)+2)) + '.png')) : []);
       if(imagens && imagens.length){
-        document.getElementById('galeria-section').style.display = 'block';
-        const wrapper = document.getElementById('galeria-wrapper'); wrapper.innerHTML = '';
+        document.getElementById('galeria-section').classList.remove('hide');
+        const wrapper = document.getElementById('galeria-wrapper'); wrapper.innerHTML='';
         imagens.forEach(url=>{
           const slide = document.createElement('div'); slide.className='swiper-slide';
           slide.innerHTML = `<img src="${url}" alt="Foto">`;
           wrapper.appendChild(slide);
         });
-        document.getElementById('orcamento-swiper').style.display = 'block';
-        setTimeout(()=>{ new Swiper('#orcamento-swiper',{ loop:true, pagination:{ el:'.swiper-pagination', clickable:true }, navigation:{ nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev' }, autoplay:{ delay:5000, disableOnInteraction:false }, effect:'fade', fadeEffect:{ crossFade:true } }); }, 120);
-      } else {
-        document.getElementById('galeria-section').style.display = 'none';
-      }
+        setTimeout(()=>{ new Swiper('.swiper',{ loop:true, pagination:{ el:'.swiper-pagination', clickable:true }, navigation:{ nextEl:'.swiper-button-next', prevEl:'.swiper-button-prev' }, autoplay:{ delay:5000, disableOnInteraction:false }, effect:'fade' }); }, 120);
+      } else document.getElementById('galeria-section').classList.add('hide');
 
       // Incluídos
-      if(orc.incluidos && orc.incluidos.length){
-        document.getElementById('incluidos-section').style.display = 'block';
-        const ul = document.getElementById('incluidos-lista').querySelector('ul'); ul.innerHTML = '';
-        orc.incluidos.forEach(it=>{ const li=document.createElement('li'); li.innerHTML = `<i class="fas fa-check"></i> ${it}`; ul.appendChild(li); });
+      if(orc.inclusos && orc.inclusos.length){
+        document.getElementById('incluidos-section').classList.remove('hide');
+        const ul = document.getElementById('incluidos-lista').querySelector('ul'); ul.innerHTML='';
+        orc.inclusos.forEach(it=>{ const li=document.createElement('li'); li.innerHTML=`<i class="fas fa-check"></i><div>${it}</div>`; ul.appendChild(li); });
       }
 
       // Não Incluídos
       if(orc.naoIncluidos && orc.naoIncluidos.length){
-        document.getElementById('nao-incluidos-section').style.display = 'block';
-        const ul = document.getElementById('nao-incluidos-lista').querySelector('ul'); ul.innerHTML = '';
-        orc.naoIncluidos.forEach(it=>{ const li=document.createElement('li'); li.innerHTML = `<i class="fas fa-times"></i> ${it}`; ul.appendChild(li); });
+        document.getElementById('nao-incluidos-section').classList.remove('hide');
+        const ul = document.getElementById('nao-incluidos-lista').querySelector('ul'); ul.innerHTML='';
+        orc.naoIncluidos.forEach(it=>{ const li=document.createElement('li'); li.innerHTML=`<i class="fas fa-times"></i><div>${it}</div>`; ul.appendChild(li); });
       }
 
-      // Roteiro — exibir apenas texto (e imagem se houver), id roteiroTexto
+      // Roteiro
       if(orc.roteiro && orc.roteiro.length){
-        document.getElementById('roteiro-section').style.display = 'block';
-        const cont = document.getElementById('roteiroTexto'); cont.innerHTML = '';
+        document.getElementById('roteiro-section').classList.remove('hide');
+        const cont = document.getElementById('roteiroTexto'); cont.innerHTML='';
         orc.roteiro.forEach((d,idx)=>{
           const div = document.createElement('div'); div.className='roteiro-dia';
-          const imgHtml = d.imagem ? `<img src="${d.imagem}" alt="Dia ${idx+1}">` : `<img src="${BASE_URL + '/assets/images/roteiros/' + (((idx%8)+2)) + '.png'}" alt="Dia ${idx+1}">`;
-          div.innerHTML = `<h4>Dia ${idx+1}: ${d.titulo || 'Atividade'}</h4><p>${(d.descricao || '').replace(/\n/g,'<br>')}</p>${imgHtml}`;
-          // adicionar dicas e temperatura (placeholders; se houver no objeto, exibe)
-          if(d.temperatura || d.dicas || d.mapa){
-            let extras = '<div style="margin-top:8px">';
-            if(d.temperatura) extras += `<p><strong>Temperatura:</strong> ${d.temperatura}</p>`;
-            if(d.dicas) extras += `<p><strong>Dicas:</strong> ${d.dicas}</p>`;
-            if(d.mapa) extras += `<p><strong>Mapa:</strong> <a href="${d.mapa}" target="_blank">Ver mapa</a></p>`;
-            extras += '</div>';
-            div.innerHTML += extras;
-          }
+          const imgHtml = `<img src="${d.imagem || (BASE_URL + '/assets/images/roteiros/' + (((idx%8)+2)) + '.png')}" alt="Dia ${idx+1}">`;
+          div.innerHTML = `<h4>Dia ${idx+1} — ${d.titulo || 'Atividade'}</h4><p>${(d.descricao||'').replace(/\n/g,'<br>')}</p>${imgHtml}`;
           cont.appendChild(div);
         });
       }
 
       // Valores
       if((orc.opcoesValores && orc.opcoesValores.length) || orc.parcelamentoTxt || orc.valorTotal){
-        document.getElementById('valores-section').style.display = 'block';
-        const opcont = document.getElementById('opcoes-valores-container'); opcont.innerHTML = '';
+        document.getElementById('valores-section').classList.remove('hide');
+        const opcont = document.getElementById('opcoes-valores-container'); opcont.innerHTML='';
         (orc.opcoesValores||[]).forEach(o=>{
           const box = document.createElement('div'); box.className='valor-opcao';
           box.innerHTML = `<h4>${o.label||'Opção'}</h4><div class="preco">${o.preco ? formatarMoeda(parseFloat(String(o.preco).replace(/[^\d,.-]/g,'').replace(',', '.'))) : 'A consultar'}</div><div class="descricao">${o.desc||''}</div>`;
           opcont.appendChild(box);
         });
-        const det = document.getElementById('detalhes-pagamento'); det.innerHTML = '';
+        const det = document.getElementById('detalhes-pagamento'); det.innerHTML='';
         if(orc.parcelamentoTxt) det.innerHTML = `<p><strong>Pagamento:</strong> ${orc.parcelamentoTxt}</p>`;
         else if(orc.valorTotal) det.innerHTML = `<p><strong>Valor Total:</strong> ${formatarMoeda(orc.valorTotal)}</p>`;
       }
 
-      // Aéreo
+      // Aereo
       if(orc.aereo && orc.aereo.length){
-        document.getElementById('aereo-section').style.display = 'block';
-        const cont = document.getElementById('aereo-container'); cont.innerHTML = '';
+        document.getElementById('aereo-section').classList.remove('hide');
+        const cont = document.getElementById('aereo-container'); cont.innerHTML='';
         orc.aereo.forEach(it=>{ const div=document.createElement('div'); div.className='adicional-item'; div.innerHTML = `<h4>Voo: ${it.origem||''} → ${it.destino||''}</h4><p><strong>Cia:</strong> ${it.cia||''}</p><p><strong>Voo:</strong> ${it.numVoo||''}</p><p><strong>Horários:</strong> ${it.horarios||''}</p>`; cont.appendChild(div); });
       }
 
       // Carro
       if(orc.carro && orc.carro.length){
-        document.getElementById('carro-section').style.display = 'block';
-        const cont=document.getElementById('carro-container'); cont.innerHTML = '';
+        document.getElementById('carro-section').classList.remove('hide');
+        const cont = document.getElementById('carro-container'); cont.innerHTML='';
         orc.carro.forEach(it=>{ const div=document.createElement('div'); div.className='adicional-item'; div.innerHTML = `<h4>Aluguel de Carro</h4><p><strong>Retirada:</strong> ${it.localRetirada||''}</p><p><strong>Entrega:</strong> ${it.localEntrega||''}</p><p><strong>Info:</strong> ${it.infoAdicional||''}</p>`; cont.appendChild(div); });
       }
 
       // Hotéis
       if(orc.hoteis && orc.hoteis.length){
-        document.getElementById('hoteis-section').style.display = 'block';
+        document.getElementById('hoteis-section').classList.remove('hide');
         const cont=document.getElementById('hoteis-container-public'); cont.innerHTML='';
         orc.hoteis.forEach(h=>{ const div=document.createElement('div'); div.className='hotel-item'; div.style.display='flex'; div.style.gap='10px'; div.style.alignItems='center'; div.style.marginBottom='10px'; div.innerHTML = `<img src="${h.img || (BASE_URL + '/assets/images/hoteis/hotel-placeholder.png')}" style="width:140px;height:90px;object-fit:cover;border-radius:8px;margin-right:10px"><div><h4 style="margin:0">${h.nome||''}</h4><p style="margin:6px 0">${h.categoria?'<strong>'+h.categoria+'</strong>':''}</p><p style="margin:0">${h.desc||''}</p></div>`; cont.appendChild(div); });
       }
 
       // Adicionais e Observações
-      if(orc.adicionais){ document.getElementById('adicionais-section').style.display='block'; document.getElementById('adicionais-container').innerHTML = `<p>${orc.adicionais.replace(/\n/g,'<br>')}</p>`; }
-      if(orc.observacoes){ document.getElementById('observacoes-section').style.display='block'; document.getElementById('observacoes').innerHTML = `<p>${orc.observacoes.replace(/\n/g,'<br>')}</p>`; }
+      if(orc.adicionais){ document.getElementById('adicionais-section').classList.remove('hide'); document.getElementById('adicionais-container').innerHTML = `<p>${orc.adicionais.replace(/\n/g,'<br>')}</p>` }
+      if(orc.observacoes){ document.getElementById('observacoes-section').classList.remove('hide'); document.getElementById('observacoes').innerHTML = `<p>${orc.observacoes.replace(/\n/g,'<br>')}</p>` }
 
-      // Links úteis (se houver)
-      if(orc.links && orc.links.length){ document.getElementById('links-section').style.display='block'; const ln=document.getElementById('links-uteis'); ln.innerHTML=''; orc.links.forEach(l=>{ const a=document.createElement('a'); a.href=l.url; a.target='_blank'; a.textContent = l.label || l.url; a.style.display='block'; a.style.marginBottom='6px'; ln.appendChild(a); }); }
+      // Links úteis
+      if(orc.links && orc.links.length){ document.getElementById('links-section').classList.remove('hide'); const ln=document.getElementById('links-uteis'); ln.innerHTML=''; orc.links.forEach(l=>{ const a=document.createElement('a'); a.href=l.url; a.target='_blank'; a.textContent = l.label || l.url; a.style.display='block'; a.style.marginBottom='6px'; ln.appendChild(a); }); }
 
-      // PDF download — cria o mesmo conteúdo do admin (mas sem preços no roteiro)
-      document.getElementById('btn-download-pdf').onclick = ()=> {
-        gerarPdfPublic(orc);
-      };
+      // botão wpp
+      q('#btn-wpp-public').onclick = ()=>{ const urlPublic = `${BASE_URL}/orcamento.html?id=${orc.id}`; window.open(`https://wa.me/?text=${encodeURIComponent('Confira o orçamento: ' + urlPublic)}`); };
+
+      // botão baixar pdf
+      q('#btn-download-pdf').onclick = ()=>{ gerarPdfPublic(orc); };
     }
 
     function gerarPdfPublic(o){
       const container = document.createElement('div');
-      container.style.padding = '18px';
-      container.style.fontFamily = 'Arial, Helvetica, sans-serif';
-      container.style.color = '#222';
+      container.style.padding='18px';
+      container.style.fontFamily='Arial, Helvetica, sans-serif';
+      container.style.color='#222';
       container.innerHTML = `<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><img src="${o.capa || BASE_URL + '/assets/images/logo.png'}" style="height:70px;object-fit:contain"><div><h2 style="margin:0">${o.titulo || 'Orçamento'}</h2><div style="color:#555">${o.subtitulo || ''}</div><div style="color:#666;margin-top:6px">Período: ${o.periodo || '—'}</div></div></div><hr style="border:none;border-top:1px solid #eee;margin:10px 0"><h3>Roteiro dia a dia</h3>`;
 
       (o.roteiro||[]).forEach((d, idx)=>{
         const bloco = document.createElement('div');
-        bloco.style.marginTop = '12px';
-        bloco.style.display = 'flex';
-        bloco.style.gap = '12px';
-        bloco.style.pageBreakInside = 'avoid';
+        bloco.style.marginTop='12px';
+        bloco.style.display='flex';
+        bloco.style.gap='12px';
+        bloco.style.pageBreakInside='avoid';
         const imgUrl = d.imagem || (BASE_URL + '/assets/images/roteiros/' + (((idx%8)+2)) + '.png');
         bloco.innerHTML = `<div style="flex-shrink:0;width:220px"><img src="${imgUrl}" style="width:100%;height:140px;object-fit:cover;border-radius:6px;border:1px solid #eee"></div><div style="flex:1"><h4 style="margin:0 0 8px 0">${d.titulo||('Dia '+(idx+1))}</h4><div style="color:#333;white-space:pre-line">${d.descricao||''}</div></div>`;
         container.appendChild(bloco);
@@ -352,9 +263,11 @@
       footer.innerHTML = `<hr style="border:none;border-top:1px solid #eee;margin:10px 0"><div style="display:flex;justify-content:space-between;align-items:center"><div><div><strong>Oficina de Turismo</strong></div><div>WhatsApp: +55 35 98862-2943 | oficinadeturismo@oficinatur.com.br</div><div>@oficinadeturismo | www.oficinatur.com.br</div></div></div>`;
       container.appendChild(footer);
 
-      const opt = { margin:[10,10,10,10], filename: `${(o.titulo||'roteiro').replace(/\s+/g,'_')}.pdf`, image:{type:'jpeg',quality:0.92}, html2canvas:{scale:2,allowTaint:true,useCORS:true}, jsPDF:{unit:'pt',format:'a4',orientation:'portrait'}, pagebreak:{mode:['css','legacy']} };
-      html2pdf().set(opt).from(container).save().then(()=>{ /* opcional: criar link público apontando para arquivo salvo no servidor */ });
+      const opt = { margin:[10,10,10,10], filename:`${(o.titulo||'roteiro').replace(/\s+/g,'_')}.pdf`, image:{type:'jpeg',quality:0.92}, html2canvas:{scale:2,allowTaint:true,useCORS:true}, jsPDF:{unit:'pt',format:'a4',orientation:'portrait'}, pagebreak:{mode:['css','legacy']} };
+      html2pdf().set(opt).from(container).save();
     }
+
+    function q(selector){ return document.querySelector(selector); }
 
     document.addEventListener('DOMContentLoaded', carregarOrcamento);
   </script>
