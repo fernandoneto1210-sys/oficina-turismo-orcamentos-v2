@@ -138,7 +138,7 @@
       border:none;cursor:pointer;transition:all .3s;
     }
     .b-salvar{background:var(--dourado);color:#fff;}
-    .b-salvar:hover{background:var(--dourado2);transform:translateY(-1px);}
+    .b-salvar:hover{background:#b8941f;transform:translateY(-1px);}
     .b-ver{background:#25D366;color:#fff;}
     .b-ver:hover{background:#1ebe5d;}
     .b-wpp{background:#128C7E;color:#fff;}
@@ -150,13 +150,12 @@
 
     /* ══ ABAS ══ */
     .abas{
-      display:flex;border-bottom:2px solid var(--cor-borda-suave); /* Borda mais suave */
+      display:flex;border-bottom:2px solid #f0f0f0;
       background:#fafafa;padding:0 20px;overflow-x:auto;
     }
     .aba{
       padding:13px 18px;font-size:.84rem;font-weight:600;
-      color:var(--cor-texto-suave); /* Cor de texto mais suave */
-      cursor:pointer;
+      color:#bbb;cursor:pointer;
       border-bottom:3px solid transparent;margin-bottom:-2px;
       white-space:nowrap;transition:all .2s;
       display:flex;align-items:center;gap:5px;
@@ -172,332 +171,279 @@
     .cg label i{margin-right:4px;opacity:.7;}
     .cg input,.cg textarea,.cg select{
       width:100%;padding:9px 13px;
-      border:2px solid var(--cor-borda-suave); /* Borda mais suave */
-      border-radius:8px;
+      border:2px solid #e8e8e8;border-radius:8px;
       font-size:.90rem;transition:border-color .2s;
       background:#fff;color:#444;
     }
     .cg input:focus,.cg textarea:focus,.cg select:focus{outline:none;border-color:var(--azul2);}
     .cg textarea{resize:vertical;min-height:90px;line-height:1.6;}
-    .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
-    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
-    .hint{font-size:.75rem;color:var(--cor-texto-suave); /* Cor de texto mais suave */ margin-top:4px;}
+    .row2{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+    .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;}
+    .row4{display:grid;grid-template-columns:repeat(4, 1fr);gap:18px;}
 
-    /* Campos de valores */
-    .cg.valor input{text-align:right;}
-    .cg.valor input::placeholder{text-align:right;}
-
-    /* ══ LISTA DINÂMICA ══ */
-    .ldyn{border:2px solid var(--cor-borda-suave); /* Borda mais suave */ border-radius:8px;overflow:hidden;background:#fff;}
-    .litem{display:flex;align-items:center;gap:8px;padding:9px 12px;border-bottom:1px solid #f5f5f5;}
-    .litem:last-child{border-bottom:none;}
-    .litem input{flex:1;border:none;font-size:.90rem;outline:none;padding:3px 0;color:#444;}
-    .brem{background:none;border:none;cursor:pointer;color:#e74c3c;padding:4px 6px;border-radius:4px;font-size:.9rem;flex-shrink:0;transition:all .2s;}
-    .brem:hover{background:#fee2e2;}
-    .badd{
-      display:flex;align-items:center;gap:6px;width:100%;
-      background:none;border:2px dashed var(--cor-borda-suave); /* Borda mais suave */ color:var(--cor-texto-suave); /* Cor de texto mais suave */
-      cursor:pointer;padding:9px 14px;font-size:.85rem;font-weight:600;
-      border-radius:8px;margin-top:7px;transition:all .2s;
-    }
-    .badd:hover{border-color:var(--azul2);color:var(--azul2);}
-
-    /* ══ UPLOAD ══ */
-    .upload-box{
-      border:2px dashed var(--cor-borda-suave); /* Borda mais suave */ border-radius:10px;
-      padding:22px;text-align:center;cursor:pointer;
-      transition:all .3s;background:#fafafa;position:relative;
-    }
-    .upload-box:hover{border-color:var(--azul2);background:#f0f4ff;}
-    .upload-box input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%;}
-    .upload-box i{font-size:2rem;color:var(--cor-texto-suave); /* Cor de texto mais suave */ display:block;margin-bottom:8px;}
-    .upload-box p{font-size:.85rem;color:var(--cor-texto-suave); /* Cor de texto mais suave */ line-height:1.5;pointer-events:none;}
-    .upload-box.sending{border-color:var(--dourado);background:#fffbf0;}
-
-    /* Preview galeria */
-    .prev-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px;}
-    .prev-item{position:relative;width:90px;height:70px;border-radius:8px;overflow:hidden;border:2px solid var(--cor-borda-suave);}
-    .prev-item img{width:100%;height:100%;object-fit:cover;}
-    .prev-item .del-prev{
-      position:absolute;top:3px;right:3px;
-      background:rgba(220,38,38,.85);color:#fff;
-      border:none;border-radius:50%;width:20px;height:20px;
-      font-size:.65rem;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      opacity:0;transition:opacity .2s;
-    }
-    .prev-item:hover .del-prev{opacity:1;}
-    .prev-item.capa{border-color:var(--dourado);box-shadow:0 0 0 2px var(--dourado);}
-    .prev-item.capa::after{
-      content:'CAPA';position:absolute;bottom:0;left:0;right:0;
-      background:rgba(201,168,76,.8);color:#fff;font-size:.6rem;
-      font-weight:700;text-align:center;padding:2px 0;
-    }
-
-    /* Roteiro dia a dia */
-    .roteiro-dia-item{
-      border:2px solid var(--cor-borda-suave); /* Borda mais suave */ border-radius:8px;margin-bottom:15px;
-      background:#fff;overflow:hidden;
-    }
-    .rd-header{
-      background:#f5f5f5;padding:10px 15px;
-      display:flex;align-items:center;justify-content:space-between;
-      font-weight:700;color:var(--azul);
-    }
-    .rd-header span{display:flex;align-items:center;gap:8px;}
-    .rd-header .brem{margin-left:auto;}
-    .rd-body{padding:15px;}
-    .foto-dia-row{display:flex;gap:15px;margin-bottom:15px;}
-    .rd-img-wrap{flex-shrink:0;width:180px;height:120px;border-radius:8px;overflow:hidden;border:1px solid #eee;position:relative;}
-    .rd-img-wrap img{width:100%;height:100%;object-fit:cover;}
-    .rd-img-wrap .del-rd-img{
-      position:absolute;top:5px;right:5px;
-      background:rgba(220,38,38,.85);color:#fff;
-      border:none;border-radius:50%;width:24px;height:24px;
-      font-size:.75rem;cursor:pointer;
-      display:flex;align-items:center;justify-content:center;
-      opacity:0;transition:opacity .2s;
-    }
-    .rd-img-wrap:hover .del-rd-img{opacity:1;}
-    .rd-img-upload{flex:1;}
-
-    /* Valores por pessoa */
-    .valores-item{
-      border:2px solid var(--cor-borda-suave); /* Borda mais suave */ border-radius:8px;margin-bottom:15px;
-      background:#fff;overflow:hidden;
-    }
-    .val-header{
-      background:#f5f5f5;padding:10px 15px;
-      display:flex;align-items:center;justify-content:space-between;
-      font-weight:700;color:var(--azul);
-    }
-    .val-header span{display:flex;align-items:center;gap:8px;}
-    .val-header .brem{margin-left:auto;}
-    .val-body{padding:15px;}
-
-    /* Campos dinâmicos de Aéreo e Carro */
+    /* ══ DINÂMICOS ══ */
     .dyn-section-item{
-      border:2px solid var(--cor-borda-suave); /* Borda mais suave */ border-radius:8px;margin-bottom:15px;
-      background:#fff;overflow:hidden;
+      background:#f8f8f8;border:1px solid #eee;border-radius:var(--radius);
+      margin-bottom:15px;
     }
     .dyn-header{
-      background:#f5f5f5;padding:10px 15px;
-      display:flex;align-items:center;justify-content:space-between;
-      font-weight:700;color:var(--azul);
+      background:#eef;padding:10px 15px;
+      border-bottom:1px solid #e0e0f0;
+      display:flex;justify-content:space-between;align-items:center;
+      border-top-left-radius:var(--radius);border-top-right-radius:var(--radius);
     }
-    .dyn-header span{display:flex;align-items:center;gap:8px;}
-    .dyn-header .brem{margin-left:auto;}
+    .dyn-header span{font-weight:600;color:var(--azul);}
     .dyn-body{padding:15px;}
-
-    /* Toast */
-    .toast{
-      position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
-      background:var(--azul);color:#fff;padding:12px 20px;
-      border-radius:8px;box-shadow:var(--sombra);
-      opacity:0;visibility:hidden;transition:all .3s ease-out;
-      z-index:1000;font-size:.9rem;font-weight:600;
-      display:flex;align-items:center;gap:8px;
+    .brem{
+      background:none;border:none;color:#999;cursor:pointer;
+      font-size:.9rem;transition:color .2s;
     }
-    .toast.show{opacity:1;visibility:visible;transform:translateX(-50%) translateY(-10px);}
-    .toast.error{background:#e74c3c;}
-    .toast.success{background:var(--verde);}
+    .brem:hover{color:#e74c3c;}
+    .badd{
+      background:var(--azul);color:#fff;border:none;cursor:pointer;
+      padding:8px 15px;border-radius:8px;font-size:.85rem;
+      display:flex;align-items:center;gap:6px;margin-top:10px;
+      transition:background .2s;
+    }
+    .badd:hover{background:var(--azul2);}
 
-    /* Responsividade */
-    @media(max-width:768px){
-      .adm-header{flex-direction:column;text-align:center;}
-      .adm-header-right{width:100%;justify-content:center;}
+    /* ══ GALERIA ══ */
+    .galeria-preview-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(100px,1fr));
+      gap:10px;margin-top:15px;
+    }
+    .prev-item{
+      position:relative;width:100px;height:100px;
+      border:2px solid #eee;border-radius:8px;overflow:hidden;
+      cursor:pointer;transition:border-color .2s;
+    }
+    .prev-item:hover{border-color:var(--azul);}
+    .prev-item.capa{border-color:var(--dourado);border-width:3px;}
+    .prev-item img{width:100%;height:100%;object-fit:cover;}
+    .del-prev{
+      position:absolute;top:5px;right:5px;
+      background:rgba(0,0,0,.5);color:#fff;border-radius:50%;
+      width:24px;height:24px;display:flex;align-items:center;justify-content:center;
+      font-size:.7rem;opacity:0;transition:opacity .2s;
+    }
+    .prev-item:hover .del-prev{opacity:1;}
+    .upload-box{
+      border:2px dashed #ccc;border-radius:var(--radius);
+      padding:20px;text-align:center;cursor:pointer;
+      transition:border-color .2s,background .2s;
+      position:relative;
+    }
+    .upload-box:hover{border-color:var(--azul);background:#f9f9f9;}
+    .upload-box input{
+      position:absolute;top:0;left:0;width:100%;height:100%;
+      opacity:0;cursor:pointer;
+    }
+    .upload-box i{font-size:2rem;color:#ccc;margin-bottom:10px;}
+    .upload-box p{color:#999;font-size:.9rem;}
+    .upload-box.sending{background:#e6f7ff;border-color:#91d5ff;}
+    .upload-box.sending i,.upload-box.sending p{color:#1890ff;}
+
+    .capa-preview-container{
+      position:relative;width:200px;height:180px;
+      border:2px solid #eee;border-radius:var(--radius);overflow:hidden;
+      margin-bottom:15px;
+    }
+    .capa-preview-container img{width:100%;height:100%;object-fit:cover;}
+    .capa-preview-container .remove-capa{
+      position:absolute;top:10px;right:10px;
+      background:rgba(0,0,0,.6);color:#fff;border-radius:50%;
+      width:30px;height:30px;display:flex;align-items:center;justify-content:center;
+      font-size:.8rem;cursor:pointer;display:none; /* Escondido por padrão */
+    }
+    .capa-preview-container .remove-capa:hover{background:rgba(231,76,60,.8);}
+
+    /* ══ TOAST ══ */
+    .toast-container{
+      position:fixed;bottom:20px;right:20px;z-index:1000;
+    }
+    .toast{
+      background:#333;color:#fff;padding:10px 20px;border-radius:8px;
+      margin-bottom:10px;opacity:0;transition:opacity .3s,transform .3s;
+      transform:translateY(20px);display:flex;align-items:center;gap:10px;
+      box-shadow:0 4px 12px rgba(0,0,0,.2);
+    }
+    .toast.show{opacity:1;transform:translateY(0);}
+    .toast.success{background:#28a745;}
+    .toast.error{background:#dc3545;}
+    .toast i{font-size:1.2rem;}
+
+    /* ══ RESPONSIVIDADE ══ */
+    @media (max-width: 768px) {
+      .adm-header{padding:10px 15px;}
+      .adm-logo{gap:8px;padding:4px 10px;}
+      .adm-logo img.lp{height:50px;}
+      .adm-logo img.l30{height:40px;}
+      .logo-sep{height:40px;}
+      .adm-info .titulo{font-size:.9rem;}
+      .adm-badge{font-size:.6rem;}
+      .adm-header-right a{font-size:.75rem;}
       .layout{flex-direction:column;}
-      .sidebar{width:100%;position:static;height:auto;border-right:none;border-bottom:1px solid var(--cor-borda-suave);}
-      .orc-lista{display:flex;flex-wrap:wrap;gap:8px;padding:8px;}
-      .orc-item{flex:1 1 calc(50% - 8px);margin-bottom:0;}
-      .main{padding:16px;}
-      .painel{padding:16px;}
-      .row2,.row3{grid-template-columns:1fr;}
-      .foto-dia-row{flex-direction:column;}
-      .rd-img-wrap{width:100%;}
-      .upload-mini{width:100%;height:80px;}
+      .sidebar{
+        width:100%;min-width:unset;height:auto;
+        position:relative;top:unset;border-right:none;
+        border-bottom:1px solid #e8e8e8;
+      }
+      .main{padding:15px;}
+      .form-topo{padding:12px 15px;}
+      .form-topo h2{font-size:.95rem;}
+      .topo-btns .btn{padding:6px 12px;font-size:.75rem;}
+      .abas{padding:0 10px;}
+      .aba{padding:10px 12px;font-size:.75rem;}
+      .painel{padding:15px;}
+      .row2,.row3,.row4{grid-template-columns:1fr;}
+      .prev-item{width:80px;height:80px;}
+      .capa-preview-container{width:150px;height:130px;}
     }
   </style>
 </head>
 <body>
-
-  <header class="adm-header">
+  <div class="adm-header">
     <div class="adm-logo">
-      <img src="assets/images/logo.png" alt="Oficina de Turismo" class="lp"/>
+      <img src="assets/images/logo.png" alt="Logo Oficina de Turismo" class="lp"/>
       <div class="logo-sep"></div>
-      <img src="assets/images/logo-30-anos.png" alt="30 Anos" class="l30"/>
-    </div>
-    <div class="adm-info">
-      <span class="titulo">Painel Administrativo</span>
-      <span class="adm-badge">ORÇAMENTOS</span>
+      <img src="assets/images/logo-30-anos.png" alt="Logo 30 Anos" class="l30"/>
+      <div class="adm-info">
+        <div class="titulo">Painel Administrativo</div>
+        <div class="adm-badge">ORÇAMENTOS</div>
+      </div>
     </div>
     <div class="adm-header-right">
-      <a href="https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2/" target="_blank">
-        <i class="fas fa-globe"></i> Ver Site
-      </a>
+      <a href="https://oficinatur.com.br" target="_blank"><i class="fas fa-globe"></i> Site</a>
+      <a href="https://www.instagram.com/oficinadeturismo" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
     </div>
-  </header>
+  </div>
 
-  <div id="jb-status" class="jb-status-bar">
-    <i class="fas fa-circle-notch fa-spin"></i> Conectando ao JSONBin...
+  <div id="jb-status-bar" class="jb-status-bar off">
+    <i class="fas fa-exclamation-triangle"></i> Conectando ao banco de dados...
   </div>
 
   <div class="layout">
-    <aside class="sidebar">
+    <div class="sidebar">
       <div class="sb-topo">
-        <button class="btn-novo" onclick="novoOrc()">
-          <i class="fas fa-plus-circle"></i> Novo Orçamento
-        </button>
+        <button class="btn-novo" onclick="novoOrcamento()"><i class="fas fa-plus-circle"></i> Novo Orçamento</button>
       </div>
       <div class="sb-label">Meus Orçamentos</div>
       <div id="orc-lista" class="orc-lista">
-        <!-- Orçamentos serão renderizados aqui -->
+        <!-- Orçamentos serão carregados aqui -->
+        <div class="sb-vazio">
+          <i class="fas fa-box-open"></i>
+          <p>Nenhum orçamento cadastrado.</p>
+          <p>Clique em "Novo Orçamento" para começar.</p>
+        </div>
       </div>
-    </aside>
+    </div>
 
-    <main class="main">
-      <div id="tela-ini" class="tela-ini">
-        <i class="fas fa-plane-departure"></i>
-        <h2>Bem-vindo ao Painel!</h2>
-        <p>Selecione um orçamento na lateral ou crie um novo para começar.</p>
+    <div class="main">
+      <div id="tela-inicial" class="tela-ini on">
+        <i class="fas fa-hand-point-left"></i>
+        <h2>Selecione um orçamento</h2>
+        <p>Ou crie um novo para começar a editar.</p>
       </div>
 
-      <div id="form-orcamento" class="form-card" style="display:none;">
+      <div id="form-orcamento" class="form-card" style="display: none;">
         <div class="form-topo">
-          <h2><i class="fas fa-edit"></i> Editar Orçamento</h2>
+          <h2 id="orcamento-titulo-form"><i class="fas fa-file-alt"></i> Novo Orçamento</h2>
           <div class="topo-btns">
-            <button class="btn b-salvar" onclick="salvarOrc()"><i class="fas fa-save"></i> Salvar</button>
-            <button class="btn b-ver" onclick="verOrc()" disabled><i class="fas fa-eye"></i> Ver</button>
-            <button class="btn b-wpp" onclick="envWppOrc()" disabled><i class="fab fa-whatsapp"></i> WhatsApp</button>
-            <button class="btn b-dup" onclick="duplicarOrc()" disabled><i class="fas fa-copy"></i> Duplicar</button>
-            <button class="btn b-del" onclick="deletarOrc()" disabled><i class="fas fa-trash-alt"></i> Deletar</button>
+            <button class="btn b-salvar" onclick="salvarOrcamento()"><i class="fas fa-save"></i> Salvar</button>
+            <button class="btn b-ver" onclick="visualizarOrcamento()"><i class="fas fa-eye"></i> Ver</button>
+            <button class="btn b-wpp" onclick="enviarWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+            <button class="btn b-dup" onclick="duplicarOrcamento()"><i class="fas fa-copy"></i> Duplicar</button>
+            <button class="btn b-del" onclick="deletarOrcamento()"><i class="fas fa-trash-alt"></i> Excluir</button>
           </div>
         </div>
 
         <div class="abas">
           <div class="aba on" data-aba="geral"><i class="fas fa-info-circle"></i> Geral</div>
-          <div class="aba" data-aba="incluidos"><i class="fas fa-list-check"></i> Incluídos</div>
-          <div class="aba" data-aba="roteiro"><i class="fas fa-route"></i> Roteiro</div>
+          <div class="aba" data-aba="roteiro"><i class="fas fa-map-marked-alt"></i> Roteiro</div>
           <div class="aba" data-aba="valores"><i class="fas fa-dollar-sign"></i> Valores</div>
-          <div class="aba" data-aba="fotos"><i class="fas fa-images"></i> Fotos</div>
           <div class="aba" data-aba="adicionais"><i class="fas fa-plus-circle"></i> Adicionais</div>
-          <div class="aba" data-aba="condicoes"><i class="fas fa-file-contract"></i> Condições</div>
+          <div class="aba" data-aba="hoteis"><i class="fas fa-hotel"></i> Hotéis</div> <!-- Nova aba para Hotéis -->
+          <div class="aba" data-aba="galeria"><i class="fas fa-images"></i> Galeria</div>
+          <div class="aba" data-aba="obs"><i class="fas fa-clipboard-list"></i> Observações</div>
         </div>
 
         <div class="painel on" data-painel="geral">
-          <div class="cg">
-            <label for="f-titulo"><i class="fas fa-tag"></i> Título do Orçamento</label>
-            <input type="text" id="f-titulo" placeholder="Ex: Viagem para Manaus - 5 dias"/>
-          </div>
-          <div class="cg">
-            <label for="f-cliente"><i class="fas fa-user"></i> Nome do Cliente</label>
-            <input type="text" id="f-cliente" placeholder="Ex: João da Silva"/>
-          </div>
-          <div class="cg">
-            <label for="f-subtitulo"><i class="fas fa-heading"></i> Subtítulo</label>
-            <input type="text" id="f-subtitulo" placeholder="Ex: Uma aventura inesquecível na Amazônia"/>
-          </div>
           <div class="row2">
             <div class="cg">
-              <label for="f-data-viagem"><i class="fas fa-calendar-alt"></i> Data da Viagem</label>
-              <input type="date" id="f-data-viagem"/>
+              <label for="f-titulo"><i class="fas fa-heading"></i> Título do Orçamento</label>
+              <input type="text" id="f-titulo" placeholder="Ex: Viagem para Manaus - 5 dias"/>
             </div>
             <div class="cg">
-              <label for="f-status"><i class="fas fa-signal"></i> Status</label>
-              <select id="f-status">
-                <option value="rascunho">Rascunho</option>
-                <option value="ativo">Ativo</option>
-                <option value="expirado">Expirado</option>
-              </select>
+              <label for="f-periodo"><i class="fas fa-calendar-alt"></i> Período</label>
+              <input type="text" id="f-periodo" placeholder="Ex: 10 a 15 de Outubro de 2024"/>
             </div>
           </div>
-        </div>
-
-        <div class="painel" data-painel="incluidos">
           <div class="cg">
-            <label><i class="fas fa-check-circle"></i> Itens Incluídos</label>
-            <div id="incluidos-container" class="ldyn">
-              <!-- Itens incluídos serão adicionados aqui -->
-            </div>
-            <button class="badd" onclick="addItemToList('incluidos-container')"><i class="fas fa-plus"></i> Adicionar Item Incluído</button>
+            <label for="f-link-externo"><i class="fas fa-link"></i> Link Externo (Opcional)</label>
+            <input type="url" id="f-link-externo" placeholder="Ex: https://link-para-informacoes-adicionais.com"/>
           </div>
           <div class="cg">
-            <label><i class="fas fa-times-circle"></i> Itens Não Incluídos</label>
-            <div id="nao-incluidos-container" class="ldyn">
-              <!-- Itens não incluídos serão adicionados aqui -->
-            </div>
-            <button class="badd" onclick="addItemToList('nao-incluidos-container')"><i class="fas fa-plus"></i> Adicionar Item Não Incluído</button>
+            <label for="f-status"><i class="fas fa-check-circle"></i> Status</label>
+            <select id="f-status">
+              <option value="rascunho">Rascunho</option>
+              <option value="ativo">Ativo</option>
+              <option value="expirado">Expirado</option>
+            </select>
+          </div>
+          <div class="cg">
+            <label for="f-incluido"><i class="fas fa-check"></i> Incluído (um item por linha)</label>
+            <textarea id="f-incluido" rows="5" placeholder="Ex:&#10;- Passagem aérea ida e volta&#10;- 5 noites de hospedagem&#10;- Seguro viagem"></textarea>
+          </div>
+          <div class="cg">
+            <label for="f-nao-incluido"><i class="fas fa-times"></i> Não Incluído (um item por linha)</label>
+            <textarea id="f-nao-incluido" rows="5" placeholder="Ex:&#10;- Refeições não mencionadas&#10;- Despesas pessoais&#10;- Gorjetas"></textarea>
           </div>
         </div>
 
         <div class="painel" data-painel="roteiro">
-          <div id="roteiro-dias-container">
-            <!-- Dias do roteiro serão adicionados aqui -->
+          <div id="roteiro-container">
+            <!-- Itens de roteiro serão adicionados aqui -->
           </div>
-          <button class="badd" onclick="addRoteiroDia()"><i class="fas fa-plus"></i> Adicionar Dia ao Roteiro</button>
+          <button class="badd" onclick="addRoteiroItem()"><i class="fas fa-plus"></i> Adicionar Dia no Roteiro</button>
         </div>
 
         <div class="painel" data-painel="valores">
-          <div id="opcoes-valores-container">
-            <!-- Opções de valores serão adicionadas aqui -->
-          </div>
-          <button class="badd" onclick="addOpcaoValor()"><i class="fas fa-plus"></i> Adicionar Opção de Valor</button>
-
-          <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
-
-          <h3><i class="fas fa-money-bill-wave"></i> Cálculo de Parcelamento</h3>
-          <div class="row3">
-            <div class="cg valor">
-              <label for="f-valor-total">Valor Total</label>
-              <input type="number" id="f-valor-total" placeholder="0.00" oninput="calcularParcelamento()"/>
-            </div>
-            <div class="cg valor">
-              <label for="f-valor-entrada">Valor da Entrada</label>
-              <input type="number" id="f-valor-entrada" placeholder="0.00" oninput="calcularParcelamento()"/>
+          <div class="row2">
+            <div class="cg">
+              <label for="f-valor-total"><i class="fas fa-money-bill-wave"></i> Valor Total</label>
+              <input type="number" id="f-valor-total" placeholder="0.00" step="0.01" oninput="calcularParcelamento()"/>
             </div>
             <div class="cg">
-              <label for="f-num-parcelas">Nº de Parcelas</label>
-              <input type="number" id="f-num-parcelas" placeholder="0" oninput="calcularParcelamento()"/>
+              <label for="f-valor-entrada"><i class="fas fa-money-check-alt"></i> Valor da Entrada</label>
+              <input type="number" id="f-valor-entrada" placeholder="0.00" step="0.01" oninput="calcularParcelamento()"/>
             </div>
           </div>
           <div class="row2">
-            <div class="cg valor">
-              <label for="f-valor-parcela">Valor da Parcela</label>
-              <input type="text" id="f-valor-parcela" readonly style="background:#f0f0f0;"/>
+            <div class="cg">
+              <label for="f-num-parcelas"><i class="fas fa-calculator"></i> Número de Parcelas (saldo)</label>
+              <input type="number" id="f-num-parcelas" placeholder="0" oninput="calcularParcelamento()"/>
             </div>
             <div class="cg">
-              <label for="f-parcelamento-txt">Texto do Parcelamento</label>
-              <input type="text" id="f-parcelamento-txt" readonly style="background:#f0f0f0;"/>
+              <label for="f-valor-parcela"><i class="fas fa-hand-holding-usd"></i> Valor da Parcela (calculado)</label>
+              <input type="text" id="f-valor-parcela" placeholder="R$ 0.00" readonly/>
             </div>
           </div>
-        </div>
+          <div class="cg">
+            <label for="f-parcelamento-txt"><i class="fas fa-comment-dollar"></i> Texto de Parcelamento</label>
+            <textarea id="f-parcelamento-txt" rows="3" placeholder="Ex: Entrada de R$ 500,00 e saldo em 10x de R$ 200,00 sem juros." readonly></textarea>
+          </div>
 
-        <div class="painel" data-painel="fotos">
-          <div class="cg">
-            <label><i class="fas fa-image"></i> Foto de Capa</label>
-            <div style="display:flex;align-items:center;gap:10px;margin-bottom:15px;">
-              <div class="rd-img-wrap" style="width:200px;height:180px;">
-                <img id="capa-preview" src="https://via.placeholder.com/200x180?text=Capa" alt="Capa"/>
-                <button class="del-rd-img" onclick="removeCapaFoto()" style="display:none;"><i class="fas fa-times"></i></button>
-              </div>
-              <p class="hint">Clique em uma imagem da galeria abaixo para defini-la como capa.</p>
-            </div>
+          <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
+
+          <h3>Opções de Valores Adicionais</h3>
+          <div id="opcoes-valores-container">
+            <!-- Opções de valores adicionais serão adicionadas aqui -->
           </div>
-          <div class="cg">
-            <label><i class="fas fa-images"></i> Galeria de Fotos</label>
-            <div class="upload-box" data-loading="false">
-              <input type="file" accept="image/*" multiple onchange="handleGalleryUpload(event, this.closest('.upload-box'))"/>
-              <i class="fas fa-cloud-upload-alt"></i>
-              <p>Clique ou arraste imagens para a galeria</p>
-            </div>
-            <div id="galeria-preview-grid" class="prev-grid">
-              <!-- Imagens da galeria serão adicionadas aqui -->
-            </div>
-          </div>
+          <button class="badd" onclick="addOpcaoValor()"><i class="fas fa-plus"></i> Adicionar Opção de Valor</button>
         </div>
 
         <div class="painel" data-painel="adicionais">
-          <h3><i class="fas fa-plane"></i> Parte Aérea</h3>
+          <h3>Parte Aérea</h3>
           <div id="aereo-container">
             <!-- Itens aéreos serão adicionados aqui -->
           </div>
@@ -505,81 +451,132 @@
 
           <hr style="margin: 30px 0; border: 0; border-top: 1px solid #eee;">
 
-          <h3><i class="fas fa-car"></i> Aluguel de Carro</h3>
+          <h3>Aluguel de Carro</h3>
           <div id="carro-container">
             <!-- Itens de carro serão adicionados aqui -->
           </div>
           <button class="badd" onclick="addCarroItem()"><i class="fas fa-plus"></i> Adicionar Aluguel de Carro</button>
         </div>
 
-        <div class="painel" data-painel="condicoes">
-          <div class="cg">
-            <label for="f-condicoes-gerais"><i class="fas fa-file-alt"></i> Condições Gerais</label>
-            <textarea id="f-condicoes-gerais" rows="8" placeholder="Ex: Política de cancelamento, documentação necessária, etc."></textarea>
+        <!-- Nova seção para Hotéis -->
+        <div class="painel" data-painel="hoteis">
+          <h3>Hotéis da Viagem</h3>
+          <div id="hoteis-container">
+            <!-- Itens de hotéis serão adicionados aqui -->
           </div>
-          <div class="cg">
-            <label for="f-observacoes"><i class="fas fa-comment-dots"></i> Observações Importantes</label>
-            <textarea id="f-observacoes" rows="5" placeholder="Ex: Dicas de viagem, informações sobre o destino, etc."></textarea>
+          <button class="badd" onclick="addHotelItem()"><i class="fas fa-plus"></i> Adicionar Hotel</button>
+        </div>
+
+        <div class="painel" data-painel="galeria">
+          <div class="row2">
+            <div class="cg">
+              <label><i class="fas fa-image"></i> Foto de Capa</label>
+              <div class="capa-preview-container">
+                <img id="capa-preview" src="https://via.placeholder.com/200x180?text=Capa" alt="Capa do Orçamento"/>
+                <button class="remove-capa" onclick="removeCapaFoto()"><i class="fas fa-times"></i></button>
+              </div>
+              <small style="color:#999;">Clique em uma imagem da galeria para defini-la como capa.</small>
+            </div>
+            <div class="cg">
+              <label><i class="fas fa-images"></i> Galeria de Fotos</label>
+              <div class="upload-box" data-loading="false">
+                <input type="file" multiple accept="image/*" onchange="handleGalleryUpload(event, this)"/>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Arraste e solte ou clique para enviar fotos</p>
+              </div>
+              <div id="galeria-preview-grid" class="galeria-preview-grid">
+                <!-- Fotos da galeria serão adicionadas aqui -->
+              </div>
+            </div>
           </div>
         </div>
 
+        <div class="painel" data-painel="obs">
+          <div class="cg">
+            <label for="f-condicoes-gerais"><i class="fas fa-file-contract"></i> Condições Gerais</label>
+            <textarea id="f-condicoes-gerais" rows="8" placeholder="Ex:&#10;- Preços sujeitos a alteração sem aviso prévio&#10;- Cancelamentos conforme política da operadora"></textarea>
+          </div>
+          <div class="cg">
+            <label for="f-observacoes"><i class="fas fa-comment-dots"></i> Observações Importantes</label>
+            <textarea id="f-observacoes" rows="8" placeholder="Ex:&#10;- Levar protetor solar e chapéu&#10;- Adaptador de tomada universal"></textarea>
+          </div>
+        </div>
       </div>
-    </main>
+    </div>
   </div>
 
-  <div id="toast" class="toast"></div>
+  <div class="toast-container"></div>
 
   <script>
     // ════════════════════════════════════════════
-    // CONFIGURAÇÕES GLOBAIS
+    // CONFIGURAÇÕES
     // ════════════════════════════════════════════
 
-    const JSONBIN_ID  = '6a318e1eda38895dfecb475a'; // Seu BIN ID do JSONBin.io
-    const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09Rdqj.'; // Sua chave de acesso ao JSONBin.io
-    const IMGUR_ID    = 'd70305e7c3ac5c6'; // Seu Client ID do Imgur
-    const BASE_URL    = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2'; // URL base do seu GitHub Pages
+    // ** ATENÇÃO: SUBSTITUA COM SEUS PRÓPRIOS VALORES **
+    const JSONBIN_ID = '6a318e1eda38895dfecb475a'; // ID do seu bin no JSONBin.io
+    const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09RdqT.'; // Chave secreta do seu bin
+    const IMGUR_ID = 'd70305e7c3ac5c6'; // Client ID do Imgur para upload de imagens
+    const BASE_URL = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2'; // URL base do seu GitHub Pages
 
-    let todosOrcamentos = [];
+    // ════════════════════════════════════════════
+    // VARIÁVEIS GLOBAIS
+    // ════════════════════════════════════════════
+
+    let orcamentos = [];
     let orcamentoAtualId = null;
+    const toastContainer = document.querySelector('.toast-container');
 
     // ════════════════════════════════════════════
-    // FUNÇÕES UTILITÁRIAS
+    // UTILITÁRIOS
     // ════════════════════════════════════════════
 
     function showToast(message, type = 'info') {
-      const toast = document.getElementById('toast');
-      toast.textContent = message;
-      toast.className = `toast show ${type}`;
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+      toast.innerHTML = `<i class="fas ${type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle'}"></i> ${message}`;
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 10);
+
       setTimeout(() => {
         toast.classList.remove('show');
-      }, 3000);
+        toast.addEventListener('transitionend', () => toast.remove());
+      }, 5000);
     }
 
     function formatarMoeda(valor) {
       return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
     }
 
-    function formatarData(dataString) {
-      if (!dataString) return '';
-      const data = new Date(dataString + 'T00:00:00'); // Adiciona T00:00:00 para evitar problemas de fuso horário
-      return new Intl.DateTimeFormat('pt-BR').format(data);
+    function slugify(text) {
+      return text
+        .toString()
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim()
+        .replace(/\s+/g, '-')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '-');
     }
 
     // ════════════════════════════════════════════
-    // INTEGRAÇÃO COM JSONBIN.IO
+    // JSONBIN.IO INTEGRAÇÃO
     // ════════════════════════════════════════════
 
     async function carregarOrcamentos() {
-      const statusDiv = document.getElementById('jb-status');
-      statusDiv.classList.remove('ok', 'off');
-      statusDiv.classList.add('jb-status-bar');
-      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Conectando ao JSONBin...';
+      const statusBar = document.getElementById('jb-status-bar');
+      statusBar.classList.remove('ok', 'off');
+      statusBar.classList.add('off');
+      statusBar.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Conectando ao banco de dados...';
 
       try {
         const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
           headers: {
             'X-Master-Key': JSONBIN_KEY,
-            'X-Bin-Meta': false // Não retorna metadados, apenas o conteúdo
+            'X-Bin-Meta': false // Para obter apenas os dados, sem metadados
           }
         });
 
@@ -589,26 +586,26 @@
         }
 
         const data = await response.json();
-        todosOrcamentos = data.record || []; // Garante que seja um array, mesmo se vazio
+        orcamentos = data.record || [];
         renderizarListaOrcamentos();
-        statusDiv.classList.remove('jb-status-bar');
-        statusDiv.classList.add('ok');
-        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
+        statusBar.classList.remove('off');
+        statusBar.classList.add('ok');
+        statusBar.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao banco de dados.';
         showToast('Orçamentos carregados com sucesso!', 'success');
       } catch (error) {
-        console.error('Erro ao carregar orçamentos do JSONBin:', error);
-        statusDiv.classList.remove('jb-status-bar');
-        statusDiv.classList.add('off');
-        statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao conectar ao JSONBin';
+        console.error('Erro ao carregar orçamentos:', error);
+        statusBar.classList.remove('ok');
+        statusBar.classList.add('off');
+        statusBar.innerHTML = `<i class="fas fa-times-circle"></i> Erro ao conectar: ${error.message}`;
         showToast(`Erro ao carregar orçamentos: ${error.message}`, 'error');
       }
     }
 
     async function salvarOrcamentosNoBin() {
-      const statusDiv = document.getElementById('jb-status');
-      statusDiv.classList.remove('ok', 'off');
-      statusDiv.classList.add('jb-status-bar');
-      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Salvando no JSONBin...';
+      const statusBar = document.getElementById('jb-status-bar');
+      statusBar.classList.remove('ok', 'off');
+      statusBar.classList.add('off');
+      statusBar.innerHTML = '<i class="fas fa-sync-alt"></i> Salvando dados...';
 
       try {
         const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
@@ -617,7 +614,7 @@
             'Content-Type': 'application/json',
             'X-Master-Key': JSONBIN_KEY
           },
-          body: JSON.stringify(todosOrcamentos)
+          body: JSON.stringify(orcamentos)
         });
 
         if (!response.ok) {
@@ -625,457 +622,417 @@
           throw new Error(`Erro ao salvar orçamentos: ${response.status} - ${errorText}`);
         }
 
-        statusDiv.classList.remove('jb-status-bar');
-        statusDiv.classList.add('ok');
-        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
+        statusBar.classList.remove('off');
+        statusBar.classList.add('ok');
+        statusBar.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao banco de dados.';
         showToast('Orçamento salvo com sucesso!', 'success');
       } catch (error) {
-        console.error('Erro ao salvar orçamentos no JSONBin:', error);
-        statusDiv.classList.remove('jb-status-bar');
-        statusDiv.classList.add('off');
-        statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao conectar ao JSONBin';
+        console.error('Erro ao salvar orçamentos:', error);
+        statusBar.classList.remove('ok');
+        statusBar.classList.add('off');
+        statusBar.innerHTML = `<i class="fas fa-times-circle"></i> Erro ao salvar: ${error.message}`;
         showToast(`Erro ao salvar orçamentos: ${error.message}`, 'error');
       }
     }
 
     // ════════════════════════════════════════════
-    // INTEGRAÇÃO COM IMGUR
+    // RENDERIZAÇÃO DA LISTA DE ORÇAMENTOS
     // ════════════════════════════════════════════
 
-    async function uploadImageToImgur(file) {
-      const formData = new FormData();
-      formData.append('image', file);
+    function renderizarListaOrcamentos() {
+      const orcLista = document.getElementById('orc-lista');
+      orcLista.innerHTML = '';
 
-      try {
-        const response = await fetch('https://api.imgur.com/3/image', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Client-ID ${IMGUR_ID}`
-          },
-          body: formData
-        });
+      if (orcamentos.length === 0) {
+        orcLista.innerHTML = `
+          <div class="sb-vazio">
+            <i class="fas fa-box-open"></i>
+            <p>Nenhum orçamento cadastrado.</p>
+            <p>Clique em "Novo Orçamento" para começar.</p>
+          </div>
+        `;
+        return;
+      }
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          throw new Error(`Erro ao enviar imagem para o Imgur: ${errorData.data.error || response.statusText}`);
+      orcamentos.forEach(orc => {
+        const div = document.createElement('div');
+        div.classList.add('orc-item');
+        if (orc.id === orcamentoAtualId) {
+          div.classList.add('on');
+        }
+        div.dataset.id = orc.id;
+        div.onclick = () => selecionarOrcamento(orc.id);
+
+        let statusClass = '';
+        let statusText = '';
+        if (orc.status === 'ativo') {
+          statusClass = 's-ativo';
+          statusText = 'Ativo';
+        } else if (orc.status === 'rascunho') {
+          statusClass = 's-rascunho';
+          statusText = 'Rascunho';
+        } else if (orc.status === 'expirado') {
+          statusClass = 's-expirado';
+          statusText = 'Expirado';
         }
 
-        const data = await response.json();
-        return data.data.link;
-      } catch (error) {
-        console.error('Erro no upload para o Imgur:', error);
-        throw error;
-      }
+        div.innerHTML = `
+          <div class="orc-top">
+            <div class="orc-titulo">${orc.titulo || 'Novo Orçamento'}</div>
+            <div class="sbadge ${statusClass}">${statusText}</div>
+          </div>
+          <div class="orc-meta">
+            <span><i class="fas fa-calendar-alt"></i> ${orc.periodo || 'Sem período'}</span>
+            <span><i class="fas fa-user"></i> ${orc.cliente || 'Sem cliente'}</span>
+          </div>
+        `;
+        orcLista.appendChild(div);
+      });
     }
 
     // ════════════════════════════════════════════
     // GERENCIAMENTO DE ORÇAMENTOS
     // ════════════════════════════════════════════
 
-    function renderizarListaOrcamentos() {
-      const listaDiv = document.getElementById('orc-lista');
-      listaDiv.innerHTML = '';
-
-      if (todosOrcamentos.length === 0) {
-        listaDiv.innerHTML = `
-          <div class="sb-vazio">
-            <i class="fas fa-box-open"></i>
-            <p>Nenhum orçamento encontrado.</p>
-          </div>
-        `;
-        return;
-      }
-
-      todosOrcamentos.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
-
-      todosOrcamentos.forEach(orc => {
-        const div = document.createElement('div');
-        div.classList.add('orc-item');
-        if (orc.id === orcamentoAtualId) {
-          div.classList.add('on');
-        }
-        div.onclick = () => selecionarOrcamento(orc.id);
-
-        let statusBadgeClass = '';
-        if (orc.status === 'ativo') statusBadgeClass = 's-ativo';
-        else if (orc.status === 'rascunho') statusBadgeClass = 's-rascunho';
-        else if (orc.status === 'expirado') statusBadgeClass = 's-expirado';
-
-        div.innerHTML = `
-          <div class="orc-top">
-            <span class="orc-titulo">${orc.titulo || 'Novo Orçamento'}</span>
-            <span class="sbadge ${statusBadgeClass}">${orc.status ? orc.status.toUpperCase() : 'RASCUNHO'}</span>
-          </div>
-          <div class="orc-meta">
-            <span><i class="fas fa-user"></i> ${orc.cliente || 'Sem Cliente'}</span>
-            <span><i class="fas fa-calendar-alt"></i> ${formatarData(orc.dataViagem) || 'Sem Data'}</span>
-          </div>
-        `;
-        listaDiv.appendChild(div);
-      });
-    }
-
-    function novoOrc() {
+    function novoOrcamento() {
       orcamentoAtualId = null;
       limparFormulario();
-      document.getElementById('tela-ini').style.display = 'none';
+      document.getElementById('tela-inicial').style.display = 'none';
       document.getElementById('form-orcamento').style.display = 'block';
-      document.getElementById('f-titulo').focus();
-      ativarAba('geral');
-      renderizarListaOrcamentos(); // Para desmarcar qualquer item selecionado
-      atualizarBotoesAcoes(false); // Desabilita botões de ver/deletar/duplicar/wpp
+      document.getElementById('orcamento-titulo-form').innerHTML = '<i class="fas fa-file-alt"></i> Novo Orçamento';
+      renderizarListaOrcamentos(); // Atualiza a lista para desmarcar qualquer item
       showToast('Novo orçamento pronto para edição!', 'info');
     }
 
     function selecionarOrcamento(id) {
       orcamentoAtualId = id;
-      const orc = todosOrcamentos.find(o => o.id === id);
+      const orc = orcamentos.find(o => o.id === id);
       if (orc) {
         preencherFormulario(orc);
-        document.getElementById('tela-ini').style.display = 'none';
+        document.getElementById('tela-inicial').style.display = 'none';
         document.getElementById('form-orcamento').style.display = 'block';
-        ativarAba('geral');
-        renderizarListaOrcamentos(); // Para marcar o item selecionado
-        atualizarBotoesAcoes(true); // Habilita botões de ver/deletar/duplicar/wpp
+        document.getElementById('orcamento-titulo-form').innerHTML = `<i class="fas fa-file-alt"></i> ${orc.titulo || 'Orçamento Sem Título'}`;
+        renderizarListaOrcamentos(); // Atualiza a lista para marcar o item selecionado
         showToast(`Orçamento "${orc.titulo}" carregado.`, 'info');
       }
     }
 
+    async function salvarOrcamento() {
+      const dados = coletarDadosFormulario();
+      if (!dados.titulo) {
+        showToast('O título do orçamento é obrigatório!', 'error');
+        return;
+      }
+
+      if (orcamentoAtualId) {
+        // Editar orçamento existente
+        const index = orcamentos.findIndex(o => o.id === orcamentoAtualId);
+        if (index !== -1) {
+          orcamentos[index] = { ...orcamentos[index], ...dados };
+        }
+      } else {
+        // Novo orçamento
+        dados.id = crypto.randomUUID();
+        orcamentos.push(dados);
+        orcamentoAtualId = dados.id; // Seleciona o novo orçamento
+      }
+
+      await salvarOrcamentosNoBin();
+      renderizarListaOrcamentos();
+      // Atualiza o título do formulário após salvar um novo orçamento
+      document.getElementById('orcamento-titulo-form').innerHTML = `<i class="fas fa-file-alt"></i> ${dados.titulo}`;
+    }
+
+    async function deletarOrcamento() {
+      if (!orcamentoAtualId) {
+        showToast('Nenhum orçamento selecionado para exclusão.', 'error');
+        return;
+      }
+
+      if (confirm('Tem certeza que deseja excluir este orçamento? Esta ação não pode ser desfeita.')) {
+        orcamentos = orcamentos.filter(o => o.id !== orcamentoAtualId);
+        orcamentoAtualId = null;
+        await salvarOrcamentosNoBin();
+        renderizarListaOrcamentos();
+        limparFormulario();
+        document.getElementById('form-orcamento').style.display = 'none';
+        document.getElementById('tela-inicial').style.display = 'flex';
+        showToast('Orçamento excluído com sucesso!', 'success');
+      }
+    }
+
+    async function duplicarOrcamento() {
+      if (!orcamentoAtualId) {
+        showToast('Nenhum orçamento selecionado para duplicar.', 'error');
+        return;
+      }
+
+      const orcOriginal = orcamentos.find(o => o.id === orcamentoAtualId);
+      if (orcOriginal) {
+        const novoOrc = { ...orcOriginal };
+        novoOrc.id = crypto.randomUUID();
+        novoOrc.titulo = `Cópia de ${orcOriginal.titulo || 'Novo Orçamento'}`;
+        novoOrc.status = 'rascunho'; // Cópia sempre começa como rascunho
+        orcamentos.push(novoOrc);
+        orcamentoAtualId = novoOrc.id; // Seleciona a cópia
+        await salvarOrcamentosNoBin();
+        renderizarListaOrcamentos();
+        preencherFormulario(novoOrc);
+        document.getElementById('orcamento-titulo-form').innerHTML = `<i class="fas fa-file-alt"></i> ${novoOrc.titulo}`;
+        showToast('Orçamento duplicado com sucesso!', 'success');
+      }
+    }
+
+    function visualizarOrcamento() {
+      if (orcamentoAtualId) {
+        const orc = orcamentos.find(o => o.id === orcamentoAtualId);
+        if (orc && orc.titulo) {
+          const slug = slugify(orc.titulo);
+          window.open(`${BASE_URL}/orcamento.html?id=${orc.id}&slug=${slug}`, '_blank');
+        } else {
+          showToast('Salve o orçamento antes de visualizar.', 'error');
+        }
+      } else {
+        showToast('Selecione ou crie um orçamento para visualizar.', 'error');
+      }
+    }
+
+    function enviarWhatsApp() {
+      if (orcamentoAtualId) {
+        const orc = orcamentos.find(o => o.id === orcamentoAtualId);
+        if (orc && orc.titulo) {
+          const slug = slugify(orc.titulo);
+          const linkOrcamento = encodeURIComponent(`${BASE_URL}/orcamento.html?id=${orc.id}&slug=${slug}`);
+          const mensagem = encodeURIComponent(`Olá! Tenho um orçamento de viagem para você: ${orc.titulo}. Veja os detalhes aqui: ${linkOrcamento}`);
+          window.open(`https://api.whatsapp.com/send?text=${mensagem}`, '_blank');
+        } else {
+          showToast('Salve o orçamento antes de enviar por WhatsApp.', 'error');
+        }
+      } else {
+        showToast('Selecione ou crie um orçamento para enviar por WhatsApp.', 'error');
+      }
+    }
+
+    // ════════════════════════════════════════════
+    // FORMULÁRIO - COLETAR E PREENCHER DADOS
+    // ════════════════════════════════════════════
+
+    function coletarDadosFormulario() {
+      return {
+        titulo: document.getElementById('f-titulo').value.trim(),
+        periodo: document.getElementById('f-periodo').value.trim(),
+        linkExterno: document.getElementById('f-link-externo').value.trim(),
+        status: document.getElementById('f-status').value,
+        incluido: document.getElementById('f-incluido').value.split('\n').map(item => item.trim()).filter(item => item !== ''),
+        naoIncluido: document.getElementById('f-nao-incluido').value.split('\n').map(item => item.trim()).filter(item => item !== ''),
+        roteiro: getRoteiroItems(),
+        valorTotal: parseFloat(document.getElementById('f-valor-total').value) || 0,
+        valorEntrada: parseFloat(document.getElementById('f-valor-entrada').value) || 0,
+        numParcelas: parseInt(document.getElementById('f-num-parcelas').value) || 0,
+        valorParcela: parseFloat(document.getElementById('f-valor-parcela').value.replace(/[R$\.,]/g, '').replace(',', '.')) || 0, // Converte para número
+        parcelamentoTxt: document.getElementById('f-parcelamento-txt').value.trim(),
+        opcoesValores: getOpcoesValores(),
+        aereo: getAereoItems(),
+        carro: getCarroItems(),
+        hoteis: getHotelItems(), // Coleta dados dos hotéis
+        capaFoto: document.getElementById('capa-preview').src.includes('placeholder') ? '' : document.getElementById('capa-preview').src,
+        galeria: getGalleryPreviews(),
+        condicoesGerais: document.getElementById('f-condicoes-gerais').value.trim(),
+        observacoes: document.getElementById('f-observacoes').value.trim(),
+        // Adicione outros campos conforme necessário
+      };
+    }
+
+    function preencherFormulario(orc) {
+      document.getElementById('f-titulo').value = orc.titulo || '';
+      document.getElementById('f-periodo').value = orc.periodo || '';
+      document.getElementById('f-link-externo').value = orc.linkExterno || '';
+      document.getElementById('f-status').value = orc.status || 'rascunho';
+      document.getElementById('f-incluido').value = (orc.incluido || []).join('\n');
+      document.getElementById('f-nao-incluido').value = (orc.naoIncluido || []).join('\n');
+
+      // Roteiro
+      document.getElementById('roteiro-container').innerHTML = '';
+      (orc.roteiro || []).forEach(item => addRoteiroItem(item));
+
+      // Valores
+      document.getElementById('f-valor-total').value = orc.valorTotal || '';
+      document.getElementById('f-valor-entrada').value = orc.valorEntrada || '';
+      document.getElementById('f-num-parcelas').value = orc.numParcelas || '';
+      calcularParcelamento(); // Recalcula para preencher valorParcela e parcelamentoTxt
+      document.getElementById('opcoes-valores-container').innerHTML = '';
+      (orc.opcoesValores || []).forEach(item => addOpcaoValor(item));
+
+      // Adicionais - Aéreo
+      document.getElementById('aereo-container').innerHTML = '';
+      (orc.aereo || []).forEach(item => addAereoItem(item));
+
+      // Adicionais - Carro
+      document.getElementById('carro-container').innerHTML = '';
+      (orc.carro || []).forEach(item => addCarroItem(item));
+
+      // Adicionais - Hotéis
+      document.getElementById('hoteis-container').innerHTML = '';
+      (orc.hoteis || []).forEach(item => addHotelItem(item));
+
+      // Galeria
+      document.getElementById('galeria-preview-grid').innerHTML = '';
+      document.getElementById('capa-preview').src = orc.capaFoto && orc.capaFoto !== '' ? orc.capaFoto : 'https://via.placeholder.com/200x180?text=Capa';
+      if (orc.capaFoto && orc.capaFoto !== '') {
+        document.querySelector('#capa-preview').nextElementSibling.style.display = 'flex';
+      } else {
+        document.querySelector('#capa-preview').nextElementSibling.style.display = 'none';
+      }
+      (orc.galeria || []).forEach(url => addGalleryPreview(url));
+      updateCapaPreview();
+
+      // Observações
+      document.getElementById('f-condicoes-gerais').value = orc.condicoesGerais || '';
+      document.getElementById('f-observacoes').value = orc.observacoes || '';
+
+      // Ativa a primeira aba por padrão ao carregar um orçamento
+      ativarAba('geral');
+    }
+
     function limparFormulario() {
       document.getElementById('f-titulo').value = '';
-      document.getElementById('f-cliente').value = '';
-      document.getElementById('f-subtitulo').value = '';
-      document.getElementById('f-data-viagem').value = '';
+      document.getElementById('f-periodo').value = '';
+      document.getElementById('f-link-externo').value = '';
       document.getElementById('f-status').value = 'rascunho';
+      document.getElementById('f-incluido').value = '';
+      document.getElementById('f-nao-incluido').value = '';
 
-      document.getElementById('incluidos-container').innerHTML = '';
-      document.getElementById('nao-incluidos-container').innerHTML = '';
-      document.getElementById('roteiro-dias-container').innerHTML = '';
-      document.getElementById('opcoes-valores-container').innerHTML = '';
+      document.getElementById('roteiro-container').innerHTML = '';
+      addRoteiroItem(); // Adiciona um item vazio para começar
+
       document.getElementById('f-valor-total').value = '';
       document.getElementById('f-valor-entrada').value = '';
       document.getElementById('f-num-parcelas').value = '';
       document.getElementById('f-valor-parcela').value = '';
       document.getElementById('f-parcelamento-txt').value = '';
-      document.getElementById('capa-preview').src = 'https://via.placeholder.com/200x180?text=Capa';
-      document.querySelector('#capa-preview').classList.remove('capa');
-      document.querySelector('#capa-preview').nextElementSibling.style.display = 'none'; // Esconde botão de remover capa
-      document.getElementById('galeria-preview-grid').innerHTML = '';
+      document.getElementById('opcoes-valores-container').innerHTML = '';
+      addOpcaoValor(); // Adiciona um item vazio para começar
+
       document.getElementById('aereo-container').innerHTML = '';
+      addAereoItem(); // Adiciona um item vazio para começar
+
       document.getElementById('carro-container').innerHTML = '';
+      addCarroItem(); // Adiciona um item vazio para começar
+
+      document.getElementById('hoteis-container').innerHTML = '';
+      addHotelItem(); // Adiciona um item vazio para começar
+
+      document.getElementById('galeria-preview-grid').innerHTML = '';
+      removeCapaFoto(); // Reseta a capa para o placeholder
+
       document.getElementById('f-condicoes-gerais').value = '';
       document.getElementById('f-observacoes').value = '';
-    }
 
-    function preencherFormulario(orc) {
-      document.getElementById('f-titulo').value = orc.titulo || '';
-      document.getElementById('f-cliente').value = orc.cliente || '';
-      document.getElementById('f-subtitulo').value = orc.subtitulo || '';
-      document.getElementById('f-data-viagem').value = orc.dataViagem || '';
-      document.getElementById('f-status').value = orc.status || 'rascunho';
-
-      // Listas dinâmicas
-      document.getElementById('incluidos-container').innerHTML = '';
-      (orc.incluidos || []).forEach(item => addItemToList('incluidos-container', item));
-      document.getElementById('nao-incluidos-container').innerHTML = '';
-      (orc.naoIncluidos || []).forEach(item => addItemToList('nao-incluidos-container', item));
-
-      // Roteiro
-      document.getElementById('roteiro-dias-container').innerHTML = '';
-      (orc.roteiro || []).forEach(dia => addRoteiroDia(dia));
-
-      // Valores
-      document.getElementById('opcoes-valores-container').innerHTML = '';
-      (orc.opcoesValores || []).forEach(val => addOpcaoValor(val));
-      document.getElementById('f-valor-total').value = orc.valorTotal || '';
-      document.getElementById('f-valor-entrada').value = orc.valorEntrada || '';
-      document.getElementById('f-num-parcelas').value = orc.numParcelas || '';
-      calcularParcelamento(); // Recalcula para preencher valor e texto da parcela
-
-      // Fotos
-      document.getElementById('capa-preview').src = orc.capaFoto && !orc.capaFoto.includes('placeholder') ? orc.capaFoto : 'https://via.placeholder.com/200x180?text=Capa';
-      document.querySelector('#capa-preview').nextElementSibling.style.display = orc.capaFoto && !orc.capaFoto.includes('placeholder') ? 'flex' : 'none';
-      document.getElementById('galeria-preview-grid').innerHTML = '';
-      (orc.galeriaFotos || []).forEach(url => addGalleryPreview(url));
-      updateCapaPreview(); // Garante que a capa esteja marcada corretamente
-
-      // Adicionais
-      document.getElementById('aereo-container').innerHTML = '';
-      (orc.aereo || []).forEach(item => addAereoItem(item));
-      document.getElementById('carro-container').innerHTML = '';
-      (orc.carro || []).forEach(item => addCarroItem(item));
-
-      // Condições
-      document.getElementById('f-condicoes-gerais').value = orc.condicoesGerais || '';
-      document.getElementById('f-observacoes').value = orc.observacoes || '';
-    }
-
-    function coletarDadosFormulario() {
-      return {
-        id: orcamentoAtualId,
-        titulo: document.getElementById('f-titulo').value.trim(),
-        cliente: document.getElementById('f-cliente').value.trim(),
-        subtitulo: document.getElementById('f-subtitulo').value.trim(),
-        dataViagem: document.getElementById('f-data-viagem').value,
-        status: document.getElementById('f-status').value,
-        dataCriacao: new Date().toISOString(), // Atualiza a data de criação/modificação
-
-        incluidos: getListItems('incluidos-container'),
-        naoIncluidos: getListItems('nao-incluidos-container'),
-        roteiro: getRoteiroDias(),
-        opcoesValores: getOpcoesValores(),
-        valorTotal: parseFloat(document.getElementById('f-valor-total').value) || 0,
-        valorEntrada: parseFloat(document.getElementById('f-valor-entrada').value) || 0,
-        numParcelas: parseInt(document.getElementById('f-num-parcelas').value) || 0,
-        valorParcela: parseFloat(document.getElementById('f-valor-parcela').value.replace('R$', '').replace('.', '').replace(',', '.')) || 0,
-        parcelamentoTxt: document.getElementById('f-parcelamento-txt').value.trim(),
-        capaFoto: document.getElementById('capa-preview').src.includes('placeholder') ? '' : document.getElementById('capa-preview').src,
-        galeriaFotos: getGalleryPreviews(),
-        aereo: getAereoItems(),
-        carro: getCarroItems(),
-        condicoesGerais: document.getElementById('f-condicoes-gerais').value.trim(),
-        observacoes: document.getElementById('f-observacoes').value.trim(),
-      };
-    }
-
-    async function salvarOrc() {
-      const dados = coletarDadosFormulario();
-
-      if (!dados.titulo) {
-        showToast('Por favor, preencha o Título do Orçamento.', 'error');
-        document.getElementById('f-titulo').focus();
-        return;
-      }
-
-      if (orcamentoAtualId) {
-        // Atualizar orçamento existente
-        const index = todosOrcamentos.findIndex(o => o.id === orcamentoAtualId);
-        if (index !== -1) {
-          todosOrcamentos[index] = { ...todosOrcamentos[index], ...dados };
-        }
-      } else {
-        // Criar novo orçamento
-        dados.id = Date.now().toString(); // ID único baseado no timestamp
-        todosOrcamentos.push(dados);
-        orcamentoAtualId = dados.id; // Define o ID do novo orçamento como o atual
-      }
-
-      await salvarOrcamentosNoBin();
-      renderizarListaOrcamentos();
-      atualizarBotoesAcoes(true); // Habilita botões após salvar
-    }
-
-    function verOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Salve o orçamento com um título antes de visualizar.', 'error');
-        return;
-      }
-      const orc = todosOrcamentos.find(o => o.id === orcamentoAtualId);
-      if (orc && orc.titulo) {
-        const url = `${BASE_URL}/orcamento.html?id=${orc.id}`;
-        window.open(url, '_blank');
-      } else {
-        showToast('Salve o orçamento com um título antes de visualizar.', 'error');
-      }
-    }
-
-    function envWppOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Salve o orçamento antes de enviar por WhatsApp.', 'error');
-        return;
-      }
-      const orc = todosOrcamentos.find(o => o.id === orcamentoAtualId);
-      if (orc && orc.titulo) {
-        const url = `${BASE_URL}/orcamento.html?id=${orc.id}`;
-        const msg  = encodeURIComponent(
-          `Olá${orc.cliente ? ' ' + orc.cliente : ''}! 🌍✈️\n\n` +
-          `Segue seu orçamento personalizado da *Oficina de Turismo*:\n\n` +
-          `✈️ *${orc.titulo}*\n\n` +
-          `👉 ${url}\n\n` +
-          `Qualquer dúvida estou à disposição! 😊\n\n` +
-          `_Oficina de Turismo — (35) 98862-2943_`
-        );
-        window.open(`https://wa.me/?text=${msg}`, '_blank');
-      } else {
-        showToast('Salve o orçamento antes de enviar por WhatsApp.', 'error');
-      }
-    }
-
-    function duplicarOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Selecione um orçamento para duplicar.', 'error');
-        return;
-      }
-      const orcOriginal = todosOrcamentos.find(o => o.id === orcamentoAtualId);
-      if (orcOriginal) {
-        const novoOrc = { ...orcOriginal };
-        novoOrc.id = Date.now().toString(); // Novo ID
-        novoOrc.titulo = `Cópia de ${novoOrc.titulo}`;
-        novoOrc.dataCriacao = new Date().toISOString();
-        todosOrcamentos.push(novoOrc);
-        salvarOrcamentosNoBin();
-        selecionarOrcamento(novoOrc.id);
-        showToast('Orçamento duplicado com sucesso!', 'success');
-      }
-    }
-
-    async function deletarOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Selecione um orçamento para deletar.', 'error');
-        return;
-      }
-      if (confirm('Tem certeza que deseja deletar este orçamento? Esta ação é irreversível.')) {
-        todosOrcamentos = todosOrcamentos.filter(o => o.id !== orcamentoAtualId);
-        orcamentoAtualId = null;
-        await salvarOrcamentosNoBin();
-        limparFormulario();
-        document.getElementById('form-orcamento').style.display = 'none';
-        document.getElementById('tela-ini').style.display = 'block';
-        renderizarListaOrcamentos();
-        atualizarBotoesAcoes(false);
-        showToast('Orçamento deletado com sucesso!', 'success');
-      }
-    }
-
-    function atualizarBotoesAcoes(habilitar) {
-      document.querySelector('.b-ver').disabled = !habilitar;
-      document.querySelector('.b-wpp').disabled = !habilitar;
-      document.querySelector('.b-dup').disabled = !habilitar;
-      document.querySelector('.b-del').disabled = !habilitar;
+      ativarAba('geral'); // Volta para a aba geral
     }
 
     // ════════════════════════════════════════════
-    // NAVEGAÇÃO POR ABAS
+    // GERENCIAMENTO DE ABAS
     // ════════════════════════════════════════════
 
-    document.querySelectorAll('.aba').forEach(aba => {
-      aba.addEventListener('click', () => ativarAba(aba.dataset.aba));
+    document.querySelectorAll('.abas .aba').forEach(aba => {
+      aba.addEventListener('click', () => {
+        const abaAlvo = aba.dataset.aba;
+        ativarAba(abaAlvo);
+      });
     });
 
-    function ativarAba(abaId) {
-      document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('on'));
-      document.querySelectorAll('.painel').forEach(painel => painel.classList.remove('on'));
+    function ativarAba(abaAlvo) {
+      document.querySelectorAll('.abas .aba').forEach(a => a.classList.remove('on'));
+      document.querySelector(`.abas .aba[data-aba="${abaAlvo}"]`).classList.add('on');
 
-      document.querySelector(`.aba[data-aba="${abaId}"]`).classList.add('on');
-      document.querySelector(`.painel[data-painel="${abaId}"]`).classList.add('on');
+      document.querySelectorAll('.painel').forEach(p => p.classList.remove('on'));
+      document.querySelector(`.painel[data-painel="${abaAlvo}"]`).classList.add('on');
     }
 
     // ════════════════════════════════════════════
-    // LISTAS DINÂMICAS (INCLUÍDOS / NÃO INCLUÍDOS)
+    // UPLOAD DE IMAGENS (IMGUR)
     // ════════════════════════════════════════════
 
-    function addItemToList(containerId, itemText = '') {
-      const container = document.getElementById(containerId);
+    async function uploadImageToImgur(file) {
+      const formData = new FormData();
+      formData.append('image', file);
+
+      const response = await fetch('https://api.imgur.com/3/image', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Client-ID ${IMGUR_ID}`
+        },
+        body: formData
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.data.error || 'Erro ao fazer upload da imagem para o Imgur.');
+      }
+
+      const data = await response.json();
+      return data.data.link;
+    }
+
+    // ════════════════════════════════════════════
+    // ROTEIRO
+    // ════════════════════════════════════════════
+
+    function addRoteiroItem(roteiroData = { dia: '', titulo: '', descricao: '', imagem: '' }) {
+      const container = document.getElementById('roteiro-container');
       const div = document.createElement('div');
-      div.classList.add('litem');
+      div.classList.add('dyn-section-item');
       div.innerHTML = `
-        <input type="text" value="${itemText}" placeholder="Novo item"/>
-        <button class="brem" onclick="this.closest('.litem').remove()"><i class="fas fa-trash-alt"></i></button>
-      `;
-      container.appendChild(div);
-    }
-
-    function getListItems(containerId) {
-      const container = document.getElementById(containerId);
-      return Array.from(container.querySelectorAll('.litem input'))
-                  .map(input => input.value.trim())
-                  .filter(value => value !== '');
-    }
-
-    // ════════════════════════════════════════════
-    // ROTEIRO DIA A DIA
-    // ════════════════════════════════════════════
-
-    function addRoteiroDia(diaData = { titulo: '', descricao: '', imagem: '' }) {
-      const container = document.getElementById('roteiro-dias-container');
-      const index = container.children.length;
-      const div = document.createElement('div');
-      div.classList.add('roteiro-dia-item');
-      div.innerHTML = `
-        <div class="rd-header">
-          <span>Dia ${index + 1}</span>
-          <button class="brem" onclick="this.closest('.roteiro-dia-item').remove()"><i class="fas fa-trash-alt"></i></button>
+        <div class="dyn-header">
+          <span>Dia <input type="number" class="f-roteiro-dia-num" value="${roteiroData.dia || ''}" placeholder="1" style="width: 40px; text-align: center; border: 1px solid #ccc; border-radius: 4px;"/></span>
+          <button class="brem" onclick="this.closest('.dyn-section-item').remove()"><i class="fas fa-trash-alt"></i></button>
         </div>
-        <div class="rd-body">
+        <div class="dyn-body">
           <div class="cg">
             <label>Título do Dia</label>
-            <input type="text" class="f-rd-titulo" value="${diaData.titulo}" placeholder="Ex: Chegada em Manaus e Transfer"/>
+            <input type="text" class="f-roteiro-titulo" value="${roteiroData.titulo}" placeholder="Ex: Chegada em Manaus e City Tour"/>
           </div>
           <div class="cg">
             <label>Descrição do Dia</label>
-            <textarea class="f-rd-descricao" rows="3" placeholder="Detalhes das atividades do dia">${diaData.descricao}</textarea>
+            <textarea class="f-roteiro-descricao" rows="4" placeholder="Ex: Recepção no aeroporto, traslado ao hotel e tarde livre para atividades. À noite, city tour pelos principais pontos turísticos.">${roteiroData.descricao}</textarea>
           </div>
-          <div class="foto-dia-row">
-            <div class="rd-img-wrap">
-              <img class="f-rd-imagem-preview" src="${diaData.imagem && !diaData.imagem.includes('placeholder') ? diaData.imagem : 'https://via.placeholder.com/180x120?text=Sem+Foto'}" alt="Preview"/>
-              ${diaData.imagem && !diaData.imagem.includes('placeholder') ? `<button class="del-rd-img" onclick="removeRoteiroDiaImage(this)"><i class="fas fa-times"></i></button>` : ''}
-            </div>
-            <div class="rd-img-upload">
-              <div class="upload-box upload-mini" data-loading="false">
-                <input type="file" accept="image/*" onchange="handleRoteiroDiaUpload(event, this)"/>
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Clique ou arraste para enviar foto do Dia ${index + 1}</p>
-              </div>
+          <div class="cg">
+            <label>Imagem do Dia (URL)</label>
+            <input type="url" class="f-roteiro-imagem" value="${roteiroData.imagem}" placeholder="Ex: https://i.imgur.com/exemplo.jpg"/>
+            <div class="roteiro-image-preview" style="margin-top: 10px; ${roteiroData.imagem ? '' : 'display: none;'}">
+              <img src="${roteiroData.imagem}" style="max-width: 150px; height: auto; border-radius: 8px;"/>
             </div>
           </div>
         </div>
       `;
       container.appendChild(div);
-    }
 
-    function getRoteiroDias() {
-      const container = document.getElementById('roteiro-dias-container');
-      return Array.from(container.querySelectorAll('.roteiro-dia-item')).map(item => {
-        return {
-          titulo: item.querySelector('.f-rd-titulo').value.trim(),
-          descricao: item.querySelector('.f-rd-descricao').value.trim(),
-          imagem: item.querySelector('.f-rd-imagem-preview').src.startsWith('http') && !item.querySelector('.f-rd-imagem-preview').src.includes('placeholder') ? item.querySelector('.f-rd-imagem-preview').src : ''
-        };
-      }).filter(dia => dia.titulo || dia.descricao || dia.imagem);
-    }
+      // Adiciona listener para atualizar preview da imagem
+      const imgInput = div.querySelector('.f-roteiro-imagem');
+      const imgPreviewContainer = div.querySelector('.roteiro-image-preview');
+      const imgPreview = div.querySelector('.roteiro-image-preview img');
 
-    async function handleRoteiroDiaUpload(event, uploadInput) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const uploadBox = uploadInput.closest('.upload-box');
-      const imgPreview = uploadInput.closest('.foto-dia-row').querySelector('.f-rd-imagem-preview');
-      let delBtn = uploadInput.closest('.foto-dia-row').querySelector('.del-rd-img');
-      const originalSrc = imgPreview.src;
-
-      uploadBox.classList.add('sending');
-      uploadBox.dataset.loading = 'true';
-      imgPreview.src = 'https://via.placeholder.com/180x120?text=Subindo...';
-      if (delBtn) delBtn.style.display = 'none'; // Esconde botão de deletar temporariamente
-
-      try {
-        const imageUrl = await uploadImageToImgur(file);
-        imgPreview.src = imageUrl;
-        if (!delBtn) { // Se não existia, cria
-          delBtn = document.createElement('button');
-          delBtn.classList.add('del-rd-img');
-          delBtn.innerHTML = '<i class="fas fa-times"></i>';
-          delBtn.onclick = () => removeRoteiroDiaImage(delBtn);
-          imgPreview.closest('.rd-img-wrap').appendChild(delBtn);
+      imgInput.addEventListener('input', () => {
+        if (imgInput.value) {
+          imgPreview.src = imgInput.value;
+          imgPreviewContainer.style.display = 'block';
+        } else {
+          imgPreviewContainer.style.display = 'none';
         }
-        delBtn.style.display = 'flex'; // Mostra o botão
-        showToast('Foto do roteiro enviada com sucesso!', 'success');
-      } catch (error) {
-        console.error('Erro ao enviar foto do roteiro:', error);
-        imgPreview.src = originalSrc.includes('Subindo') ? 'https://via.placeholder.com/180x120?text=Erro' : originalSrc; // Reverte para a imagem original ou placeholder de erro
-        if (delBtn) delBtn.style.display = 'flex'; // Mostra o botão novamente
-        showToast(`Erro ao enviar foto do roteiro: ${error.message}`, 'error');
-      } finally {
-        uploadBox.classList.remove('sending');
-        uploadBox.dataset.loading = 'false';
-        event.target.value = ''; // Limpa o input file
-      }
+      });
     }
 
-    function removeRoteiroDiaImage(button) {
-      const imgPreview = button.closest('.rd-img-wrap').querySelector('.f-rd-imagem-preview');
-      imgPreview.src = 'https://via.placeholder.com/180x120?text=Sem+Foto';
-      button.style.display = 'none'; // Esconde o botão
+    function getRoteiroItems() {
+      const container = document.getElementById('roteiro-container');
+      return Array.from(container.querySelectorAll('.dyn-section-item')).map(item => {
+        return {
+          dia: parseInt(item.querySelector('.f-roteiro-dia-num').value) || 0,
+          titulo: item.querySelector('.f-roteiro-titulo').value.trim(),
+          descricao: item.querySelector('.f-roteiro-descricao').value.trim(),
+          imagem: item.querySelector('.f-roteiro-imagem').value.trim()
+        };
+      }).filter(item => item.titulo || item.descricao || item.imagem);
     }
 
     // ════════════════════════════════════════════
@@ -1155,7 +1112,7 @@
     }
 
     // ════════════════════════════════════════════
-    // GALERIA DE FOTOS
+    // GALERIA DE FOTOS PRINCIPAL
     // ════════════════════════════════════════════
 
     function addGalleryPreview(url) {
@@ -1342,6 +1299,120 @@
           infoAdicional: item.querySelector('.f-carro-info').value.trim()
         };
       }).filter(item => item.localRetirada || item.localEntrega || item.infoAdicional);
+    }
+
+    // ════════════════════════════════════════════
+    // ADICIONAIS (HOTÉIS) - NOVA SEÇÃO
+    // ════════════════════════════════════════════
+
+    function addHotelItem(hotelData = { nome: '', localizacao: '', checkin: '', checkout: '', infoAdicional: '', fotos: [] }) {
+      const container = document.getElementById('hoteis-container');
+      const div = document.createElement('div');
+      div.classList.add('dyn-section-item');
+      div.innerHTML = `
+        <div class="dyn-header">
+          <span>Detalhes do Hotel</span>
+          <button class="brem" onclick="this.closest('.dyn-section-item').remove()"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="dyn-body">
+          <div class="cg">
+            <label>Nome do Hotel</label>
+            <input type="text" class="f-hotel-nome" value="${hotelData.nome}" placeholder="Ex: Hotel Manaus Plaza"/>
+          </div>
+          <div class="cg">
+            <label>Localização</label>
+            <input type="text" class="f-hotel-localizacao" value="${hotelData.localizacao}" placeholder="Ex: Manaus, AM"/>
+          </div>
+          <div class="row2">
+            <div class="cg">
+              <label>Check-in</label>
+              <input type="date" class="f-hotel-checkin" value="${hotelData.checkin}"/>
+            </div>
+            <div class="cg">
+              <label>Check-out</label>
+              <input type="date" class="f-hotel-checkout" value="${hotelData.checkout}"/>
+            </div>
+          </div>
+          <div class="cg">
+            <label>Informações Adicionais</label>
+            <textarea class="f-hotel-info" rows="3" placeholder="Ex: Quarto duplo com café da manhã, vista para o rio.">${hotelData.infoAdicional}</textarea>
+          </div>
+          <div class="cg">
+            <label>Fotos do Hotel</label>
+            <div class="upload-box" data-loading="false">
+              <input type="file" multiple accept="image/*" onchange="handleHotelGalleryUpload(event, this, this.closest('.dyn-section-item').querySelector('.hotel-galeria-preview-grid'))"/>
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Arraste e solte ou clique para enviar fotos do hotel</p>
+            </div>
+            <div class="hotel-galeria-preview-grid galeria-preview-grid">
+              <!-- Fotos do hotel serão adicionadas aqui -->
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+
+      // Preencher fotos do hotel se existirem
+      const hotelGalleryGrid = div.querySelector('.hotel-galeria-preview-grid');
+      (hotelData.fotos || []).forEach(url => addHotelGalleryPreview(url, hotelGalleryGrid));
+    }
+
+    function getHotelItems() {
+      const container = document.getElementById('hoteis-container');
+      return Array.from(container.querySelectorAll('.dyn-section-item')).map(item => {
+        return {
+          nome: item.querySelector('.f-hotel-nome').value.trim(),
+          localizacao: item.querySelector('.f-hotel-localizacao').value.trim(),
+          checkin: item.querySelector('.f-hotel-checkin').value.trim(),
+          checkout: item.querySelector('.f-hotel-checkout').value.trim(),
+          infoAdicional: item.querySelector('.f-hotel-info').value.trim(),
+          fotos: getHotelGalleryPreviews(item.querySelector('.hotel-galeria-preview-grid'))
+        };
+      }).filter(item => item.nome || item.localizacao || item.checkin || item.checkout || item.infoAdicional || item.fotos.length > 0);
+    }
+
+    // Funções para a galeria de fotos de cada hotel
+    function addHotelGalleryPreview(url, gridElement) {
+      const div = document.createElement('div');
+      div.classList.add('prev-item');
+      div.innerHTML = `
+        <img src="${url}" alt="Foto do Hotel"/>
+        <button class="del-prev" onclick="removeHotelGalleryPreview(this)"><i class="fas fa-times"></i></button>
+      `;
+      gridElement.appendChild(div);
+    }
+
+    function getHotelGalleryPreviews(gridElement) {
+      return Array.from(gridElement.querySelectorAll('.prev-item img'))
+                  .map(img => img.src)
+                  .filter(src => src.startsWith('http') && !src.includes('placeholder'));
+    }
+
+    function removeHotelGalleryPreview(button) {
+      button.closest('.prev-item').remove();
+    }
+
+    async function handleHotelGalleryUpload(event, uploadBox, gridElement) {
+      const files = event.target.files;
+      if (files.length === 0) return;
+
+      uploadBox.classList.add('sending');
+      uploadBox.dataset.loading = 'true';
+
+      for (const file of files) {
+        try {
+          const imageUrl = await uploadImageToImgur(file);
+          addHotelGalleryPreview(imageUrl, gridElement);
+          showToast(`Foto "${file.name}" do hotel enviada com sucesso!`, 'success');
+        } catch (error) {
+          console.error(`Erro ao enviar foto "${file.name}" do hotel:`, error);
+          showToast(`Erro ao enviar foto "${file.name}" do hotel: ${error.message}`, 'error');
+        }
+      }
+
+      uploadBox.classList.remove('sending');
+      uploadBox.dataset.loading = 'false';
+      event.target.value = ''; // Limpa o input file
     }
 
     // ════════════════════════════════════════════
