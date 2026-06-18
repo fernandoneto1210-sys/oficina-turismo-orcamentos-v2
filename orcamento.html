@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Orçamento de Viagem — Oficina de Turismo</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <!-- Adicione o CSS do Swiper aqui -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <style>
     :root{
       --azul:#1B3A6B;--azul2:#2E5FA3;--verde:#2D6A4F;--verde2:#40916C;
@@ -48,13 +50,18 @@
     .section h3 i{margin-right:10px;color:var(--dourado);}
 
     /* ══ GALERIA ══ */
-    .galeria-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-top:20px;}
-    .galeria-item{border-radius:8px;overflow:hidden;box-shadow:var(--sombra);height:120px;}
-    .galeria-item img{width:100%;height:100%;object-fit:cover;}
+    /* Removido galeria-grid padrão para usar Swiper */
 
     /* ══ INCLUÍDOS / NÃO INCLUÍDOS ══ */
     .lista-itens ul{list-style:none;padding-left:0;}
-    .lista-itens li{margin-bottom:8px;display:flex;align-items:flex-start;gap:10px;}
+    .lista-itens li{
+      margin-bottom:8px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      flex-direction: row; /* Garante que o ícone e o texto fiquem na mesma linha */
+      flex-wrap: nowrap; /* Impede que o texto quebre para a linha de baixo do ícone */
+    }
     .lista-itens li i{font-size:1.1rem;flex-shrink:0;}
     .lista-itens.incluidos li i{color:var(--verde);}
     .lista-itens.nao-incluidos li i{color:#e74c3c;}
@@ -98,13 +105,62 @@
     }
     .status-message i{font-size:3rem;color:var(--dourado);margin-bottom:20px;display:block;}
 
+    /* ══ SWIPER (CARROSSEL) ══ */
+    .swiper-container {
+      width: 100%;
+      height: 350px; /* Altura fixa para o carrossel */
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--sombra);
+      margin-top: 20px;
+    }
+    .swiper-slide {
+      text-align: center;
+      font-size: 18px;
+      background: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .swiper-slide img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    .swiper-button-next, .swiper-button-prev {
+      color: #fff;
+      background-color: rgba(0,0,0,0.4);
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background-color 0.3s;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+      background-color: rgba(0,0,0,0.6);
+    }
+    .swiper-pagination-bullet {
+      background-color: #fff;
+      opacity: 0.7;
+    }
+    .swiper-pagination-bullet-active {
+      background-color: var(--dourado);
+      opacity: 1;
+    }
+
     @media(max-width:768px){
       .orc-header h1{font-size:1.8rem;}
       .orc-header h2{font-size:1.1rem;}
       .container{margin:20px auto;padding:0 15px;}
       .section{padding:20px;}
       .section h3{font-size:1.3rem;}
-      .galeria-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));}
+      /* .galeria-grid{grid-template-columns:repeat(auto-fit,minmax(100px,1fr));} */ /* Removido para Swiper */
+      .swiper-container {
+        height: 250px; /* Ajusta a altura para mobile */
+      }
     }
   </style>
 </head>
@@ -135,8 +191,16 @@
 
       <section id="galeria-section" class="section" style="display:none;">
         <h3><i class="fas fa-images"></i> Galeria de Fotos</h3>
-        <div id="galeria-grid" class="galeria-grid">
-          <!-- Imagens da galeria serão carregadas aqui -->
+        <!-- Swiper -->
+        <div class="swiper-container" id="orcamento-swiper">
+          <div class="swiper-wrapper" id="galeria-grid">
+            <!-- Imagens da galeria serão carregadas aqui -->
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination"></div>
+          <!-- Add Navigation -->
+          <div class="swiper-button-next"></div>
+          <div class="swiper-button-prev"></div>
         </div>
       </section>
 
@@ -212,6 +276,8 @@
     </footer>
   </div>
 
+  <!-- Swiper JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
     // ════════════════════════════════════════════
     // CONFIGURAÇÕES GLOBAIS
@@ -306,21 +372,61 @@ $
       if (orcamento.capaFoto && !orcamento.capaFoto.includes('placeholder')) {
         capaBg.style.backgroundImage = `url('${orcamento.capaFoto}')`;
       } else {
-        // Se não houver capa, use uma imagem padrão ou remova o background
-        capaBg.style.backgroundImage = `url('assets/images/placeholder-capa.jpg')`; // Crie esta imagem em assets/images
+        capaBg.style.backgroundImage = `url('${BASE_URL}/assets/images/placeholder-capa.jpg')`; // Use BASE_URL para o placeholder
       }
 
+      // Galeria de Fotos (agora com Swiper)
+      const galeriaGrid = document.getElementById('galeria-grid'); // Este é o swiper-wrapper
+      const imagensParaCarrossel = [];
 
-      // Galeria de Fotos (agora separada da capa)
-      const galeriaGrid = document.getElementById('galeria-grid');
+      // Adiciona a capa à galeria se ela não for um placeholder
+      if (orcamento.capaFoto && !orcamento.capaFoto.includes('placeholder')) {
+        imagensParaCarrossel.push(orcamento.capaFoto);
+      }
+
+      // Adiciona as fotos da galeria
       if (orcamento.galeriaFotos && orcamento.galeriaFotos.length > 0) {
-        document.getElementById('galeria-section').style.display = 'block';
         orcamento.galeriaFotos.forEach(url => {
+          if (!url.includes('placeholder')) { // Evita adicionar placeholders da galeria
+            imagensParaCarrossel.push(url);
+          }
+        });
+      }
+
+      if (imagensParaCarrossel.length > 0) {
+        document.getElementById('galeria-section').style.display = 'block';
+        galeriaGrid.innerHTML = ''; // Limpa antes de adicionar
+        imagensParaCarrossel.forEach(url => {
           const div = document.createElement('div');
-          div.classList.add('galeria-item');
+          div.classList.add('swiper-slide');
           div.innerHTML = `<img src="${url}" alt="Foto da Viagem"/>`;
           galeriaGrid.appendChild(div);
         });
+
+        // Inicializa o Swiper APÓS adicionar os slides
+        setTimeout(() => { // Pequeno delay para garantir que o DOM esteja pronto
+          new Swiper('#orcamento-swiper', {
+            loop: true,
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: false,
+            },
+            effect: 'fade', // Efeito de transição
+            fadeEffect: {
+              crossFade: true,
+            },
+          });
+        }, 100); // Ajuste o delay se necessário
+      } else {
+        document.getElementById('galeria-section').style.display = 'none';
       }
 
 
@@ -328,6 +434,7 @@ $
       const incluidosLista = document.getElementById('incluidos-lista').querySelector('ul');
       if (orcamento.incluidos && orcamento.incluidos.length > 0) {
         document.getElementById('incluidos-section').style.display = 'block';
+        incluidosLista.innerHTML = ''; // Limpa antes de adicionar
         orcamento.incluidos.forEach(item => {
           const li = document.createElement('li');
           li.innerHTML = `<i class="fas fa-check"></i> ${item}`;
@@ -339,6 +446,7 @@ $
       const naoIncluidosLista = document.getElementById('nao-incluidos-lista').querySelector('ul');
       if (orcamento.naoIncluidos && orcamento.naoIncluidos.length > 0) {
         document.getElementById('nao-incluidos-section').style.display = 'block';
+        naoIncluidosLista.innerHTML = ''; // Limpa antes de adicionar
         orcamento.naoIncluidos.forEach(item => {
           const li = document.createElement('li');
           li.innerHTML = `<i class="fas fa-times"></i> ${item}`;
@@ -350,6 +458,7 @@ $
       const roteiroDiasContainer = document.getElementById('roteiro-dias-container');
       if (orcamento.roteiro && orcamento.roteiro.length > 0) {
         document.getElementById('roteiro-section').style.display = 'block';
+        roteiroDiasContainer.innerHTML = ''; // Limpa antes de adicionar
         orcamento.roteiro.forEach((dia, index) => {
           const div = document.createElement('div');
           div.classList.add('roteiro-dia');
@@ -367,6 +476,8 @@ $
       const detalhesPagamento = document.getElementById('detalhes-pagamento');
       if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt) {
         document.getElementById('valores-section').style.display = 'block';
+        opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
+        detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
 
         if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
           orcamento.opcoesValores.forEach(opcao => {
@@ -396,6 +507,7 @@ $
       const aereoContainer = document.getElementById('aereo-container');
       if (orcamento.aereo && orcamento.aereo.length > 0) {
         document.getElementById('aereo-section').style.display = 'block';
+        aereoContainer.innerHTML = ''; // Limpa antes de adicionar
         orcamento.aereo.forEach(item => {
           const div = document.createElement('div');
           div.classList.add('adicional-item');
@@ -413,6 +525,7 @@ $
       const carroContainer = document.getElementById('carro-container');
       if (orcamento.carro && orcamento.carro.length > 0) {
         document.getElementById('carro-section').style.display = 'block';
+        carroContainer.innerHTML = ''; // Limpa antes de adicionar
         orcamento.carro.forEach(item => {
           const div = document.createElement('div');
           div.classList.add('adicional-item');
