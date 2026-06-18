@@ -12,7 +12,6 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <style>
-    /* --- (mesmo CSS organizado que conversamos) --- */
     :root{
       --azul:#1B3A6B; --azul2:#2E5FA3; --verde:#2D6A4F; --dourado:#C9A84C;
       --cinza:#F5F6FA; --bg:#ffffff; --suave:#f7fafc;
@@ -21,7 +20,7 @@
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{font-family: Inter, "Segoe UI", Roboto, system-ui; background:var(--cinza); color:#223; margin:0}
+    body{font-family: "Segoe UI", Roboto, system-ui, -apple-system, "Helvetica Neue", Arial; background:var(--cinza); color:#223; margin:0}
     a{color:inherit;text-decoration:none}
     button{font-family:inherit;cursor:pointer}
 
@@ -106,7 +105,7 @@
 
   <header class="adm-header">
     <div style="display:flex;align-items:center;gap:12px">
-      <div class="logo-wrap"><img src="assets/images/logo-agencia.png" alt="Oficina"/></div>
+      <div class="logo-wrap"><img src="assets/images/logo.png" alt="Oficina"/></div>
       <div>
         <div style="font-weight:700">Painel Administrativo — Oficina de Turismo</div>
         <div style="font-size:.9rem;opacity:.9">Gerencie orçamentos e gere PDF do roteiro</div>
@@ -114,7 +113,7 @@
     </div>
 
     <div style="display:flex;gap:8px;align-items:center">
-      <a href="https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2/" target="_blank"><i class="fas fa-globe"></i> Ver site</a>
+      <a href="./orcamento.html" target="_blank"><i class="fas fa-globe"></i> Ver exemplo público</a>
       <div style="color:#fff;font-weight:700">WhatsApp: +55 35 98862-2943</div>
     </div>
   </header>
@@ -168,26 +167,35 @@
           <div class="aba" data-aba="observacoes" onclick="showAba(event)">Observações</div>
         </div>
 
-        <!-- PAINÉIS (Geral) -->
+        <!-- PAINEL GERAL -->
         <div class="painel on" data-painel="geral">
-          <div style="display:flex;gap:12px;align-items:center;justify-content:space-between">
-            <div style="flex:1">
-              <div class="cg"><label for="f-titulo">Título</label><input id="f-titulo" placeholder="Ex: Viagem para Manaus - 5 dias"></div>
-              <div class="cg"><label for="f-subtitulo">Subtítulo / Destino</label><input id="f-subtitulo" placeholder="Ex: Aventura na Amazônia"></div>
+          <div class="cg">
+            <label for="f-titulo">Título do Orçamento</label>
+            <input id="f-titulo" type="text" placeholder="Ex: Inglaterra e Escócia — 10 dias"/>
+          </div>
+          <div class="row2">
+            <div class="cg">
+              <label for="f-periodo">Período / Datas</label>
+              <input id="f-periodo" type="text" placeholder="Ex: 10/07/2026 - 20/07/2026"/>
             </div>
-            <div style="width:260px">
-              <div class="cg"><label for="f-cliente">Cliente</label><input id="f-cliente" placeholder="Nome do cliente"></div>
-              <div class="row2">
-                <div class="cg"><label for="f-data-inicio">Data Início</label><input type="date" id="f-data-inicio"></div>
-                <div class="cg"><label for="f-data-fim">Data Fim</label><input type="date" id="f-data-fim"></div>
-              </div>
-              <div class="cg"><label for="f-status">Status</label><select id="f-status"><option value="rascunho">Rascunho</option><option value="ativo">Ativo</option><option value="expirado">Expirado</option></select></div>
+            <div class="cg">
+              <label for="f-subtitulo">Subtítulo</label>
+              <input id="f-subtitulo" type="text" placeholder="Ex: Uma aventura inesquecível"/>
             </div>
           </div>
-
           <div class="row2">
-            <div class="cg"><label for="f-destino">Destino (Principal)</label><input id="f-destino" placeholder="Nome do destino"></div>
-            <div class="cg"><label for="f-periodo">Período</label><input id="f-periodo" placeholder="Ex: 10 a 15 de Julho"></div>
+            <div class="cg">
+              <label for="f-cliente">Cliente / Agência</label>
+              <input id="f-cliente" type="text" placeholder="Nome do cliente ou agência"/>
+            </div>
+            <div class="cg">
+              <label for="f-status">Status</label>
+              <select id="f-status">
+                <option value="rascunho">Rascunho</option>
+                <option value="ativo">Ativo</option>
+                <option value="expirado">Expirado</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -196,7 +204,7 @@
           <div class="cg">
             <label>Itens Incluídos</label>
             <div id="incluidos-container" class="coluna-itens"></div>
-            <button class="badd" onclick="addIncluido()">+ Adicionar incluído</button>
+            <button class="badd" onclick="addListItem('incluidos-container','incluido')"><i class="fas fa-plus"></i> Adicionar</button>
           </div>
         </div>
 
@@ -205,33 +213,51 @@
           <div class="cg">
             <label>Itens Não Incluídos</label>
             <div id="nao-incluidos-container" class="coluna-itens"></div>
-            <button class="badd" onclick="addNaoIncluido()">+ Adicionar não incluído</button>
+            <button class="badd" onclick="addListItem('nao-incluidos-container','nao-incluido')"><i class="fas fa-plus"></i> Adicionar</button>
           </div>
         </div>
 
         <!-- ROTEIRO -->
         <div class="painel" data-painel="roteiro">
-          <div id="roteiro-dias-container"></div>
-          <div style="margin-top:8px;display:flex;gap:8px">
-            <button class="badd" onclick="addRoteiroDia()">+ Adicionar Dia</button>
-            <button class="badd" onclick="autoCarregarRoteiroPadrao()">Carregar Roteiro Padrão</button>
+          <div id="roteiro-dias-container" class="ldyn"></div>
+          <div style="display:flex;gap:8px">
+            <button class="badd" onclick="addRoteiroDia()"><i class="fas fa-plus"></i> Adicionar Dia</button>
+            <button class="badd" onclick="autoCarregarRoteiroPadrao()"><i class="fas fa-magic"></i> Carregar Roteiro Padrão</button>
           </div>
         </div>
 
         <!-- VALORES -->
         <div class="painel" data-painel="valores">
-          <div id="opcoes-valores-container"></div>
-          <button class="badd" onclick="addOpcaoValor()">+ Adicionar Opção de Valor</button>
-          <hr style="margin:16px 0;border:none;border-top:1px solid #eee"/>
-          <h3 style="margin:8px 0">Detalhes de Pagamento</h3>
+          <div id="opcoes-valores-container" class="ldyn"></div>
+          <button class="badd" onclick="addOpcaoValor()"><i class="fas fa-plus"></i> Adicionar Opção de Valor</button>
+
+          <hr style="margin:18px 0;border:0;border-top:1px solid #eee"/>
+
+          <h4>Pagamento</h4>
           <div class="row3">
-            <div class="cg"><label>Valor Total</label><input id="f-valor-total" type="number" step="0.01" placeholder="0.00" oninput="calcularParcelamento()"></div>
-            <div class="cg"><label>Entrada</label><input id="f-valor-entrada" type="number" step="0.01" placeholder="0.00" oninput="calcularParcelamento()"></div>
-            <div class="cg"><label>Nº Parcelas</label><input id="f-num-parcelas" type="number" min="0" placeholder="0" oninput="calcularParcelamento()"></div>
+            <div class="cg">
+              <label for="f-valor-total">Valor Total (R$)</label>
+              <input id="f-valor-total" type="number" step="0.01" oninput="calcularParcelamento()"/>
+            </div>
+            <div class="cg">
+              <label for="f-valor-entrada">Entrada (R$)</label>
+              <input id="f-valor-entrada" type="number" step="0.01" oninput="calcularParcelamento()"/>
+            </div>
+            <div class="cg">
+              <label for="f-num-parcelas">Nº de Parcelas</label>
+              <input id="f-num-parcelas" type="number" min="1" oninput="calcularParcelamento()"/>
+            </div>
           </div>
-          <div class="row2" style="margin-top:10px">
-            <div class="cg"><label>Valor Parcela</label><input id="f-valor-parcela" readonly></div>
-            <div class="cg"><label>Texto Parcelamento</label><textarea id="f-parcelamento-txt" rows="2" readonly></textarea></div>
+
+          <div class="row2">
+            <div class="cg">
+              <label for="f-valor-parcela">Valor da Parcela (R$)</label>
+              <input id="f-valor-parcela" type="text" readonly/>
+            </div>
+            <div class="cg">
+              <label for="f-parcelamento-txt">Texto de Parcelamento</label>
+              <textarea id="f-parcelamento-txt" rows="2" readonly></textarea>
+            </div>
           </div>
         </div>
 
@@ -239,49 +265,36 @@
         <div class="painel" data-painel="fotos">
           <div class="cg">
             <label>Foto de Capa</label>
-            <div style="display:flex;gap:10px;align-items:center">
-              <div class="capa-box"><img id="capa-preview" src="assets/images/placeholder-capa.jpg" alt="Capa" style="width:100%;height:100%;object-fit:cover"></div>
-              <div style="flex:1">
-                <input type="file" id="f-capa-file" accept="image/*" style="display:none" onchange="handleCapaUpload(event)">
-                <div style="display:flex;gap:8px">
-                  <button class="btn" onclick="document.getElementById('f-capa-file').click()">Enviar Capa</button>
-                  <button class="btn" onclick="removeCapaFoto()">Remover Capa</button>
-                </div>
-                <p class="hint" style="margin-top:8px">Clique em uma imagem da galeria para definir como capa.</p>
-              </div>
+            <div class="capa-box" id="capa-box"><img id="capa-preview" src="assets/images/placeholder-capa.jpg" alt="Capa" style="width:100%;height:100%;object-fit:cover"></div>
+            <div style="margin-top:8px">
+              <input id="f-capa-file" type="file" accept="image/*" onchange="handleCapaUpload(event)"/>
             </div>
           </div>
 
           <div class="cg">
-            <label>Galeria de Fotos</label>
-            <input type="file" id="f-galeria-files" accept="image/*" multiple onchange="handleGalleryUpload(event)">
+            <label>Galeria de Fotos (fotos do dia)</label>
+            <input id="f-galeria-file" type="file" accept="image/*" multiple onchange="handleGaleriaUpload(event)"/>
             <div id="galeria-preview-grid" class="fotos-grid"></div>
           </div>
         </div>
 
         <!-- AÉREO -->
         <div class="painel" data-painel="aereo">
-          <div id="aereo-container"></div>
-          <div style="margin-top:8px;display:flex;gap:8px">
-            <button class="badd" onclick="addAereoItem()">+ Adicionar Voo</button>
-            <button class="badd" onclick="renderAereo([])">Limpar Voos</button>
-          </div>
+          <div id="aereo-container" class="ldyn"></div>
+          <button class="badd" onclick="addAereoItem()"><i class="fas fa-plus"></i> Adicionar Voo</button>
         </div>
 
         <!-- HOTÉIS -->
         <div class="painel" data-painel="hoteis">
-          <div id="hoteis-container"></div>
-          <div style="margin-top:8px;display:flex;gap:8px">
-            <button class="badd" onclick="addHotelItem()">+ Adicionar Hotel</button>
-            <button class="badd" onclick="autoCarregarHoteisDemo()">Demo Hoteis</button>
-          </div>
+          <div id="hoteis-container" class="ldyn"></div>
+          <button class="badd" onclick="addHotelItem()"><i class="fas fa-plus"></i> Adicionar Hotel</button>
         </div>
 
         <!-- ADICIONAIS -->
         <div class="painel" data-painel="adicionais">
           <div class="cg">
-            <label>Adicionais (livre)</label>
-            <textarea id="f-adicionais" rows="4" placeholder="Ex: Seguro viagem, excursões opcionais"></textarea>
+            <label>Adicionais / Observações</label>
+            <textarea id="f-adicionais" rows="4" placeholder="Informações gerais, políticas, vouchers, etc."></textarea>
           </div>
         </div>
 
@@ -289,13 +302,13 @@
         <div class="painel" data-painel="observacoes">
           <div class="cg">
             <label>Observações Importantes</label>
-            <textarea id="f-observacoes" rows="6"></textarea>
+            <textarea id="f-observacoes" rows="4"></textarea>
           </div>
         </div>
 
       </div>
 
-      <div id="pdf-preview" onclick="closePdfPreview(event)" style="display:none;align-items:center;justify-content:center">
+      <div id="pdf-preview" onclick="closePdfPreview(event)">
         <div class="pdf-preview-inner" id="pdf-preview-inner"></div>
       </div>
 
@@ -303,71 +316,225 @@
   </div>
 
   <footer>
-    <div>© Oficina de Turismo</div>
+    <div><strong>Oficina de Turismo</strong> — Orçamentos personalizados</div>
     <div class="contatos">
-      <a href="https://wa.me/5535988622943" target="_blank"><i class="fab fa-whatsapp"></i></a>
-      <a href="mailto:oficinadeturismo@oficinatur.com.br"><i class="fas fa-envelope"></i></a>
-      <a href="https://instagram.com/oficinadeturismo" target="_blank"><i class="fab fa-instagram"></i></a>
+      <a href="https://wa.me/5535988622943" target="_blank"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+      <a href="mailto:oficinadeturismo@oficinatur.com.br"><i class="fas fa-envelope"></i> Email</a>
+      <a href="https://instagram.com/oficinadeturismo" target="_blank"><i class="fab fa-instagram"></i> Instagram</a>
+      <a href="https://www.oficinatur.com.br" target="_blank"><i class="fas fa-globe"></i> Site</a>
     </div>
   </footer>
 
   <script>
-    /*************************************************************************
-     * Configurações do usuário (já providenciadas)
-     * Se quiser manter privadas, mova para arquivo externo.
-     *************************************************************************/
+    /* ======= Configs ======= */
     const JSONBIN_ID = '6a318e1eda38895dfecb475a';
     const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09RdqT.';
     const IMGUR_ID = 'd70305e7c3ac5c6';
     const BASE_URL = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2';
 
-    /*************************************************************************
-     * Estado local
-     *************************************************************************/
-    let orcamentos = [];      // lista completa (do JSONBin)
-    let currentId = null;     // id do orçamento aberto
-    let isDirty = false;
+    /* ======= Estado ======= */
+    let orcamentos = []; // lista carregada
+    let currentId = null;
+    let useLocalFallback = false; // se true, salva no localStorage quando JSONBin indisponível
 
-    /*************************************************************************
-     * Utilitários
-     *************************************************************************/
+    /* ======= Util ======= */
     function uid(){ return 'id-' + Math.random().toString(36).slice(2,11); }
-    function formatMoney(val){
-      if(val==null || isNaN(val)) return '';
-      return Number(val).toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
-    }
-    function showToast(msg, type='info'){
-      console.log('[TOAST]', msg);
-      // Simples: alert ou console. Pode ser substituído por UI customizada.
-      // alert(msg);
-    }
+    function q(selector, ctx=document){ return ctx.querySelector(selector); }
+    function formatarMoeda(v){ if(v===null||v===undefined||v==='') return ''; return Number(v).toLocaleString('pt-BR',{style:'currency',currency:'BRL'}); }
+    function showToast(msg){ alert(msg); }
 
-    /*************************************************************************
-     * JSONBin — carregar e salvar (simples)
-     * JSON armazenará um array de orçamentos.
-     *************************************************************************/
+    /* ======= Inicialização (carregar orçamentos JSONBin) ======= */
     async function carregarOrcamentos(){
       document.getElementById('jb-status').textContent = 'Carregando orçamentos...';
-      try{
+      try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-          headers: { 'X-Master-Key': JSONBIN_KEY }
+          method: 'GET',
+          headers: { 'X-Master-Key': JSONBIN_KEY, 'Accept':'application/json' },
+          cache:'no-store'
         });
-        if(!res.ok) throw new Error('Falha ao buscar JSONBin');
-        const data = await res.json();
-        orcamentos = data.record || [];
+        if(!res.ok) throw new Error('JSONBin retornou ' + res.status);
+        const j = await res.json();
+        orcamentos = Array.isArray(j.record) ? j.record : (j.record?.orcamentos || []);
+        document.getElementById('jb-status').textContent = 'Conectado ao JSONBin';
         renderLista();
-        document.getElementById('jb-status').textContent = 'Conectado — Orçamentos carregados';
-      }catch(err){
+      } catch(err){
         console.error(err);
-        document.getElementById('jb-status').textContent = 'Erro ao conectar JSONBin';
-        // inicializar vazio
-        orcamentos = [];
+        document.getElementById('jb-status').textContent = 'Erro ao conectar JSONBin — usando fallback local';
+        useLocalFallback = true;
+        // tentar carregar do localStorage
+        const raw = localStorage.getItem('orcamentos_local');
+        orcamentos = raw ? JSON.parse(raw) : [];
         renderLista();
       }
     }
 
+    function renderLista(){
+      const lista = document.getElementById('orc-lista');
+      lista.innerHTML = '';
+      if(!orcamentos || orcamentos.length===0){
+        lista.innerHTML = '<div style="color:#bbb;text-align:center;padding:20px">Nenhum orçamento — clique em Novo Orçamento</div>';
+        return;
+      }
+      orcamentos.forEach(o=>{
+        const div = document.createElement('div'); div.className='orc-item';
+        div.dataset.id = o.id;
+        div.innerHTML = `<div class="titulo">${o.titulo || 'Sem título'}</div><div class="meta">${o.cliente ? o.cliente+' • ' : ''}${o.periodo||''}</div>`;
+        div.onclick = ()=>abrirOrc(o.id);
+        lista.appendChild(div);
+      });
+    }
+
+    function novoOrc(){
+      const n = {
+        id: uid(),
+        titulo: '',
+        subtitulo: '',
+        periodo: '',
+        cliente: '',
+        status: 'rascunho',
+        inclusos: [],
+        naoIncluidos: [],
+        roteiro: [],
+        opcoesValores: [],
+        valorTotal: null,
+        entrada: null,
+        numParcelas: 1,
+        parcelamentoTxt: '',
+        capa: BASE_URL + '/assets/images/roteiros/2.png',
+        galeria: [],
+        aereo: [],
+        carro: [],
+        hoteis: [],
+        adicionais: '',
+        observacoes: ''
+      };
+      orcamentos.unshift(n);
+      renderLista();
+      abrirOrc(n.id);
+      salvarTodosOrcamentosNoJSONBin();
+    }
+
+    function abrirOrc(id){
+      currentId = id;
+      document.getElementById('tela-ini').style.display='none';
+      document.getElementById('form-orcamento').style.display='block';
+      document.getElementById('btn-wpp').disabled=false;
+      document.getElementById('btn-gerar-pdf').disabled=false;
+      document.getElementById('btn-del').disabled=false;
+      const o = orcamentos.find(x=>x.id===id);
+      fillFormWithOrc(o);
+    }
+
+    function fillFormWithOrc(o){
+      if(!o) return;
+      q('#f-titulo').value = o.titulo || '';
+      q('#f-subtitulo').value = o.subtitulo || '';
+      q('#f-periodo').value = o.periodo || '';
+      q('#f-cliente').value = o.cliente || '';
+      q('#f-status').value = o.status || 'rascunho';
+      q('#f-valor-total').value = o.valorTotal || '';
+      q('#f-valor-entrada').value = o.entrada || '';
+      q('#f-num-parcelas').value = o.numParcelas || 1;
+      q('#f-valor-parcela').value = '';
+      q('#f-parcelamento-txt').value = o.parcelamentoTxt || '';
+
+      // capa
+      q('#capa-preview').src = o.capa || (BASE_URL + '/assets/images/roteiros/2.png');
+
+      // galeria
+      const gal = q('#galeria-preview-grid'); gal.innerHTML = '';
+      (o.galeria||[]).forEach(url=>{ const div=document.createElement('div'); div.className='foto-thumb'; div.innerHTML=`<img src="${url}"><button class="del" onclick="this.closest('.foto-thumb').remove()">✕</button>`; gal.appendChild(div); });
+
+      // inclusos / nao inclusos
+      const incCont = q('#incluidos-container'); incCont.innerHTML='';
+      (o.inclusos||[]).forEach(it=>{ const d=document.createElement('div'); d.className='incluido'; d.innerHTML=`<div style="display:flex;gap:8px;align-items:center"><input type="text" value="${it}" style="flex:1"><button onclick="this.closest('.incluido').remove()">✕</button></div>`; incCont.appendChild(d); });
+
+      const naoc = q('#nao-incluidos-container'); naoc.innerHTML='';
+      (o.naoIncluidos||[]).forEach(it=>{ const d=document.createElement('div'); d.className='nao-incluido'; d.innerHTML=`<div style="display:flex;gap:8px;align-items:center"><input type="text" value="${it}" style="flex:1"><button onclick="this.closest('.nao-incluido').remove()">✕</button></div>`; naoc.appendChild(d); });
+
+      // roteiro
+      const rote = q('#roteiro-dias-container'); rote.innerHTML = '';
+      (o.roteiro||[]).forEach(d=>addRoteiroDia(d));
+
+      // opcoes valores
+      const opc = q('#opcoes-valores-container'); opc.innerHTML='';
+      (o.opcoesValores||[]).forEach(v=>addOpcaoValor(v));
+
+      // aéreo
+      const a = q('#aereo-container'); a.innerHTML = '';
+      (o.aereo||[]).forEach(av=>addAereoItem(av));
+
+      // carro
+      // (já no o.carro mas não tem painel dedicado aqui, deixamos para adicionais)
+
+      // hoteis
+      const hcont = q('#hoteis-container'); hcont.innerHTML='';
+      (o.hoteis||[]).forEach(h=>addHotelItem(h));
+
+      q('#f-adicionais').value = o.adicionais || '';
+      q('#f-observacoes').value = o.observacoes || '';
+
+      calcularParcelamento();
+    }
+
+    /* ======= Funções de salvar ======= */
+    async function salvarOrc(){
+      if(!currentId) return;
+      const o = orcamentos.find(x=>x.id===currentId);
+      if(!o) return;
+      // coletar dados do form
+      o.titulo = q('#f-titulo').value.trim();
+      o.subtitulo = q('#f-subtitulo').value.trim();
+      o.periodo = q('#f-periodo').value.trim();
+      o.cliente = q('#f-cliente').value.trim();
+      o.status = q('#f-status').value;
+      o.valorTotal = parseFloat(q('#f-valor-total').value) || null;
+      o.entrada = parseFloat(q('#f-valor-entrada').value) || null;
+      o.numParcelas = parseInt(q('#f-num-parcelas').value) || 1;
+      o.parcelamentoTxt = q('#f-parcelamento-txt').value;
+
+      // capa
+      o.capa = q('#capa-preview').src;
+
+      // galeria
+      o.galeria = Array.from(q('#galeria-preview-grid').querySelectorAll('img')).map(i=>i.src);
+
+      // inclusos
+      o.inclusos = Array.from(q('#incluidos-container').querySelectorAll('input')).map(i=>i.value.trim()).filter(x=>x);
+
+      // nao incluidos
+      o.naoIncluidos = Array.from(q('#nao-incluidos-container').querySelectorAll('input')).map(i=>i.value.trim()).filter(x=>x);
+
+      // roteiro
+      o.roteiro = getRoteiroItems();
+
+      // opcoes valores
+      o.opcoesValores = Array.from(q('#opcoes-valores-container').querySelectorAll('.valor-opcao')).map(node=>{
+        return {
+          label: node.querySelector('[data-field="label"]').value,
+          preco: node.querySelector('[data-field="preco"]').value,
+          desc: node.querySelector('[data-field="desc"]').value
+        };
+      });
+
+      // aereo
+      o.aereo = getAereoItems();
+
+      // hoteis
+      o.hoteis = getHotelItems();
+
+      o.adicionais = q('#f-adicionais').value;
+      o.observacoes = q('#f-observacoes').value;
+
+      // atualiza lista e salva em JSONBin/local
+      renderLista();
+      const ok = await salvarTodosOrcamentosNoJSONBin();
+      if(ok) showToast('Orçamento salvo');
+      else showToast('Salvo localmente (JSONBin indisponível)');
+    }
+
     async function salvarTodosOrcamentosNoJSONBin(){
-      try{
+      try {
         const res = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
           method: 'PUT',
           headers: {
@@ -376,453 +543,288 @@
           },
           body: JSON.stringify(orcamentos)
         });
-        if(!res.ok) throw new Error('Erro salvando JSONBin');
-        showToast('Orçamentos salvos');
-      }catch(err){
-        console.error(err);
-        showToast('Erro ao salvar orçamentos');
+        if(!res.ok) throw new Error('Erro status ' + res.status);
+        useLocalFallback = false;
+        localStorage.removeItem('orcamentos_local');
+        return true;
+      } catch(err){
+        console.warn('Erro ao salvar JSONBin:', err);
+        useLocalFallback = true;
+        localStorage.setItem('orcamentos_local', JSON.stringify(orcamentos));
+        return false;
       }
     }
 
-    /*************************************************************************
-     * Render lista lateral
-     *************************************************************************/
-    function renderLista(){
-      const lista = document.getElementById('orc-lista');
-      lista.innerHTML = '';
-      orcamentos.forEach(o=>{
-        const div = document.createElement('div'); div.className='orc-item';
-        div.dataset.id = o.id;
-        div.innerHTML = `<div class="titulo">${o.titulo || 'Sem título'}</div>
-                         <div class="meta"><span>${o.cliente || '—'}</span> • <span>${o.periodo || ''}</span></div>`;
-        div.onclick = ()=> abrirOrcamento(o.id);
-        lista.appendChild(div);
-      });
-    }
-
-    /*************************************************************************
-     * CRUD local (novo, abrir, salvar, deletar, duplicar)
-     *************************************************************************/
-    function novoOrc(){
-      const novo = {
-        id: uid(),
-        titulo: 'Novo Orçamento',
-        subtitulo: '',
-        cliente: '',
-        dataInicio: '',
-        dataFim: '',
-        periodo: '',
-        destino: '',
-        status: 'rascunho',
-        incluidos: [],
-        naoIncluidos: [],
-        roteiro: [],
-        opcoesValores: [],
-        valorTotal: 0,
-        entrada:0,
-        numParcelas:0,
-        parcelamentoTxt: '',
-        galeria: [],
-        capa: '',
-        aereo: [],
-        carro: [],
-        hoteis: [],
-        adicionais: '',
-        observacoes: ''
-      };
-      orcamentos.unshift(novo);
-      renderLista();
-      abrirOrcamento(novo.id);
-      salvarTodosOrcamentosNoJSONBin();
-    }
-
-    function abrirOrcamento(id){
-      const o = orcamentos.find(x=>x.id===id);
-      if(!o) return;
-      currentId = id;
-      document.getElementById('tela-ini').style.display = 'none';
-      document.getElementById('form-orcamento').style.display = 'block';
-      document.getElementById('btn-wpp').disabled = false;
-      document.getElementById('btn-gerar-pdf').disabled = false;
-      document.getElementById('btn-del').disabled = false;
-
-      // preencher campos
-      document.getElementById('f-titulo').value = o.titulo || '';
-      document.getElementById('f-subtitulo').value = o.subtitulo || '';
-      document.getElementById('f-cliente').value = o.cliente || '';
-      document.getElementById('f-data-inicio').value = o.dataInicio || '';
-      document.getElementById('f-data-fim').value = o.dataFim || '';
-      document.getElementById('f-destino').value = o.destino || '';
-      document.getElementById('f-periodo').value = o.periodo || '';
-      document.getElementById('f-status').value = o.status || 'rascunho';
-      document.getElementById('f-valor-total').value = o.valorTotal || '';
-      document.getElementById('f-valor-entrada').value = o.entrada || '';
-      document.getElementById('f-num-parcelas').value = o.numParcelas || '';
-      document.getElementById('f-parcelamento-txt').value = o.parcelamentoTxt || '';
-      document.getElementById('f-valor-parcela').value = o.parcelaValor ? formatMoney(o.parcelaValor) : '';
-
-      // listagens dinâmicas
-      renderIncluidos(o.incluidos||[]);
-      renderNaoIncluidos(o.naoIncluidos||[]);
-      renderRoteiro(o.roteiro||[]);
-      renderOpcoesValores(o.opcoesValores||[]);
-      renderGaleria(o.galeria||[]);
-      renderAereo(o.aereo||[]);
-      renderCarro(o.carro||[]);
-      renderHoteis(o.hoteis||[]);
-      document.getElementById('f-adicionais').value = o.adicionais || '';
-      document.getElementById('f-observacoes').value = o.observacoes || '';
-    }
-
-    function salvarOrc(){
+    async function deletarOrc(){
       if(!currentId) return;
-      const o = orcamentos.find(x=>x.id===currentId);
-      if(!o) return;
-      // ler campos
-      o.titulo = document.getElementById('f-titulo').value.trim();
-      o.subtitulo = document.getElementById('f-subtitulo').value.trim();
-      o.cliente = document.getElementById('f-cliente').value.trim();
-      o.dataInicio = document.getElementById('f-data-inicio').value;
-      o.dataFim = document.getElementById('f-data-fim').value;
-      o.destino = document.getElementById('f-destino').value.trim();
-      o.periodo = document.getElementById('f-periodo').value.trim();
-      o.status = document.getElementById('f-status').value;
-      o.valorTotal = parseFloat(document.getElementById('f-valor-total').value) || 0;
-      o.entrada = parseFloat(document.getElementById('f-valor-entrada').value) || 0;
-      o.numParcelas = parseInt(document.getElementById('f-num-parcelas').value) || 0;
-      o.parcelamentoTxt = document.getElementById('f-parcelamento-txt').value;
-      o.parcelaValor = parseFloat((document.getElementById('f-valor-parcela').value || '').replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
-      o.incluidos = getIncluidos();
-      o.naoIncluidos = getNaoIncluidos();
-      o.roteiro = getRoteiroDias();
-      o.opcoesValores = getOpcoesValores();
-      o.galeria = getGalleryPreviews();
-      o.capa = document.getElementById('capa-preview').src;
-      o.aereo = getAereoItems();
-      o.carro = getCarroItems();
-      o.hoteis = getHotelItems();
-      o.adicionais = document.getElementById('f-adicionais').value;
-      o.observacoes = document.getElementById('f-observacoes').value;
-
-      // atualizar lista e salvar no JSONBin
-      renderLista();
-      salvarTodosOrcamentosNoJSONBin();
-      showToast('Orçamento salvo');
-    }
-
-    function deletarOrc(){
-      if(!currentId) return;
-      if(!confirm('Confirmar exclusão deste orçamento?')) return;
-      orcamentos = orcamentos.filter(x=>x.id!==currentId);
+      if(!confirm('Excluir este orçamento?')) return;
+      orcamentos = orcamentos.filter(o=>o.id!==currentId);
       currentId = null;
-      document.getElementById('form-orcamento').style.display = 'none';
-      document.getElementById('tela-ini').style.display = 'block';
       renderLista();
-      salvarTodosOrcamentosNoJSONBin();
+      document.getElementById('form-orcamento').style.display='none';
+      document.getElementById('tela-ini').style.display='block';
+      await salvarTodosOrcamentosNoJSONBin();
     }
 
-    function duplicarOrc(){
-      if(!currentId) return;
-      const orig = orcamentos.find(x=>x.id===currentId);
-      if(!orig) return;
-      const copia = JSON.parse(JSON.stringify(orig));
-      copia.id = uid();
-      copia.titulo = (copia.titulo || '') + ' (Cópia)';
-      orcamentos.unshift(copia);
-      renderLista();
-      salvarTodosOrcamentosNoJSONBin();
-      showToast('Orçamento duplicado');
+    /* ======= Abas e helpers de UI ======= */
+    function showAba(e){
+      const target = e.currentTarget;
+      const aba = target.dataset.aba;
+      Array.from(document.querySelectorAll('.aba')).forEach(a=>a.classList.remove('on'));
+      target.classList.add('on');
+      Array.from(document.querySelectorAll('.painel')).forEach(p=>p.classList.remove('on'));
+      document.querySelector(`.painel[data-painel="${aba}"]`).classList.add('on');
     }
 
-    /*************************************************************************
-     * Renderers de componentes dinâmicos
-     *************************************************************************/
-    // Incluídos / Não incluídos
-    function renderIncluidos(arr){
-      const cont = document.getElementById('incluidos-container'); cont.innerHTML='';
-      (arr||[]).forEach(i=>{
-        const div = document.createElement('div'); div.className='incluido';
-        div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div>${i}</div><button class="brem" onclick="this.closest('.incluido').remove()">Remover</button></div>`;
-        cont.appendChild(div);
-      });
+    /* ======= Listas simples (incluidos/nao incluídos) ======= */
+    function addListItem(containerId, type='incluido', value=''){
+      const cont = document.getElementById(containerId);
+      const div = document.createElement('div');
+      div.className = (type==='incluido' ? 'incluido' : 'nao-incluido');
+      div.innerHTML = `<div style="display:flex;gap:8px;align-items:center"><input type="text" value="${value}" style="flex:1"><button onclick="this.closest('div').remove()">✕</button></div>`;
+      cont.appendChild(div);
     }
-    function renderNaoIncluidos(arr){
-      const cont = document.getElementById('nao-incluidos-container'); cont.innerHTML='';
-      (arr||[]).forEach(i=>{
-        const div = document.createElement('div'); div.className='nao-incluido';
-        div.innerHTML = `<div style="display:flex;justify-content:space-between;align-items:center"><div>${i}</div><button class="brem" onclick="this.closest('.nao-incluido').remove()">Remover</button></div>`;
-        cont.appendChild(div);
-      });
-    }
-    function addIncluido(){ const cont=document.getElementById('incluidos-container'); const div=document.createElement('div'); div.className='incluido'; div.innerHTML=`<div style="display:flex;gap:8px"><input placeholder="Item incluído"><button class="brem" onclick="this.closest('.incluido').remove()">Remover</button></div>`; cont.appendChild(div); }
-    function addNaoIncluido(){ const cont=document.getElementById('nao-incluidos-container'); const div=document.createElement('div'); div.className='nao-incluido'; div.innerHTML=`<div style="display:flex;gap:8px"><input placeholder="Item não incluído"><button class="brem" onclick="this.closest('.nao-incluido').remove()">Remover</button></div>`; cont.appendChild(div); }
-    function getIncluidos(){ return Array.from(document.getElementById('incluidos-container').querySelectorAll('.incluido')).map(d=>{ const inp=d.querySelector('input'); return inp?inp.value.trim():d.textContent.trim(); }).filter(Boolean); }
-    function getNaoIncluidos(){ return Array.from(document.getElementById('nao-incluidos-container').querySelectorAll('.nao-incluido')).map(d=>{ const inp=d.querySelector('input'); return inp?inp.value.trim():d.textContent.trim(); }).filter(Boolean); }
 
-    // Roteiro
-    function addRoteiroDia(d={titulo:'',descricao:'',imagem:''}){
+    /* ======= Roteiro dinâmico ======= */
+    function addRoteiroDia(data = { titulo: '', descricao: '', imagem: '' }){
       const cont = document.getElementById('roteiro-dias-container');
       const div = document.createElement('div'); div.className='roteiro-dia-item';
+      const idImg = 'rote-img-' + Math.random().toString(36).slice(2,9);
       div.innerHTML = `
-        <img src="${d.imagem || (BASE_URL + '/assets/images/roteiros/2.png')}" alt="Imagem do dia">
+        <div style="flex-shrink:0">
+          <img id="${idImg}" src="${data.imagem || (BASE_URL + '/assets/images/roteiros/2.png')}" style="width:160px;height:110px;object-fit:cover;border-radius:8px">
+          <input type="file" accept="image/*" onchange="handleRoteiroImgUpload(event, '${idImg}')"/>
+        </div>
         <div class="conteudo">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <h4 contenteditable data-field="titulo">${d.titulo || 'Título do dia'}</h4>
-            <div style="display:flex;gap:6px">
-              <button class="brem" onclick="this.closest('.roteiro-dia-item').remove()">Remover</button>
-              <input type="file" style="display:none" accept="image/*" onchange="handleRoteiroImgUpload(event,this)">
-              <button class="btn" onclick="this.parentElement.previousElementSibling.nextElementSibling.click()">Enviar Imagem</button>
-            </div>
+          <input data-field="titulo" type="text" placeholder="Título do dia" value="${(data.titulo||'')}"/>
+          <textarea data-field="descricao" rows="4" placeholder="Descrição do dia">${(data.descricao||'')}</textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button onclick="this.closest('.roteiro-dia-item').remove()" class="badd">Remover dia</button>
           </div>
-          <textarea data-field="descricao" placeholder="Descrição do dia" style="width:100%;margin-top:8px;padding:8px;border-radius:6px;border:1px solid #eef2f6">${d.descricao || ''}</textarea>
         </div>
       `;
       cont.appendChild(div);
     }
-    function renderRoteiro(arr){ const cont=document.getElementById('roteiro-dias-container'); cont.innerHTML=''; (arr||[]).forEach(d=>addRoteiroDia(d)); }
-    function getRoteiroDias(){ return Array.from(document.getElementById('roteiro-dias-container').querySelectorAll('.roteiro-dia-item')).map((el,idx)=>({ titulo: el.querySelector('[data-field="titulo"]').textContent.trim(), descricao: el.querySelector('[data-field="descricao"]').value.trim(), imagem: el.querySelector('img').src })); }
 
-    // Opções de valores
-    function addOpcaoValor(o={label:'',preco:'',desc:''}){
-      const cont=document.getElementById('opcoes-valores-container');
-      const div=document.createElement('div'); div.className='litem';
-      div.innerHTML = `<input placeholder="Label" value="${o.label}"><input placeholder="Preço" value="${o.preco}"><input placeholder="Descrição" value="${o.desc}"><button class="brem" onclick="this.closest('.litem').remove()">Remover</button>`;
-      cont.appendChild(div);
-    }
-    function renderOpcoesValores(arr){ const cont=document.getElementById('opcoes-valores-container'); cont.innerHTML=''; (arr||[]).forEach(a=>addOpcaoValor(a)); }
-    function getOpcoesValores(){ return Array.from(document.getElementById('opcoes-valores-container').querySelectorAll('.litem')).map(l=>{ const inputs=l.querySelectorAll('input'); return { label: inputs[0].value.trim(), preco: inputs[1].value.trim(), desc: inputs[2].value.trim() }; }).filter(x=>x.label||x.preco||x.desc); }
-
-    // Galeria / capa
-    async function handleCapaUpload(evt){
-      const f = evt.target.files && evt.target.files[0]; if(!f) return;
-      try{
-        const url = await uploadImageToImgurFile(f);
-        document.getElementById('capa-preview').src = url;
-        addGalleryPreview(url);
-        showToast('Capa enviada');
-      }catch(err){ console.error(err); showToast('Erro ao enviar capa'); }
-      evt.target.value='';
-    }
-    function removeCapaFoto(){ document.getElementById('capa-preview').src = BASE_URL + '/assets/images/placeholder-capa.jpg'; }
-
-    async function handleGalleryUpload(evt){
-      const files = Array.from(evt.target.files || []);
-      if(files.length===0) return;
-      for(const f of files){
-        try{
-          const url = await uploadImageToImgurFile(f);
-          addGalleryPreview(url);
-          showToast(`Foto "${f.name}" enviada`);
-        }catch(e){ console.error(e); showToast('Erro upload'); }
-      }
-      evt.target.value = '';
-    }
-    function addGalleryPreview(url){
-      const grid = document.getElementById('galeria-preview-grid');
-      const thumb = document.createElement('div'); thumb.className='foto-thumb';
-      thumb.innerHTML = `<img src="${url}"><button class="del" onclick="this.closest('.foto-thumb').remove()">✕</button>`;
-      thumb.onclick = (e)=>{ if(e.target.tagName.toLowerCase()!=='button') { document.getElementById('capa-preview').src = url; } };
-      grid.appendChild(thumb);
-    }
-    function getGalleryPreviews(){ return Array.from(document.getElementById('galeria-preview-grid').querySelectorAll('img')).map(i=>i.src); }
-
-    // Upload para Imgur via Client-ID (anônimo)
-    async function uploadImageToImgurFile(file){
-      const fd = new FormData(); fd.append('image', file);
-      const res = await fetch('https://api.imgur.com/3/image', { method:'POST', headers:{ Authorization: 'Client-ID ' + IMGUR_ID }, body: fd });
-      const j = await res.json();
-      if(!j.success) throw new Error('Imgur upload failed');
-      return j.data.link;
+    function getRoteiroItems(){
+      const cont = document.getElementById('roteiro-dias-container');
+      return Array.from(cont.querySelectorAll('.roteiro-dia-item')).map(node=>{
+        return {
+          titulo: node.querySelector('[data-field="titulo"]').value.trim(),
+          descricao: node.querySelector('[data-field="descricao"]').value.trim(),
+          imagem: node.querySelector('img').src
+        };
+      }).filter(x=>x.titulo || x.descricao || x.imagem);
     }
 
-    // Roteiro imagem upload
-    async function handleRoteiroImgUpload(evt, inputEl){
-      const file = evt.target.files && evt.target.files[0]; if(!file) return;
-      try{
-        const url = await uploadImageToImgurFile(file);
-        inputEl.closest('.roteiro-dia-item').querySelector('img').src = url;
-        addGalleryPreview(url);
-        showToast('Imagem do dia enviada');
-      }catch(e){ console.error(e); showToast('Erro upload roteiro'); }
-      evt.target.value = '';
-    }
-
-    // Aéreo
-    function addAereoItem(a = {cia:'',numVoo:'',origem:'',destino:'',horarioSaida:'',horarioChegada:'',obs:''}){
-      const cont=document.getElementById('aereo-container');
-      const div=document.createElement('div'); div.className='dyn-section-item'; div.style.border='1px solid #eef2f6'; div.style.padding='10px'; div.style.borderRadius='8px'; div.style.marginBottom='8px';
+    /* ======= Valores dinâmicos ======= */
+    function addOpcaoValor(data = { label:'', preco:'', desc:'' }){
+      const cont = document.getElementById('opcoes-valores-container');
+      const div = document.createElement('div'); div.className='valor-opcao';
+      div.style.padding='10px'; div.style.border='1px solid #eef2f6'; div.style.borderRadius='8px';
       div.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <strong>Voo</strong>
-          <button class="brem" onclick="this.closest('.dyn-section-item').remove()">Remover</button>
+        <div style="display:flex;gap:8px;align-items:center;margin-bottom:8px">
+          <input data-field="label" placeholder="Rótulo (ex: Padrão, Promoção)" value="${data.label}"/>
+          <button onclick="this.closest('.valor-opcao').remove()">✕</button>
         </div>
-        <div style="margin-top:8px" class="row3">
-          <input placeholder="Cia Aérea" value="${a.cia}">
-          <input placeholder="Nº Voo" value="${a.numVoo}">
-          <input placeholder="Origem" value="${a.origem}">
+        <div style="display:flex;gap:8px">
+          <input data-field="preco" placeholder="Preço (ex: 4500.00)" value="${data.preco}"/>
+          <input data-field="desc" placeholder="Descrição curta" value="${data.desc}"/>
         </div>
-        <div style="margin-top:8px" class="row3">
-          <input placeholder="Destino" value="${a.destino}">
-          <input placeholder="Horário Saída" value="${a.horarioSaida}">
-          <input placeholder="Horário Chegada" value="${a.horarioChegada}">
-        </div>
-        <div style="margin-top:8px"><input placeholder="Observações" value="${a.obs}"></div>
       `;
       cont.appendChild(div);
     }
-    function renderAereo(arr){ const cont=document.getElementById('aereo-container'); cont.innerHTML=''; (arr||[]).forEach(a=>addAereoItem(a)); }
-    function getAereoItems(){ return Array.from(document.getElementById('aereo-container').querySelectorAll('.dyn-section-item')).map(div=>{ const inputs=div.querySelectorAll('input'); return { cia: inputs[0].value.trim(), numVoo: inputs[1].value.trim(), origem: inputs[2].value.trim(), destino: inputs[3].value.trim(), horarios: `${inputs[4].value.trim()} - ${inputs[5].value.trim()}`, horariosSaida: inputs[4].value.trim(), horariosChegada: inputs[5].value.trim(), obs: inputs[6].value.trim() }; }).filter(x=>x.cia||x.numVoo||x.origem||x.destino); }
 
-    // Carro
-    function addCarroItem(c = {localRetirada:'',localEntrega:'',infoAdicional:''}){
-      const cont=document.getElementById('aereo-container'); // reusar container? Criar container específico
+    function calcularParcelamento(){
+      const total = parseFloat(q('#f-valor-total').value) || 0;
+      const entrada = parseFloat(q('#f-valor-entrada').value) || 0;
+      let parcelas = parseInt(q('#f-num-parcelas').value) || 1;
+      if(parcelas < 1) parcelas = 1;
+      const saldo = Math.max(0, total - entrada);
+      const vpar = parcelas>0 ? (saldo / parcelas) : saldo;
+      q('#f-valor-parcela').value = vpar ? vpar.toLocaleString('pt-BR',{minimumFractionDigits:2,maximumFractionDigits:2}) : '';
+      const txt = entrada ? `Entrada de ${entrada.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})} e ${parcelas}x de ${vpar.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}` : `${parcelas}x de ${vpar.toLocaleString('pt-BR',{style:'currency',currency:'BRL'})}`;
+      q('#f-parcelamento-txt').value = txt;
     }
-    function renderCarro(arr){ const cont=document.getElementById('carro-container'); cont.innerHTML=''; (arr||[]).forEach(c=>{ const div=document.createElement('div'); div.className='adicional-item'; div.innerHTML=`<h4>Aluguel de Carro</h4><p><strong>Retirada:</strong> ${c.localRetirada||''}</p><p><strong>Entrega:</strong> ${c.localEntrega||''}</p><p><strong>Informações:</strong> ${c.infoAdicional||''}</p>`; cont.appendChild(div); }); }
-    function getCarroItems(){ const cont=document.getElementById('carro-container'); return Array.from(cont.querySelectorAll('.adicional-item')).map(div=>({ localRetirada: div.querySelector('p:nth-child(2)')?div.querySelector('p:nth-child(2)').textContent.replace('Retirada:','').trim():'', localEntrega:'', infoAdicional:'' })); }
 
-    // Hotéis
-    function addHotelItem(h={nome:'',categoria:'',desc:'',img:''}){
-      const cont=document.getElementById('hoteis-container');
-      const div=document.createElement('div'); div.className='hotel-item';
-      div.innerHTML = `<img src="${h.img || (BASE_URL + '/assets/images/hoteis/hotel-placeholder.png')}" alt="hotel">
-        <div style="flex:1">
-          <div style="display:flex;justify-content:space-between;align-items:center">
-            <input placeholder="Nome do hotel" value="${h.nome}" style="font-weight:700;border:none;background:transparent">
-            <button class="brem" onclick="this.closest('.hotel-item').remove()">Remover</button>
-          </div>
-          <div style="margin-top:6px">
-            <input placeholder="Categoria" value="${h.categoria||''}" style="width:100%;padding:8px;border:1px solid #eef2f6;border-radius:6px">
-            <textarea placeholder="Descrição" style="width:100%;margin-top:6px;padding:8px;border:1px solid #eef2f6;border-radius:6px">${h.desc||''}</textarea>
-            <div style="margin-top:6px;display:flex;gap:6px">
-              <input type="file" style="display:none" onchange="handleHotelImagem(event,this)">
-              <button class="btn" onclick="this.previousElementSibling.click()">Enviar Imagem</button>
-            </div>
-          </div>
-        </div>`;
+    /* ======= Uploads (Imgur) ======= */
+    async function uploadToImgur(file){
+      if(!file) return null;
+      try {
+        const form = new FormData(); form.append('image', file);
+        const res = await fetch('https://api.imgur.com/3/image', {
+          method:'POST',
+          headers: { Authorization: 'Client-ID ' + IMGUR_ID },
+          body: form
+        });
+        const j = await res.json();
+        if(j.success && j.data && j.data.link) return j.data.link;
+        console.warn('Imgur upload falhou', j);
+        return null;
+      } catch(err){
+        console.error('Erro upload Imgur', err);
+        return null;
+      }
+    }
+
+    async function handleCapaUpload(e){
+      const f = e.target.files[0];
+      if(!f) return;
+      const url = await uploadToImgur(f);
+      if(url){ q('#capa-preview').src = url; showToast('Capa enviada'); }
+    }
+
+    async function handleGaleriaUpload(e){
+      const files = Array.from(e.target.files||[]);
+      for(const f of files){
+        const url = await uploadToImgur(f);
+        if(url){
+          const div = document.createElement('div'); div.className='foto-thumb'; div.innerHTML = `<img src="${url}"><button class="del" onclick="this.closest('.foto-thumb').remove()">✕</button>`;
+          q('#galeria-preview-grid').appendChild(div);
+        }
+      }
+    }
+
+    async function handleRoteiroImgUpload(e, imgId){
+      const f = e.target.files[0];
+      if(!f) return;
+      const url = await uploadToImgur(f);
+      if(url) q('#' + imgId).src = url;
+    }
+
+    /* ======= Aéreo dinâmico ======= */
+    function addAereoItem(data = { cia: '', numVoo: '', origem:'', destino:'', horarios:'' }){
+      const cont = q('#aereo-container');
+      const div = document.createElement('div'); div.className='dyn-section-item'; div.style.border='1px solid #eef2f6'; div.style.padding='10px'; div.style.borderRadius='8px';
+      div.innerHTML = `
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+          <strong>Detalhes do Voo</strong>
+          <button onclick="this.closest('.dyn-section-item').remove()">✕</button>
+        </div>
+        <div class="row2">
+          <div class="cg"><label>Cia Aérea</label><input class="f-aereo-cia" value="${data.cia}"></div>
+          <div class="cg"><label>Nº do Voo</label><input class="f-aereo-num-voo" value="${data.numVoo}"></div>
+        </div>
+        <div class="row2">
+          <div class="cg"><label>Origem</label><input class="f-aereo-origem" value="${data.origem}"></div>
+          <div class="cg"><label>Destino</label><input class="f-aereo-destino" value="${data.destino}"></div>
+        </div>
+        <div class="cg"><label>Horários</label><input class="f-aereo-horarios" value="${data.horarios}"></div>
+      `;
       cont.appendChild(div);
     }
-    function renderHoteis(arr){ const cont=document.getElementById('hoteis-container'); cont.innerHTML=''; (arr||[]).forEach(h=>addHotelItem(h)); }
-    function getHotelItems(){ return Array.from(document.getElementById('hoteis-container').querySelectorAll('.hotel-item')).map(div=>{ return { img: div.querySelector('img').src, nome: div.querySelector('input').value.trim(), categoria: div.querySelector('input:nth-of-type(2)')?div.querySelector('input:nth-of-type(2)').value.trim():'', desc: div.querySelector('textarea')?div.querySelector('textarea').value.trim():'' }; }); }
 
-    async function handleHotelImagem(evt, inputEl){
-      const file = evt.target.files && evt.target.files[0]; if(!file) return;
-      try{
-        const url = await uploadImageToImgurFile(file);
-        inputEl.closest('.hotel-item').querySelector('img').src = url;
-        addGalleryPreview(url);
-      }catch(e){ console.error(e); }
-      evt.target.value = '';
+    function getAereoItems(){
+      return Array.from(q('#aereo-container').querySelectorAll('.dyn-section-item')).map(node=>{
+        return {
+          cia: node.querySelector('.f-aereo-cia').value.trim(),
+          numVoo: node.querySelector('.f-aereo-num-voo').value.trim(),
+          origem: node.querySelector('.f-aereo-origem').value.trim(),
+          destino: node.querySelector('.f-aereo-destino').value.trim(),
+          horarios: node.querySelector('.f-aereo-horarios').value.trim()
+        };
+      }).filter(x=>x.cia||x.origem||x.destino||x.numVoo||x.horarios);
     }
 
-    /*************************************************************************
-     * Parcelamento automático
-     *************************************************************************/
-    function calcularParcelamento(){
-      const total = parseFloat(document.getElementById('f-valor-total').value) || 0;
-      const entrada = parseFloat(document.getElementById('f-valor-entrada').value) || 0;
-      let parcelas = parseInt(document.getElementById('f-num-parcelas').value) || 0;
-      if(total <= 0){ document.getElementById('f-valor-parcela').value = ''; document.getElementById('f-parcelamento-txt').value=''; return; }
-      if(parcelas <= 0){
-        document.getElementById('f-valor-parcela').value = '—';
-        document.getElementById('f-parcelamento-txt').value = `Valor total ${formatMoney(total)}${entrada>0 ? ' com entrada de ' + formatMoney(entrada) : ''}`;
-        return;
-      }
-      let saldo = total - entrada;
-      if(saldo <= 0){
-        document.getElementById('f-valor-parcela').value = '—';
-        document.getElementById('f-parcelamento-txt').value = `Tudo pago (entrada >= total). Troco: ${formatMoney(Math.abs(saldo))}`;
-        return;
-      }
-      const valorParc = saldo / parcelas;
-      document.getElementById('f-valor-parcela').value = formatMoney(valorParc);
-      document.getElementById('f-parcelamento-txt').value = `Entrada ${formatMoney(entrada)} e saldo em ${parcelas}x de ${formatMoney(valorParc)} sem juros.`;
+    /* ======= Hotéis dinâmico ======= */
+    function addHotelItem(data = { nome:'', categoria:'', desc:'', img: BASE_URL + '/assets/images/hoteis/hotel-placeholder.png' }){
+      const cont = q('#hoteis-container');
+      const div = document.createElement('div'); div.className='hotel-item';
+      div.style.display='flex'; div.style.justifyContent='space-between'; div.style.alignItems='center';
+      div.innerHTML = `
+        <div style="display:flex;gap:10px;align-items:center;flex:1">
+          <img src="${data.img}" style="width:110px;height:70px;object-fit:cover;border-radius:8px">
+          <div style="flex:1">
+            <input data-field="nome" placeholder="Nome do hotel" value="${data.nome}">
+            <input data-field="categoria" placeholder="Categoria (ex: 4 estrelas)" value="${data.categoria}">
+            <textarea data-field="desc" rows="2" placeholder="Descrição">${data.desc}</textarea>
+          </div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:6px">
+          <input type="file" accept="image/*" onchange="handleHotelImgUpload(event, this.closest('.hotel-item'))">
+          <button onclick="this.closest('.hotel-item').remove()">Remover</button>
+        </div>
+      `;
+      cont.appendChild(div);
     }
 
-    /*************************************************************************
-     * Gerar PDF (roteiro dia a dia) — usa html2pdf
-     *************************************************************************/
-    async function gerarPdfOrc(){
-      if(!currentId) return;
+    async function handleHotelImgUpload(e, node){
+      const f = e.target.files[0]; if(!f) return;
+      const url = await uploadToImgur(f);
+      if(url) node.querySelector('img').src = url;
+    }
+
+    function getHotelItems(){
+      return Array.from(q('#hoteis-container').querySelectorAll('.hotel-item')).map(node=>{
+        return {
+          nome: node.querySelector('[data-field="nome"]').value.trim(),
+          categoria: node.querySelector('[data-field="categoria"]').value.trim(),
+          desc: node.querySelector('[data-field="desc"]').value.trim(),
+          img: node.querySelector('img').src
+        };
+      }).filter(x=>x.nome||x.desc||x.img);
+    }
+
+    /* ======= Get carros (se tiver) ======= */
+    function addCarroItem(data = { localRetirada:'', localEntrega:'', infoAdicional:'' }){
+      // Implementar se desejar exibir área separada para carros
+    }
+
+    /* ======= Gerar PDF (admin) ======= */
+    function gerarPdfOrc(){
       const o = orcamentos.find(x=>x.id===currentId);
       if(!o) return;
-
       const container = document.createElement('div');
-      container.style.padding = '18px';
-      container.style.fontFamily = 'Arial, Helvetica, sans-serif';
-      container.style.color = '#222';
-      container.innerHTML = `
-        <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-          <img src="${o.capa || BASE_URL + '/assets/images/logo-agencia.png'}" style="height:70px;object-fit:contain">
-          <div>
-            <h2 style="margin:0">${o.titulo || 'Orçamento'}</h2>
-            <div style="color:#555">${o.subtitulo || ''}</div>
-            <div style="color:#666;margin-top:6px">Cliente: ${o.cliente || '—'} | Período: ${o.periodo || '—'}</div>
-          </div>
-        </div>
-        <hr style="border:none;border-top:1px solid #eee;margin:10px 0">
-        <h3>Roteiro dia a dia</h3>
-      `;
-
+      container.style.padding='18px';
+      container.style.fontFamily='Arial,Helvetica,sans-serif';
+      container.style.color='#222';
+      container.innerHTML = `<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px"><img src="${o.capa || BASE_URL + '/assets/images/logo.png'}" style="height:70px;object-fit:contain"><div><h2 style="margin:0">${o.titulo || 'Orçamento'}</h2><div style="color:#555">${o.subtitulo || ''}</div><div style="color:#666;margin-top:6px">Período: ${o.periodo || '—'}</div></div></div><hr style="border:none;border-top:1px solid #eee;margin:10px 0"><h3>Roteiro dia a dia</h3>`;
       (o.roteiro||[]).forEach((d, idx)=>{
         const bloco = document.createElement('div');
-        bloco.style.marginTop = '12px';
-        bloco.style.display = 'flex';
-        bloco.style.gap = '12px';
-        bloco.style.pageBreakInside = 'avoid';
-        const imgUrl = d.imagem || (BASE_URL + '/assets/images/roteiros/' + ( (idx%8)+2 ) + '.png');
-        bloco.innerHTML = `
-          <div style="flex-shrink:0;width:220px">
-            <img src="${imgUrl}" style="width:100%;height:140px;object-fit:cover;border-radius:6px;border:1px solid #eee">
-          </div>
-          <div style="flex:1">
-            <h4 style="margin:0 0 8px 0">${d.titulo||('Dia '+(idx+1))}</h4>
-            <div style="color:#333;white-space:pre-line">${d.descricao||''}</div>
-          </div>
-        `;
+        bloco.style.marginTop='12px';
+        bloco.style.display='flex';
+        bloco.style.gap='12px';
+        bloco.style.pageBreakInside='avoid';
+        const imgUrl = d.imagem || (BASE_URL + '/assets/images/roteiros/' + (((idx%8)+2)) + '.png');
+        bloco.innerHTML = `<div style="flex-shrink:0;width:220px"><img src="${imgUrl}" style="width:100%;height:140px;object-fit:cover;border-radius:6px;border:1px solid #eee"></div><div style="flex:1"><h4 style="margin:0 0 8px 0">${d.titulo||('Dia '+(idx+1))}</h4><div style="color:#333;white-space:pre-line">${d.descricao||''}</div></div>`;
         container.appendChild(bloco);
       });
 
-      const footer = document.createElement('div');
-      footer.style.marginTop = '18px';
-      footer.innerHTML = `<hr style="border:none;border-top:1px solid #eee;margin:10px 0">
-        <div style="display:flex;justify-content:space-between;align-items:center">
-          <div>
-            <div><strong>Oficina de Turismo</strong></div>
-            <div>WhatsApp: +55 35 98862-2943 | oficinadeturismo@oficinatur.com.br</div>
-            <div>@oficinadeturismo | www.oficinatur.com.br</div>
-          </div>
-        </div>
-      `;
+      const footer = document.createElement('div'); footer.style.marginTop='18px';
+      footer.innerHTML = `<hr style="border:none;border-top:1px solid #eee;margin:10px 0"><div style="display:flex;justify-content:space-between;align-items:center"><div><div><strong>Oficina de Turismo</strong></div><div>WhatsApp: +55 35 98862-2943 | oficinadeturismo@oficinatur.com.br</div><div>@oficinadeturismo | www.oficinatur.com.br</div></div></div>`;
       container.appendChild(footer);
 
-      const opt = {
-        margin: [10,10,10,10],
-        filename: `${(o.titulo||'roteiro').replace(/\s+/g,'_')}.pdf`,
-        image: { type: 'jpeg', quality: 0.92 },
-        html2canvas: { scale: 2, allowTaint:true, useCORS:true },
-        jsPDF: { unit:'pt', format:'a4', orientation:'portrait' },
-        pagebreak: { mode: ['css', 'legacy'] }
-      };
-
-      const preview = document.getElementById('pdf-preview-inner');
-      preview.innerHTML = '';
-      preview.appendChild(container);
-      document.getElementById('pdf-preview').style.display = 'flex';
-
-      const btnDownload = document.createElement('button');
-      btnDownload.className = 'btn b-pdf';
-      btnDownload.textContent = 'Baixar PDF';
-      btnDownload.style.marginTop = '12px';
-      btnDownload.onclick = async () => { await html2pdf().set(opt).from(container).save(); };
-      preview.appendChild(btnDownload);
+      const opt = { margin:[10,10,10,10], filename:`${(o.titulo||'roteiro').replace(/\s+/g,'_')}.pdf`, image:{type:'jpeg',quality:0.92}, html2canvas:{scale:2,allowTaint:true,useCORS:true}, jsPDF:{unit:'pt',format:'a4',orientation:'portrait'}, pagebreak:{mode:['css','legacy']} };
+      // mostrar preview
+      const preview = q('#pdf-preview'); const inner = q('#pdf-preview-inner'); inner.innerHTML=''; inner.appendChild(container);
+      preview.style.display='flex';
+      // adicionar botão para download
+      const btn = document.createElement('button'); btn.className='btn b-pdf'; btn.textContent='Baixar PDF'; btn.style.marginTop='12px';
+      btn.onclick = ()=> html2pdf().set(opt).from(container).save();
+      inner.appendChild(btn);
     }
-    function closePdfPreview(e){ if(e.target.id === 'pdf-preview') { document.getElementById('pdf-preview').style.display = 'none'; document.getElementById('pdf-preview-inner').innerHTML = ''; } }
 
-    /*************************************************************************
-     * Carregar inicial
-     *************************************************************************/
-    document.addEventListener('DOMContentLoaded', () => { carregarOrcamentos(); });
+    function closePdfPreview(e){ if(e.target.id==='pdf-preview'){ e.target.style.display='none'; q('#pdf-preview-inner').innerHTML=''; } }
 
+    /* ======= WhatsApp link ======= */
+    function envWppOrc(){
+      if(!currentId) return;
+      const o = orcamentos.find(x=>x.id===currentId);
+      const urlPublic = `${BASE_URL}/orcamento.html?id=${o.id}`;
+      const text = `Olá! Segue o orçamento: ${o.titulo || ''} - ${urlPublic}`;
+      window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+    }
+
+    /* ======= Aéreo/carros/carregar padrão/hoteis helpers ======= */
+    function getAereoItems(){ /* já implementado */ return Array.from(q('#aereo-container').querySelectorAll('.dyn-section-item')).map(node=>({ cia: node.querySelector('.f-aereo-cia').value.trim(), numVoo: node.querySelector('.f-aereo-num-voo').value.trim(), origem: node.querySelector('.f-aereo-origem').value.trim(), destino: node.querySelector('.f-aereo-destino').value.trim(), horarios: node.querySelector('.f-aereo-horarios').value.trim() })); }
+    function getHotelItems(){ return Array.from(q('#hoteis-container').querySelectorAll('.hotel-item')).map(node=>({ nome: node.querySelector('[data-field=\"nome\"]').value.trim(), categoria: node.querySelector('[data-field=\"categoria\"]').value.trim(), desc: node.querySelector('[data-field=\"desc\"]').value.trim(), img: node.querySelector('img').src })); }
+    function autoCarregarRoteiroPadrao(){ const arr=[]; for(let i=2;i<=9;i++) arr.push({ titulo:'Dia '+(i-1), descricao:'Descrição do dia '+(i-1)+'. Atividades, horários e recomendações.', imagem: BASE_URL + '/assets/images/roteiros/'+i+'.png' }); const cont = q('#roteiro-dias-container'); cont.innerHTML=''; arr.forEach(d=>addRoteiroDia(d)); showToast('Roteiro padrão carregado'); }
+
+    /* ======= Gallery helper (para adicionar manualmente) ======= */
+    function addGalleryFromUrls(urls){ const grid = q('#galeria-preview-grid'); urls.forEach(url=>{ const div=document.createElement('div'); div.className='foto-thumb'; div.innerHTML=`<img src="${url}"><button class="del" onclick="this.closest('.foto-thumb').remove()">✕</button>`; grid.appendChild(div); }); }
+
+    /* ======= Inicializa ======= */
+    document.addEventListener('DOMContentLoaded', carregarOrcamentos);
   </script>
 </body>
 </html>
