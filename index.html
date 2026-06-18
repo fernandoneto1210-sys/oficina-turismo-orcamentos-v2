@@ -547,17 +547,13 @@
       });
     }
 
-    function slugify(text) {
+    ffunction slugify(text) {
       return text.toString().toLowerCase()
         .replace(/\s+/g, '-')           // Substitui espaços por -
         .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
         .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
-        .replace(/
-^
--+/, '')             // Remove - do início
-        .replace(/-+
-$
-/, '');            // Remove - do final
+        .replace(/^-+/, '')             // Remove - do início
+        .replace(/-+$/, '');            // Remove - do final
     }
 
     function showToast(message, type = 'info') {
