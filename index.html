@@ -427,56 +427,66 @@ $
 
     // JSONBin integration
     async function carregarOrcamentos() {
-      const statusDiv = document.getElementById('jb-status');
-      statusDiv.classList.remove('ok','off');
-      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Carregando orçamentos...';
-      try {
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-          headers: { 'X-Master-Key': JSONBIN_KEY }
-        });
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Erro ao carregar do JSONBin: ${response.status} - ${errorText}`);
-        }
-        const data = await response.json();
-        todosOrcamentos = data.record || [];
-        renderizarListaOrcamentos();
-        statusDiv.classList.add('ok');
-        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
-      } catch (error) {
-        console.error('Erro ao carregar orçamentos:', error);
-        statusDiv.classList.add('off');
-        statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro: ${error.message}. Verifique JSONBIN_ID/KEY.`;
-        showToast(`Erro ao carregar orçamentos: ${error.message}`, 'error');
-      }
+  const statusDiv = document.getElementById('jb-status');
+  statusDiv.classList.remove('ok','off');
+  statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Carregando orçamentos...';
+  try {
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+      headers: { 'X-Master-Key': JSONBIN_KEY } // <-- cabeçalho necessário para bins privados
+    });
+    if (!response.ok) {
+      // Mostra detalhe da resposta no console para debug
+      console.error('Resposta JSONBin (carregar):', response);
+      const errorText = await response.text();
+      throw new Error(`Erro ao carregar do JSONBin: ${response.status} - ${errorText}`);
     }
+    const data = await response.json();
+    todosOrcamentos = Array.isArray(data.record) ? data.record : [];
+    renderizarListaOrcamentos();
+    statusDiv.classList.add('ok');
+    statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
+  } catch (error) {
+    console.error('Erro ao carregar orçamentos:', error);
+    // fallback: inicializa array vazio para permitir criar/editar localmente
+    if (!Array.isArray(todosOrcamentos)) todosOrcamentos = [];
+    statusDiv.classList.add('off');
+    statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro ao conectar ao JSONBin. Trabalhando em modo offline.`;
+    showToast(`Erro ao carregar orçamentos: ${error.message}`, 'error');
+  }
+}
 
     async function salvarOrcamentosNoBin() {
-      const statusDiv = document.getElementById('jb-status');
-      statusDiv.classList.remove('ok','off');
-      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Salvando orçamentos...';
-      try {
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
-          method: 'PUT',
-          headers: { 'Content-Type': 'application/json', 'X-Master-Key': JSONBIN_KEY },
-          body: JSON.stringify(todosOrcamentos)
-        });
-        if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Erro ao salvar no JSONBin: ${response.status} - ${errorText}`);
-        }
-        await response.json();
-        renderizarListaOrcamentos();
-        statusDiv.classList.add('ok');
-        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
-        showToast('Orçamento salvo com sucesso!', 'success');
-      } catch (error) {
-        console.error('Erro ao salvar orçamentos:', error);
-        statusDiv.classList.add('off');
-        statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro: ${error.message}. Verifique JSONBIN_ID/KEY.`;
-        showToast(`Erro ao salvar orçamentos: ${error.message}`, 'error');
-      }
+  const statusDiv = document.getElementById('jb-status');
+  statusDiv.classList.remove('ok','off');
+  statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Salvando orçamentos...';
+  try {
+    // garante que é um array antes de salvar
+    todosOrcamentos = Array.isArray(todosOrcamentos) ? todosOrcamentos : [];
+    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Master-Key': JSONBIN_KEY // <-- obrigatório para escrita em bin privado
+      },
+      body: JSON.stringify(todosOrcamentos)
+    });
+    if (!response.ok) {
+      console.error('Resposta JSONBin (salvar):', response);
+      const errorText = await response.text();
+      throw new Error(`Erro ao salvar no JSONBin: ${response.status} - ${errorText}`);
     }
+    await response.json();
+    renderizarListaOrcamentos();
+    statusDiv.classList.add('ok');
+    statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
+    showToast('Orçamento salvo com sucesso!', 'success');
+  } catch (error) {
+    console.error('Erro ao salvar orçamentos:', error);
+    statusDiv.classList.add('off');
+    statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro ao salvar no JSONBin. Verifique sua chave.`;
+    showToast(`Erro ao salvar orçamentos: ${error.message}`, 'error');
+  }
+}
 
     // Imgur upload
     async function uploadImageToImgur(file) {
