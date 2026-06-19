@@ -8,16 +8,399 @@
   <!-- Adicione o CSS do Swiper aqui -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
   <style>
-    :root{
-      --azul:#1B3A6B;--azul2:#2E5FA3;--verde:#2D6A4F;--verde2:#40916C;
-      --dourado:#C9A84C;--dourado2:#b8941f;--cinza:#F5F6FA;--branco:#fff;
-      --sombra:0 4px 20px rgba(0,0,0,.10);--radius:12px;
-    }
-    *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cinza);color:#444;line-height:1.6;}
-    a{text-decoration:none;color:inherit;}
-    img{max-width:100%;height:auto;display:block;}
+    :root {
+  --azul: #346299; /* Azul mais suave */
+  --azul2: #5B8DCF; /* Azul claro */
+  --verde: #50997A; /* Verde mais suave */
+  --verde2: #7AC2A5; /* Verde claro */
+  --dourado: #D4AF37; /* Dourado um pouco mais suave */
+  --dourado2: #CBB060; /* Dourado claro */
+  --cinza: #F8F9FA; /* Cinza bem claro para fundo */
+  --branco: #FFFFFF; /* Branco puro */
+  --sombra: 0 4px 20px rgba(0, 0, 0, 0.08); /* Sombra mais leve */
+  --radius: 12px;
+  --texto-principal: #333333; /* Cor de texto mais suave */
+  --texto-secundario: #666666; /* Cor de texto secundário */
+  --borda-clara: #E0E0E0; /* Borda mais clara */
+}
 
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background: var(--cinza);
+  color: var(--texto-principal); /* Usar a nova variável de cor de texto */
+}
+
+/* Ajustes para elementos específicos para refletir a nova paleta */
+.adm-header {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--verde) 100%);
+  box-shadow: var(--sombra);
+}
+
+.adm-header-right a {
+  color: rgba(255, 255, 255, 0.85); /* Ajuste para melhor contraste */
+}
+
+.adm-header-right a:hover {
+  color: var(--dourado);
+}
+
+.adm-info .titulo {
+  color: var(--branco);
+}
+
+.adm-badge {
+  background: var(--dourado);
+  color: var(--branco);
+}
+
+.jb-status-bar.ok {
+  background: #d4edda; /* Verde claro */
+  color: #155724; /* Verde escuro */
+}
+
+.jb-status-bar.off {
+  background: #fff3cd; /* Amarelo claro */
+  color: #856404; /* Amarelo escuro */
+}
+
+.btn-novo {
+  background: linear-gradient(135deg, var(--azul), var(--azul2));
+  box-shadow: 0 4px 12px rgba(52, 98, 153, 0.3); /* Sombra ajustada */
+}
+
+.btn-novo:hover {
+  box-shadow: 0 6px 18px rgba(52, 98, 153, 0.4);
+}
+
+.orc-item:hover {
+  border-color: var(--azul2);
+  background: var(--branco);
+  box-shadow: var(--sombra);
+}
+
+.orc-item.on {
+  border-color: var(--azul);
+  background: var(--branco);
+  box-shadow: var(--sombra);
+}
+
+.orc-titulo {
+  color: var(--azul);
+}
+
+.s-ativo {
+  background: #d4edda;
+  color: #155724;
+}
+
+.s-rascunho {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.s-expirado {
+  background: #f8d7da;
+  color: #721c24;
+} /* Vermelho mais suave */
+
+.tela-ini i {
+  color: var(--dourado);
+}
+
+.tela-ini h2 {
+  color: var(--texto-secundario);
+}
+
+.form-topo {
+  background: linear-gradient(135deg, var(--azul), var(--azul2));
+}
+
+.form-topo h2 {
+  color: var(--branco);
+}
+
+.b-salvar {
+  background: var(--dourado);
+}
+
+.b-salvar:hover {
+  background: var(--dourado2);
+}
+
+.b-ver {
+  background: #28a745;
+} /* Verde padrão mais suave */
+.b-ver:hover {
+  background: #218838;
+}
+
+.b-wpp {
+  background: #25d366;
+} /* Verde WhatsApp */
+.b-wpp:hover {
+  background: #1da851;
+}
+
+.b-del {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--branco);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.b-del:hover {
+  background: rgba(220, 53, 69, 0.4);
+} /* Vermelho mais suave */
+
+.b-dup {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--branco);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.b-dup:hover {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.aba.on {
+  color: var(--azul);
+  border-color: var(--azul);
+}
+
+.aba:hover:not(.on) {
+  color: var(--azul2);
+}
+
+.cg label {
+  color: var(--azul);
+}
+
+.cg input,
+.cg textarea,
+.cg select {
+  border: 1px solid var(--borda-clara); /* Borda mais suave */
+}
+
+.cg input:focus,
+.cg textarea:focus,
+.cg select:focus {
+  border-color: var(--azul2);
+}
+
+.ldyn {
+  border: 1px solid var(--borda-clara);
+}
+
+.litem {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.brem {
+  color: #dc3545;
+} /* Vermelho padrão mais suave */
+.brem:hover {
+  background: #f8d7da;
+}
+
+.badd {
+  border: 2px dashed var(--borda-clara);
+  color: var(--texto-secundario);
+}
+
+.badd:hover {
+  border-color: var(--azul2);
+  color: var(--azul2);
+}
+
+.upload-box {
+  border: 2px dashed var(--borda-clara);
+  background: #fdfdfd;
+}
+
+.upload-box:hover {
+  border-color: var(--azul2);
+  background: #f0f4ff;
+}
+
+.upload-box i {
+  color: var(--borda-clara);
+}
+
+.upload-box p {
+  color: var(--texto-secundario);
+}
+
+.upload-box.sending {
+  border-color: var(--dourado);
+  background: #fffbf0;
+}
+
+.prev-item {
+  border: 1px solid var(--borda-clara);
+}
+
+.prev-item .del-prev {
+  background: rgba(220, 53, 69, 0.85);
+}
+
+.prev-item.capa {
+  border-color: var(--dourado);
+  box-shadow: 0 0 0 2px var(--dourado);
+}
+
+.prev-item.capa::after {
+  background: rgba(212, 175, 55, 0.8);
+}
+
+.roteiro-dia-item {
+  border: 1px solid var(--borda-clara);
+}
+
+.rd-header {
+  background: #f5f5f5;
+  color: var(--azul);
+}
+
+.rd-img-wrap {
+  border: 1px solid var(--borda-clara);
+}
+
+.rd-img-wrap .del-rd-img {
+  background: rgba(220, 53, 69, 0.85);
+}
+
+.valores-item {
+  border: 1px solid var(--borda-clara);
+}
+
+.val-header {
+  background: #f5f5f5;
+  color: var(--azul);
+}
+
+.dyn-section-item {
+  border: 1px solid var(--borda-clara);
+}
+
+.dyn-header {
+  background: #f5f5f5;
+  color: var(--azul);
+}
+
+.toast {
+  background: var(--azul);
+}
+
+.toast.error {
+  background: #dc3545;
+}
+
+.toast.success {
+  background: #28a745;
+}
+
+/* orcamento.html */
+.orc-header {
+  background: linear-gradient(135deg, var(--azul) 0%, var(--verde) 100%);
+}
+
+.orc-header h1,
+.orc-header h2,
+.orc-header .meta {
+  color: var(--branco);
+}
+
+.section h3 {
+  color: var(--azul);
+  border-bottom: 1px solid var(--borda-clara);
+}
+
+.section h3 i {
+  color: var(--dourado);
+}
+
+.lista-itens.incluidos li i {
+  color: var(--verde);
+}
+
+.lista-itens.nao-incluidos li i {
+  color: #dc3545;
+}
+
+.roteiro-dia {
+  border-bottom: 1px dashed var(--borda-clara);
+}
+
+.roteiro-dia h4 {
+  color: var(--azul2);
+}
+
+.valor-opcao {
+  background: var(--cinza);
+}
+
+.valor-opcao h4 {
+  color: var(--azul);
+}
+
+.valor-opcao .preco {
+  color: var(--dourado);
+}
+
+.valor-opcao .descricao {
+  color: var(--texto-secundario);
+}
+
+.detalhes-pagamento strong {
+  color: var(--azul);
+}
+
+.adicional-item {
+  background: var(--cinza);
+}
+
+.adicional-item h4 {
+  color: var(--azul);
+}
+
+.adicional-item p {
+  color: var(--texto-secundario);
+}
+
+.orc-footer {
+  background: #f0f0f0;
+  color: var(--texto-secundario);
+}
+
+.orc-footer .contatos a {
+  color: var(--azul);
+}
+
+.orc-footer .contatos a:hover {
+  color: var(--dourado);
+}
+
+.status-message {
+  background: var(--branco);
+  color: var(--texto-secundario);
+}
+
+.status-message i {
+  color: var(--dourado);
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: rgba(0, 0, 0, 0.3); /* Mais suave */
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--dourado);
+}
     /* ══ HEADER ══ */
     .orc-header{
       background:linear-gradient(135deg,var(--azul) 0%,var(--verde) 100%);
@@ -499,23 +882,26 @@
         }
       }
 
-      // Parte Aérea
-      const aereoContainer = document.getElementById('aereo-container');
-      if (orcamento.aereo && orcamento.aereo.length > 0) {
-        document.getElementById('aereo-section').style.display = 'block';
-        aereoContainer.innerHTML = ''; // Limpa antes de adicionar
-        orcamento.aereo.forEach(item => {
-          const div = document.createElement('div');
-          div.classList.add('adicional-item');
-          div.innerHTML = `
-            <h4>Voo: ${item.origem || ''} &rarr; ${item.destino || ''}</h4>
-            <p><strong>Cia Aérea:</strong> ${item.cia || ''}</p>
-            <p><strong>Número do Voo:</strong> ${item.numVoo || ''}</p>
-            <p><strong>Horários:</strong> ${item.horarios || ''}</p>
-          `;
-          aereoContainer.appendChild(div);
-        });
-      }
+    // Parte Aérea
+const aereoContainer = document.getElementById('aereo-container');
+if (orcamento.aereo && orcamento.aereo.length > 0) {
+  document.getElementById('aereo-section').style.display = 'block';
+  aereoContainer.innerHTML = ''; // Limpa antes de adicionar
+  orcamento.aereo.forEach(item => {
+    const div = document.createElement('div');
+    div.classList.add('adicional-item');
+    div.innerHTML = `
+      <h4>Voo: ${item.origem || ''} &rarr; ${item.destino || ''}</h4>
+      <p><strong>Cia Aérea:</strong> ${item.cia || ''}</p>
+      <p><strong>Número do Voo:</strong> ${item.numVoo || ''}</p>
+      <p><strong>Saída:</strong> ${formatarData(item.dataSaida)} às ${item.horaSaida || ''}</p>
+      <p><strong>Chegada:</strong> ${formatarData(item.dataChegada)} às ${item.horaChegada || ''}</p>
+    `;
+    aereoContainer.appendChild(div);
+  });
+} else {
+  document.getElementById('aereo-section').style.display = 'none'; // Esconde a seção se não houver voos
+}
 
       // Aluguel de Carro
       const carroContainer = document.getElementById('carro-container');
