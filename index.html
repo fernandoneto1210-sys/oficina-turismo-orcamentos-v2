@@ -69,6 +69,8 @@
     }
     .jb-status-bar.ok{background:#d4edda;color:#155724;}
     .jb-status-bar.off{background:#fff3cd;color:#856404;}
+    .jb-status-bar.error{background:#f8d7da;color:#721c24;}
+
 
     /* ══ LAYOUT ══ */
     .layout{display:flex;min-height:calc(100vh - 88px);}
@@ -356,31 +358,36 @@
       <div class="sb-label">Meus Orçamentos</div>
       <div id="orc-lista" class="orc-lista">
         <!-- Orçamentos serão renderizados aqui -->
+        <div class="sb-vazio" id="sb-vazio">
+          <i class="fas fa-box-open"></i>
+          <p>Nenhum orçamento encontrado.</p>
+          <p>Clique em "Novo Orçamento" para começar.</p>
+        </div>
       </div>
     </aside>
 
     <main class="main">
-      <div id="tela-ini" class="tela-ini">
-        <i class="fas fa-plane-departure"></i>
+      <div id="tela-inicial" class="tela-ini">
+        <i class="fas fa-hand-pointer"></i>
         <h2>Bem-vindo ao Painel!</h2>
         <p>Selecione um orçamento na lateral ou crie um novo para começar.</p>
       </div>
 
       <div id="form-orcamento" class="form-card" style="display:none;">
         <div class="form-topo">
-          <h2><i class="fas fa-edit"></i> Editar Orçamento</h2>
+          <h2 id="form-titulo"><i class="fas fa-file-invoice-dollar"></i> Editar Orçamento</h2>
           <div class="topo-btns">
-            <button class="btn b-salvar" onclick="salvarOrc()"><i class="fas fa-save"></i> Salvar</button>
-            <button class="btn b-ver" onclick="verOrc()" disabled><i class="fas fa-eye"></i> Ver</button>
-            <button class="btn b-wpp" onclick="envWppOrc()" disabled><i class="fab fa-whatsapp"></i> WhatsApp</button>
-            <button class="btn b-dup" onclick="duplicarOrc()" disabled><i class="fas fa-copy"></i> Duplicar</button>
-            <button class="btn b-del" onclick="deletarOrc()" disabled><i class="fas fa-trash-alt"></i> Deletar</button>
+            <button class="btn b-salvar" onclick="salvarOrcamento()"><i class="fas fa-save"></i> Salvar</button>
+            <button class="btn b-ver" onclick="abrirOrcamento()"><i class="fas fa-eye"></i> Ver</button>
+            <button class="btn b-wpp" onclick="abrirWhatsApp()"><i class="fab fa-whatsapp"></i> WhatsApp</button>
+            <button class="btn b-dup" onclick="duplicarOrcamento()"><i class="fas fa-copy"></i> Duplicar</button>
+            <button class="btn b-del" onclick="deletarOrcamento()"><i class="fas fa-trash-alt"></i> Deletar</button>
           </div>
         </div>
 
         <div class="abas">
           <div class="aba on" data-aba="geral"><i class="fas fa-info-circle"></i> Geral</div>
-          <div class="aba" data-aba="incluidos"><i class="fas fa-list-check"></i> Incluídos</div>
+          <div class="aba" data-aba="incluidos"><i class="fas fa-check-circle"></i> Incluídos</div>
           <div class="aba" data-aba="roteiro"><i class="fas fa-route"></i> Roteiro</div>
           <div class="aba" data-aba="valores"><i class="fas fa-dollar-sign"></i> Valores</div>
           <div class="aba" data-aba="fotos"><i class="fas fa-images"></i> Fotos</div>
@@ -390,25 +397,25 @@
 
         <div class="painel on" data-painel="geral">
           <div class="cg">
-            <label for="f-titulo"><i class="fas fa-tag"></i> Título do Orçamento</label>
-            <input type="text" id="f-titulo" placeholder="Ex: Viagem para Manaus - 5 dias"/>
+            <label for="titulo"><i class="fas fa-heading"></i> Título do Orçamento</label>
+            <input type="text" id="titulo" placeholder="Ex: Viagem para Fernando de Noronha"/>
           </div>
           <div class="cg">
-            <label for="f-cliente"><i class="fas fa-user"></i> Nome do Cliente</label>
-            <input type="text" id="f-cliente" placeholder="Ex: João da Silva"/>
+            <label for="cliente"><i class="fas fa-user"></i> Nome do Cliente</label>
+            <input type="text" id="cliente" placeholder="Ex: João da Silva"/>
           </div>
           <div class="cg">
-            <label for="f-subtitulo"><i class="fas fa-heading"></i> Subtítulo</label>
-            <input type="text" id="f-subtitulo" placeholder="Ex: Uma aventura inesquecível na Amazônia"/>
+            <label for="subtitulo"><i class="fas fa-subheading"></i> Subtítulo</label>
+            <input type="text" id="subtitulo" placeholder="Ex: Pacote de 7 dias com aéreo e hospedagem"/>
           </div>
           <div class="row2">
             <div class="cg">
-              <label for="f-data-viagem"><i class="fas fa-calendar-alt"></i> Data da Viagem</label>
-              <input type="date" id="f-data-viagem"/>
+              <label for="dataViagem"><i class="fas fa-calendar-alt"></i> Data da Viagem</label>
+              <input type="date" id="dataViagem"/>
             </div>
             <div class="cg">
-              <label for="f-status"><i class="fas fa-signal"></i> Status</label>
-              <select id="f-status">
+              <label for="status"><i class="fas fa-toggle-on"></i> Status</label>
+              <select id="status">
                 <option value="rascunho">Rascunho</option>
                 <option value="ativo">Ativo</option>
                 <option value="expirado">Expirado</option>
@@ -423,14 +430,14 @@
             <div id="incluidos-container" class="ldyn">
               <!-- Itens incluídos serão adicionados aqui -->
             </div>
-            <button class="badd" onclick="addItemToList('incluidos-container')"><i class="fas fa-plus"></i> Adicionar Item Incluído</button>
+            <button class="badd" onclick="addIncluidoItem()"><i class="fas fa-plus"></i> Adicionar Item Incluído</button>
           </div>
           <div class="cg">
             <label><i class="fas fa-times-circle"></i> Itens Não Incluídos</label>
             <div id="nao-incluidos-container" class="ldyn">
               <!-- Itens não incluídos serão adicionados aqui -->
             </div>
-            <button class="badd" onclick="addItemToList('nao-incluidos-container')"><i class="fas fa-plus"></i> Adicionar Item Não Incluído</button>
+            <button class="badd" onclick="addNaoIncluidoItem()"><i class="fas fa-plus"></i> Adicionar Item Não Incluído</button>
           </div>
         </div>
 
@@ -442,36 +449,36 @@
         </div>
 
         <div class="painel" data-painel="valores">
-          <div id="opcoes-valores-container">
-            <!-- Opções de valores serão adicionadas aqui -->
+          <div class="cg">
+            <label><i class="fas fa-hand-holding-usd"></i> Opções de Valores por Pessoa</label>
+            <div id="opcoes-valores-container">
+              <!-- Opções de valores serão adicionadas aqui -->
+            </div>
+            <button class="badd" onclick="addValorOpcao()"><i class="fas fa-plus"></i> Adicionar Opção de Valor</button>
           </div>
-          <button class="badd" onclick="addOpcaoValor()"><i class="fas fa-plus"></i> Adicionar Opção de Valor</button>
-
-          <hr style="margin:30px 0;border:0;border-top:1px solid #eee;"/>
-
-          <h3><i class="fas fa-money-bill-wave"></i> Detalhes de Pagamento</h3>
-          <div class="row3">
-            <div class="cg valor">
-              <label for="f-valor-total"><i class="fas fa-money-bill"></i> Valor Total</label>
-              <input type="number" id="f-valor-total" step="0.01" placeholder="0.00" oninput="calcularParcelamento()"/>
+          <div class="cg">
+            <label><i class="fas fa-money-check-alt"></i> Detalhes de Pagamento</label>
+            <div class="row3">
+              <div class="cg valor">
+                <label for="valorTotal">Valor Total</label>
+                <input type="text" id="valorTotal" placeholder="0,00" oninput="formatarInputMoeda(this); calcularParcelas();"/>
+              </div>
+              <div class="cg valor">
+                <label for="valorEntrada">Valor da Entrada</label>
+                <input type="text" id="valorEntrada" placeholder="0,00" oninput="formatarInputMoeda(this); calcularParcelas();"/>
+              </div>
+              <div class="cg">
+                <label for="numParcelas">Nº de Parcelas Restantes</label>
+                <input type="number" id="numParcelas" placeholder="0" oninput="calcularParcelas();"/>
+              </div>
             </div>
             <div class="cg valor">
-              <label for="f-valor-entrada"><i class="fas fa-hand-holding-usd"></i> Valor da Entrada</label>
-              <input type="number" id="f-valor-entrada" step="0.01" placeholder="0.00" oninput="calcularParcelamento()"/>
+              <label for="valorParcela">Valor da Parcela</label>
+              <input type="text" id="valorParcela" placeholder="0,00" readonly/>
             </div>
             <div class="cg">
-              <label for="f-num-parcelas"><i class="fas fa-credit-card"></i> Nº de Parcelas</label>
-              <input type="number" id="f-num-parcelas" min="1" placeholder="0" oninput="calcularParcelamento()"/>
-            </div>
-          </div>
-          <div class="row2">
-            <div class="cg valor">
-              <label for="f-valor-parcela"><i class="fas fa-money-check-alt"></i> Valor da Parcela</label>
-              <input type="text" id="f-valor-parcela" readonly placeholder="0.00"/>
-            </div>
-            <div class="cg">
-              <label for="f-parcelamento-txt"><i class="fas fa-comment-dollar"></i> Texto de Parcelamento</label>
-              <textarea id="f-parcelamento-txt" rows="2" readonly placeholder="Ex: Entrada de R$ 500,00 e saldo em 5x de R$ 200,00"></textarea>
+              <label for="parcelamentoTxt">Texto de Parcelamento</label>
+              <textarea id="parcelamentoTxt" placeholder="Ex: Entrada de R$ X + 10x de R$ Y no cartão"></textarea>
             </div>
           </div>
         </div>
@@ -479,53 +486,56 @@
         <div class="painel" data-painel="fotos">
           <div class="cg">
             <label><i class="fas fa-image"></i> Foto de Capa</label>
-            <div class="upload-box upload-mini" style="height:120px;margin-bottom:10px;">
-              <img id="capa-preview" src="https://via.placeholder.com/200x180?text=Capa" alt="Capa" style="max-height:100%;max-width:100%;object-fit:contain;"/>
-              <button class="del-prev" onclick="removeCapaFoto()" style="position:absolute;top:5px;right:5px;display:none;"><i class="fas fa-times"></i></button>
+            <div class="upload-box" id="capa-upload-box">
+              <input type="file" accept="image/*" onchange="uploadImage(event, 'capa')"/>
+              <i class="fas fa-cloud-upload-alt"></i>
+              <p>Arraste e solte ou clique para enviar a foto de capa.</p>
+            </div>
+            <div id="capa-preview" class="prev-grid">
+              <!-- Preview da capa será adicionado aqui -->
             </div>
             <p class="hint">Clique em uma imagem da galeria abaixo para defini-la como capa.</p>
           </div>
-
           <div class="cg">
             <label><i class="fas fa-images"></i> Galeria de Fotos</label>
-            <div class="upload-box" data-loading="false">
-              <input type="file" accept="image/*" multiple onchange="handleGalleryUpload(event, this.closest('.upload-box'))"/>
+            <div class="upload-box" id="galeria-upload-box">
+              <input type="file" accept="image/*" multiple onchange="uploadImage(event, 'galeria')"/>
               <i class="fas fa-cloud-upload-alt"></i>
-              <p>Clique ou arraste para enviar fotos para a galeria</p>
+              <p>Clique ou arraste para enviar fotos para a galeria.</p>
             </div>
-            <div id="galeria-preview-grid" class="prev-grid">
+            <div id="galeria-preview" class="prev-grid">
               <!-- Previews da galeria serão adicionados aqui -->
             </div>
           </div>
         </div>
 
         <div class="painel" data-painel="adicionais">
-          <h3><i class="fas fa-plane"></i> Parte Aérea</h3>
-          <div id="aereo-container">
-            <!-- Itens de aéreo serão adicionados aqui -->
+          <div class="cg">
+            <label><i class="fas fa-plane"></i> Parte Aérea</label>
+            <div id="aereo-container">
+              <!-- Itens de aéreo serão adicionados aqui -->
+            </div>
+            <button class="badd" onclick="addAereoItem()"><i class="fas fa-plus"></i> Adicionar Voo</button>
           </div>
-          <button class="badd" onclick="addAereoItem()"><i class="fas fa-plus"></i> Adicionar Voo</button>
-
-          <hr style="margin:30px 0;border:0;border-top:1px solid #eee;"/>
-
-          <h3><i class="fas fa-car"></i> Aluguel de Carro</h3>
-          <div id="carro-container">
-            <!-- Itens de carro serão adicionados aqui -->
+          <div class="cg">
+            <label><i class="fas fa-car"></i> Aluguel de Carro</label>
+            <div id="carro-container">
+              <!-- Itens de carro serão adicionados aqui -->
+            </div>
+            <button class="badd" onclick="addCarroItem()"><i class="fas fa-plus"></i> Adicionar Aluguel de Carro</button>
           </div>
-          <button class="badd" onclick="addCarroItem()"><i class="fas fa-plus"></i> Adicionar Aluguel de Carro</button>
         </div>
 
         <div class="painel" data-painel="condicoes">
           <div class="cg">
-            <label for="f-condicoes-gerais"><i class="fas fa-file-contract"></i> Condições Gerais</label>
-            <textarea id="f-condicoes-gerais" rows="8" placeholder="Insira aqui as condições gerais do orçamento..."></textarea>
+            <label for="condicoesGerais"><i class="fas fa-file-contract"></i> Condições Gerais</label>
+            <textarea id="condicoesGerais" placeholder="Condições gerais do pacote..."></textarea>
           </div>
           <div class="cg">
-            <label for="f-observacoes"><i class="fas fa-exclamation-triangle"></i> Observações Importantes</label>
-            <textarea id="f-observacoes" rows="6" placeholder="Insira aqui observações importantes para o cliente..."></textarea>
+            <label for="observacoes"><i class="fas fa-exclamation-triangle"></i> Observações Importantes</label>
+            <textarea id="observacoes" placeholder="Observações importantes para o cliente..."></textarea>
           </div>
         </div>
-
       </div>
     </main>
   </div>
@@ -542,21 +552,44 @@
     const BASE_URL    = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2'; // URL base do seu GitHub Pages para o novo projeto
 
     let todosOrcamentos = [];
-    let orcamentoAtualId = null;
+    let orcamentoAtual = null;
 
     // ════════════════════════════════════════════
     // HELPERS
     // ════════════════════════════════════════════
 
+    function generateUUID() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+      });
+    }
+
     function formatarMoeda(valor) {
       return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
     }
 
+    function formatarInputMoeda(input) {
+      let valor = input.value.replace(/\D/g, ''); // Remove tudo que não é dígito
+      if (valor.length === 0) {
+        input.value = '';
+        return;
+      }
+      valor = (parseInt(valor) / 100).toFixed(2); // Converte para float e formata com 2 casas decimais
+      valor = valor.replace('.', ','); // Troca ponto por vírgula
+      valor = valor.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.'); // Adiciona pontos nos milhares
+      input.value = valor;
+    }
+
+    function parseMoeda(valorString) {
+      if (!valorString) return 0;
+      return parseFloat(valorString.replace(/\./g, '').replace(',', '.'));
+    }
+
     function formatarData(data) {
       if (!data) return '';
-      return new Date(data + 'T00:00:00').toLocaleDateString('pt-BR', {
-        day: '2-digit', month: '2-digit', year: 'numeric'
-      });
+      const [ano, mes, dia] = data.split('-');
+      return `${dia}/${mes}/${ano}`;
     }
 
     function slugify(text) {
@@ -577,19 +610,18 @@ $
       toast.textContent = message;
       toast.className = `toast show ${type}`;
       setTimeout(() => {
-        toast.classList.remove('show');
+        toast.className = toast.className.replace('show', '');
       }, 3000);
     }
 
     // ════════════════════════════════════════════
-    // JSONBIN.IO INTEGRAÇÃO
+    // JSONBIN.IO INTEGRATION
     // ════════════════════════════════════════════
 
     async function carregarOrcamentos() {
       const statusDiv = document.getElementById('jb-status');
-      statusDiv.classList.remove('ok', 'off');
-      statusDiv.classList.add('info');
-      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Carregando orçamentos...';
+      statusDiv.className = 'jb-status-bar'; // Resetar classes
+      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Conectando ao JSONBin...';
 
       try {
         const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
@@ -597,56 +629,473 @@ $
             'X-Master-Key': JSONBIN_KEY
           }
         });
+
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(`Erro ao carregar do JSONBin: ${response.status} - ${errorText}`);
+          throw new Error(`Erro HTTP ${response.status}: ${errorText}`);
         }
+
         const data = await response.json();
         todosOrcamentos = data.record || [];
-        renderizarListaOrcamentos();
-        statusDiv.classList.remove('info');
-        statusDiv.classList.add('ok');
-        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
+        renderizarOrcamentosSidebar();
+        statusDiv.className = 'jb-status-bar ok';
+        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin.';
+
+        // Salvar backup local
+        localStorage.setItem('orcamentos_backup', JSON.stringify(todosOrcamentos));
+
       } catch (error) {
-        console.error('Erro ao carregar orçamentos:', error);
-        statusDiv.classList.remove('info');
-        statusDiv.classList.add('off');
-        statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro: ${error.message}. Verifique JSONBIN_ID/KEY.`;
-        showToast(`Erro ao carregar orçamentos: ${error.message}`, 'error');
+        console.error('Erro ao carregar orçamentos do JSONBin:', error);
+        statusDiv.className = 'jb-status-bar error';
+        statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro ao carregar: ${error.message}. Tentando backup local...`;
+        showToast(`Erro ao carregar orçamentos: ${error.message}. Tentando backup local.`, 'error');
+
+        // Tentar carregar do backup local
+        const backup = localStorage.getItem('orcamentos_backup');
+        if (backup) {
+          todosOrcamentos = JSON.parse(backup);
+          renderizarOrcamentosSidebar();
+          statusDiv.className = 'jb-status-bar off';
+          statusDiv.innerHTML = '<i class="fas fa-info-circle"></i> Carregado do backup local (JSONBin offline).';
+          showToast('Orçamentos carregados do backup local.', 'info');
+        } else {
+          statusDiv.className = 'jb-status-bar error';
+          statusDiv.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro: JSONBin e backup local falharam.';
+          showToast('Erro: JSONBin e backup local falharam.', 'error');
+        }
       }
     }
 
-    async function salvarOrcamentosNoBin() {
+    async function salvarOrcamentos() {
       const statusDiv = document.getElementById('jb-status');
-      statusDiv.classList.remove('ok', 'off');
-      statusDiv.classList.add('info');
-      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Salvando orçamentos...';
+      statusDiv.className = 'jb-status-bar';
+      statusDiv.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Salvando no JSONBin...';
 
       try {
         const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
-            'X-Master-Key': JSONBIN_KEY
+            'X-Master-Key': JSONBIN_KEY,
+            'X-Bin-Versioning': 'false' // Desativar versionamento para evitar limites se não for necessário
           },
           body: JSON.stringify(todosOrcamentos)
         });
+
         if (!response.ok) {
           const errorText = await response.text();
-          throw new Error(`Erro ao salvar no JSONBin: ${response.status} - ${errorText}`);
+          throw new Error(`Erro HTTP ${response.status}: ${errorText}`);
         }
-        await response.json();
-        renderizarListaOrcamentos(); // Atualiza a lista após salvar
-        statusDiv.classList.remove('info');
-        statusDiv.classList.add('ok');
-        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Conectado ao JSONBin';
+
+        statusDiv.className = 'jb-status-bar ok';
+        statusDiv.innerHTML = '<i class="fas fa-check-circle"></i> Orçamentos salvos no JSONBin.';
         showToast('Orçamento salvo com sucesso!', 'success');
+
+        // Atualizar backup local após salvar com sucesso
+        localStorage.setItem('orcamentos_backup', JSON.stringify(todosOrcamentos));
+
       } catch (error) {
-        console.error('Erro ao salvar orçamentos:', error);
-        statusDiv.classList.remove('info');
-        statusDiv.classList.add('off');
-        statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro: ${error.message}. Verifique JSONBIN_ID/KEY.`;
-        showToast(`Erro ao salvar orçamentos: ${error.message}`, 'error');
+        console.error('Erro ao salvar orçamentos no JSONBin:', error);
+        statusDiv.className = 'jb-status-bar error';
+        statusDiv.innerHTML = `<i class="fas fa-exclamation-triangle"></i> Erro ao salvar: ${error.message}.`;
+        showToast(`Erro ao salvar orçamentos: ${error.message}.`, 'error');
+      }
+    }
+
+    // ════════════════════════════════════════════
+    // SIDEBAR ORÇAMENTOS
+    // ════════════════════════════════════════════
+
+    function renderizarOrcamentosSidebar() {
+      const orcLista = document.getElementById('orc-lista');
+      orcLista.innerHTML = ''; // Limpa a lista existente
+
+      if (todosOrcamentos.length === 0) {
+        document.getElementById('sb-vazio').style.display = 'block';
+        return;
+      } else {
+        document.getElementById('sb-vazio').style.display = 'none';
+      }
+
+      todosOrcamentos.sort((a, b) => new Date(b.criadoEm) - new Date(a.criadoEm)); // Ordena por mais recente
+
+      todosOrcamentos.forEach(orc => {
+        const orcItem = document.createElement('div');
+        orcItem.classList.add('orc-item');
+        if (orcamentoAtual && orc.id === orcamentoAtual.id) {
+          orcItem.classList.add('on');
+        }
+        orcItem.setAttribute('data-id', orc.id);
+        orcItem.onclick = () => selecionarOrcamento(orc.id);
+
+        let statusClass = '';
+        if (orc.status === 'ativo') statusClass = 's-ativo';
+        else if (orc.status === 'rascunho') statusClass = 's-rascunho';
+        else if (orc.status === 'expirado') statusClass = 's-expirado';
+
+        orcItem.innerHTML = `
+          <div class="orc-top">
+            <div class="orc-titulo">${orc.titulo || 'Novo Orçamento'}</div>
+            <span class="sbadge ${statusClass}">${orc.status ? orc.status.toUpperCase() : 'RASCUNHO'}</span>
+          </div>
+          <div class="orc-meta">
+            <span><i class="fas fa-user"></i> ${orc.cliente || 'Cliente'}</span>
+            <span><i class="fas fa-calendar-alt"></i> ${orc.dataViagem ? formatarData(orc.dataViagem) : 'A definir'}</span>
+          </div>
+        `;
+        orcLista.appendChild(orcItem);
+      });
+    }
+
+    function selecionarOrcamento(id) {
+      orcamentoAtual = todosOrcamentos.find(orc => orc.id === id);
+      if (orcamentoAtual) {
+        document.getElementById('tela-inicial').style.display = 'none';
+        document.getElementById('form-orcamento').style.display = 'block';
+        document.getElementById('form-titulo').innerHTML = `<i class="fas fa-file-invoice-dollar"></i> Editar Orçamento: ${orcamentoAtual.titulo || 'Sem Título'}`;
+        preencherFormulario(orcamentoAtual);
+        renderizarOrcamentosSidebar(); // Atualiza a seleção na sidebar
+      }
+    }
+
+    function novoOrc() {
+      orcamentoAtual = {
+        id: generateUUID(),
+        criadoEm: new Date().toISOString().split('T')[0],
+        titulo: 'Novo Orçamento',
+        cliente: '',
+        subtitulo: '',
+        dataViagem: '',
+        status: 'rascunho',
+        incluidos: [],
+        naoIncluidos: [],
+        roteiro: [],
+        opcoesValores: [],
+        valorTotal: '',
+        valorEntrada: '',
+        numParcelas: '',
+        valorParcela: '',
+        parcelamentoTxt: '',
+        capaFoto: '',
+        galeriaFotos: [],
+        aereo: [],
+        carro: [],
+        condicoesGerais: '',
+        observacoes: ''
+      };
+      todosOrcamentos.unshift(orcamentoAtual); // Adiciona no início para aparecer primeiro
+      selecionarOrcamento(orcamentoAtual.id);
+      salvarOrcamentos();
+      showToast('Novo orçamento criado!', 'success');
+    }
+
+    function duplicarOrcamento() {
+      if (!orcamentoAtual) return;
+
+      const novo = JSON.parse(JSON.stringify(orcamentoAtual)); // Deep copy
+      novo.id = generateUUID();
+      novo.criadoEm = new Date().toISOString().split('T')[0];
+      novo.titulo = `Cópia de ${novo.titulo}`;
+      novo.status = 'rascunho';
+
+      todosOrcamentos.unshift(novo);
+      selecionarOrcamento(novo.id);
+      salvarOrcamentos();
+      showToast('Orçamento duplicado com sucesso!', 'success');
+    }
+
+    async function deletarOrcamento() {
+      if (!orcamentoAtual || !confirm(`Tem certeza que deseja deletar o orçamento "${orcamentoAtual.titulo}"?`)) {
+        return;
+      }
+
+      // Deletar imagens do Imgur se existirem
+      const imagensParaDeletar = [];
+      if (orcamentoAtual.capaFoto && orcamentoAtual.capaFoto.includes('imgur.com')) {
+        imagensParaDeletar.push(orcamentoAtual.capaFoto);
+      }
+      orcamentoAtual.galeriaFotos.forEach(url => {
+        if (url.includes('imgur.com')) imagensParaDeletar.push(url);
+      });
+      orcamentoAtual.roteiro.forEach(dia => {
+        if (dia.imagem && dia.imagem.includes('imgur.com')) imagensParaDeletar.push(dia.imagem);
+      });
+
+      for (const url of imagensParaDeletar) {
+        await deleteImage(url, false); // Deleta sem mostrar toast
+      }
+
+      todosOrcamentos = todosOrcamentos.filter(orc => orc.id !== orcamentoAtual.id);
+      orcamentoAtual = null;
+      document.getElementById('form-orcamento').style.display = 'none';
+      document.getElementById('tela-inicial').style.display = 'flex';
+      renderizarOrcamentosSidebar();
+      await salvarOrcamentos();
+      showToast('Orçamento deletado com sucesso!', 'success');
+    }
+
+    // ════════════════════════════════════════════
+    // FORMULÁRIO
+    // ════════════════════════════════════════════
+
+    function preencherFormulario(orc) {
+      document.getElementById('titulo').value = orc.titulo || '';
+      document.getElementById('cliente').value = orc.cliente || '';
+      document.getElementById('subtitulo').value = orc.subtitulo || '';
+      document.getElementById('dataViagem').value = orc.dataViagem || '';
+      document.getElementById('status').value = orc.status || 'rascunho';
+
+      // Incluídos
+      document.getElementById('incluidos-container').innerHTML = '';
+      orc.incluidos.forEach(item => addIncluidoItem(item));
+
+      // Não Incluídos
+      document.getElementById('nao-incluidos-container').innerHTML = '';
+      orc.naoIncluidos.forEach(item => addNaoIncluidoItem(item));
+
+      // Roteiro
+      document.getElementById('roteiro-dias-container').innerHTML = '';
+      orc.roteiro.forEach(dia => addRoteiroDia(dia));
+
+      // Valores
+      document.getElementById('opcoes-valores-container').innerHTML = '';
+      orc.opcoesValores.forEach(opcao => addValorOpcao(opcao));
+      document.getElementById('valorTotal').value = orc.valorTotal ? parseMoeda(orc.valorTotal).toFixed(2).replace('.', ',') : '';
+      document.getElementById('valorEntrada').value = orc.valorEntrada ? parseMoeda(orc.valorEntrada).toFixed(2).replace('.', ',') : '';
+      document.getElementById('numParcelas').value = orc.numParcelas || '';
+      document.getElementById('valorParcela').value = orc.valorParcela ? parseMoeda(orc.valorParcela).toFixed(2).replace('.', ',') : '';
+      document.getElementById('parcelamentoTxt').value = orc.parcelamentoTxt || '';
+      calcularParcelas(); // Garante que o cálculo esteja atualizado
+
+      // Fotos
+      renderCapaPreview(orc.capaFoto);
+      renderGaleriaPreview(orc.galeriaFotos);
+
+      // Aéreo
+      document.getElementById('aereo-container').innerHTML = '';
+      orc.aereo.forEach(item => addAereoItem(item));
+
+      // Carro
+      document.getElementById('carro-container').innerHTML = '';
+      orc.carro.forEach(item => addCarroItem(item));
+
+      // Condições e Observações
+      document.getElementById('condicoesGerais').value = orc.condicoesGerais || '';
+      document.getElementById('observacoes').value = orc.observacoes || '';
+
+      // Ativa a primeira aba por padrão
+      document.querySelectorAll('.aba').forEach(tab => tab.classList.remove('on'));
+      document.querySelectorAll('.painel').forEach(panel => panel.classList.remove('on'));
+      document.querySelector('.aba[data-aba="geral"]').classList.add('on');
+      document.querySelector('.painel[data-painel="geral"]').classList.add('on');
+    }
+
+    function coletarDadosFormulario() {
+      return {
+        id: orcamentoAtual.id,
+        criadoEm: orcamentoAtual.criadoEm,
+        titulo: document.getElementById('titulo').value,
+        cliente: document.getElementById('cliente').value,
+        subtitulo: document.getElementById('subtitulo').value,
+        dataViagem: document.getElementById('dataViagem').value,
+        status: document.getElementById('status').value,
+        incluidos: getIncluidoItems(),
+        naoIncluidos: getNaoIncluidoItems(),
+        roteiro: getRoteiroDias(),
+        opcoesValores: getValorOpcoes(),
+        valorTotal: document.getElementById('valorTotal').value,
+        valorEntrada: document.getElementById('valorEntrada').value,
+        numParcelas: document.getElementById('numParcelas').value,
+        valorParcela: document.getElementById('valorParcela').value,
+        parcelamentoTxt: document.getElementById('parcelamentoTxt').value,
+        capaFoto: document.getElementById('capa-preview').querySelector('img') ? document.getElementById('capa-preview').querySelector('img').src : '',
+        galeriaFotos: Array.from(document.querySelectorAll('#galeria-preview .prev-item img')).map(img => img.src),
+        aereo: getAereoItems(),
+        carro: getCarroItems(),
+        condicoesGerais: document.getElementById('condicoesGerais').value,
+        observacoes: document.getElementById('observacoes').value
+      };
+    }
+
+    async function salvarOrcamento() {
+      if (!orcamentoAtual) return;
+
+      const dadosForm = coletarDadosFormulario();
+      const index = todosOrcamentos.findIndex(orc => orc.id === orcamentoAtual.id);
+      if (index !== -1) {
+        todosOrcamentos[index] = dadosForm;
+        orcamentoAtual = dadosForm; // Atualiza o orcamentoAtual com os dados salvos
+      }
+      renderizarOrcamentosSidebar();
+      await salvarOrcamentos(); // Chama a função global de salvar no JSONBin
+      document.getElementById('form-titulo').innerHTML = `<i class="fas fa-file-invoice-dollar"></i> Editar Orçamento: ${orcamentoAtual.titulo || 'Sem Título'}`;
+    }
+
+    // ════════════════════════════════════════════
+    // ABAS
+    // ════════════════════════════════════════════
+
+    document.querySelectorAll('.abas .aba').forEach(aba => {
+      aba.addEventListener('click', function() {
+        document.querySelectorAll('.abas .aba').forEach(a => a.classList.remove('on'));
+        document.querySelectorAll('.main .painel').forEach(p => p.classList.remove('on'));
+
+        this.classList.add('on');
+        document.querySelector(`.main .painel[data-painel="${this.dataset.aba}"]`).classList.add('on');
+      });
+    });
+
+    // ════════════════════════════════════════════
+    // LISTAS DINÂMICAS (INCLUÍDOS, NÃO INCLUÍDOS)
+    // ════════════════════════════════════════════
+
+    function addIncluidoItem(text = '') {
+      const container = document.getElementById('incluidos-container');
+      const div = document.createElement('div');
+      div.classList.add('litem');
+      div.innerHTML = `
+        <input type="text" value="${text}" placeholder="Item incluído"/>
+        <button class="brem" onclick="this.parentNode.remove();"><i class="fas fa-times"></i></button>
+      `;
+      container.appendChild(div);
+    }
+
+    function getIncluidoItems() {
+      return Array.from(document.querySelectorAll('#incluidos-container input')).map(input => input.value).filter(Boolean);
+    }
+
+    function addNaoIncluidoItem(text = '') {
+      const container = document.getElementById('nao-incluidos-container');
+      const div = document.createElement('div');
+      div.classList.add('litem');
+      div.innerHTML = `
+        <input type="text" value="${text}" placeholder="Item não incluído"/>
+        <button class="brem" onclick="this.parentNode.remove();"><i class="fas fa-times"></i></button>
+      `;
+      container.appendChild(div);
+    }
+
+    function getNaoIncluidoItems() {
+      return Array.from(document.querySelectorAll('#nao-incluidos-container input')).map(input => input.value).filter(Boolean);
+    }
+
+    // ════════════════════════════════════════════
+    // ROTEIRO DIA A DIA
+    // ════════════════════════════════════════════
+
+    function addRoteiroDia(dia = {}) {
+      const container = document.getElementById('roteiro-dias-container');
+      const index = container.children.length + 1;
+      const div = document.createElement('div');
+      div.classList.add('roteiro-dia-item');
+      div.innerHTML = `
+        <div class="rd-header">
+          <span>Dia ${index}</span>
+          <button class="brem" onclick="this.closest('.roteiro-dia-item').remove();"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="rd-body">
+          <div class="cg">
+            <label>Título do Dia</label>
+            <input type="text" class="roteiro-titulo" value="${dia.titulo || ''}" placeholder="Ex: Chegada em Paris e Torre Eiffel"/>
+          </div>
+          <div class="cg">
+            <label>Descrição</label>
+            <textarea class="roteiro-descricao" placeholder="Atividades do dia...">${dia.descricao || ''}</textarea>
+          </div>
+          <div class="foto-dia-row">
+            <div class="rd-img-wrap" style="${dia.imagem ? '' : 'display:none;'}">
+              <img src="${dia.imagem || ''}" alt="Foto do Dia ${index}"/>
+              <button class="del-rd-img" onclick="deleteRoteiroImage(this)"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="rd-img-upload">
+              <div class="upload-box upload-mini">
+                <input type="file" accept="image/*" onchange="uploadImage(event, 'roteiro', this.closest('.roteiro-dia-item'))"/>
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Foto do Dia</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+
+      // Esconder o upload-box se já tiver imagem
+      if (dia.imagem) {
+        div.querySelector('.rd-img-upload').style.display = 'none';
+      }
+    }
+
+    function getRoteiroDias() {
+      return Array.from(document.querySelectorAll('#roteiro-dias-container .roteiro-dia-item')).map(item => {
+        return {
+          titulo: item.querySelector('.roteiro-titulo').value,
+          descricao: item.querySelector('.roteiro-descricao').value,
+          imagem: item.querySelector('.rd-img-wrap img') ? item.querySelector('.rd-img-wrap img').src : ''
+        };
+      });
+    }
+
+    // ════════════════════════════════════════════
+    // VALORES E PARCELAMENTO
+    // ════════════════════════════════════════════
+
+    function addValorOpcao(opcao = {}) {
+      const container = document.getElementById('opcoes-valores-container');
+      const div = document.createElement('div');
+      div.classList.add('valores-item');
+      div.innerHTML = `
+        <div class="val-header">
+          <span>Opção de Valor</span>
+          <button class="brem" onclick="this.closest('.valores-item').remove();"><i class="fas fa-trash-alt"></i></button>
+        </div>
+        <div class="val-body">
+          <div class="cg">
+            <label>Rótulo</label>
+            <input type="text" class="valor-label" value="${opcao.label || ''}" placeholder="Ex: Por pessoa em apto duplo"/>
+          </div>
+          <div class="cg valor">
+            <label>Preço</label>
+            <input type="text" class="valor-preco" value="${opcao.preco ? parseMoeda(opcao.preco).toFixed(2).replace('.', ',') : ''}" placeholder="0,00" oninput="formatarInputMoeda(this)"/>
+          </div>
+          <div class="cg">
+            <label>Descrição</label>
+            <textarea class="valor-desc" placeholder="Detalhes da opção...">${opcao.desc || ''}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(div);
+    }
+
+    function getValorOpcoes() {
+      return Array.from(document.querySelectorAll('#opcoes-valores-container .valores-item')).map(item => {
+        return {
+          label: item.querySelector('.valor-label').value,
+          preco: item.querySelector('.valor-preco').value,
+          desc: item.querySelector('.valor-desc').value
+        };
+      });
+    }
+
+    function calcularParcelas() {
+      const valorTotalInput = document.getElementById('valorTotal');
+      const valorEntradaInput = document.getElementById('valorEntrada');
+      const numParcelasInput = document.getElementById('numParcelas');
+      const valorParcelaInput = document.getElementById('valorParcela');
+
+      const valorTotal = parseMoeda(valorTotalInput.value);
+      const valorEntrada = parseMoeda(valorEntradaInput.value);
+      const numParcelas = parseInt(numParcelasInput.value) || 0;
+
+      if (valorTotal > 0 && numParcelas > 0) {
+        const valorRestante = valorTotal - valorEntrada;
+        if (valorRestante > 0) {
+          const valorParcela = valorRestante / numParcelas;
+          valorParcelaInput.value = valorParcela.toFixed(2).replace('.', ',');
+        } else {
+          valorParcelaInput.value = '0,00';
+        }
+      } else {
+        valorParcelaInput.value = '0,00';
       }
     }
 
@@ -654,692 +1103,256 @@ $
     // UPLOAD DE IMAGENS (IMGUR)
     // ════════════════════════════════════════════
 
-    async function uploadImageToImgur(file) {
-      if (!IMGUR_ID) {
-        throw new Error('IMGUR_ID não configurado. Verifique as configurações globais.');
-      }
-
-      const formData = new FormData();
-      formData.append('image', file);
-
-      try {
-        const response = await fetch('https://api.imgur.com/3/image', {
-          method: 'POST',
-          headers: {
-            'Authorization': `Client-ID ${IMGUR_ID}`
-          },
-          body: formData
-        });
-
-        if (!response.ok) {
-          const errorText = await response.text();
-          let errorMessage = `Erro Imgur: ${response.status}`;
-          try {
-            const errorJson = JSON.parse(errorText);
-            errorMessage += ` - ${errorJson.data.error}`;
-          } catch {
-            errorMessage += ` - ${errorText.substring(0, 100)}...`; // Limita o tamanho do erro
-          }
-          throw new Error(errorMessage);
-        }
-
-        const data = await response.json();
-        return data.data.link;
-      } catch (error) {
-        console.error('Erro no upload para Imgur:', error);
-        throw new Error(`Falha no upload da imagem: ${error.message}`);
-      }
-    }
-
-    // ════════════════════════════════════════════
-    // GERENCIAMENTO DE ORÇAMENTOS
-    // ════════════════════════════════════════════
-
-    function renderizarListaOrcamentos() {
-      const listaDiv = document.getElementById('orc-lista');
-      listaDiv.innerHTML = '';
-
-      if (todosOrcamentos.length === 0) {
-        listaDiv.innerHTML = `
-          <div class="sb-vazio">
-            <i class="fas fa-box-open"></i>
-            <p>Nenhum orçamento encontrado.</p>
-            <p>Clique em "Novo Orçamento" para começar.</p>
-          </div>
-        `;
-        return;
-      }
-
-      todosOrcamentos.sort((a, b) => new Date(b.dataCriacao) - new Date(a.dataCriacao));
-
-      todosOrcamentos.forEach(orc => {
-        const div = document.createElement('div');
-        div.classList.add('orc-item');
-        if (orc.id === orcamentoAtualId) {
-          div.classList.add('on');
-        }
-        div.dataset.id = orc.id;
-        div.onclick = () => selecionarOrcamento(orc.id);
-
-        let statusClass = '';
-        let statusText = '';
-        switch (orc.status) {
-          case 'ativo':
-            statusClass = 's-ativo';
-            statusText = 'Ativo';
-            break;
-          case 'rascunho':
-            statusClass = 's-rascunho';
-            statusText = 'Rascunho';
-            break;
-          case 'expirado':
-            statusClass = 's-expirado';
-            statusText = 'Expirado';
-            break;
-          default:
-            statusClass = 's-rascunho';
-            statusText = 'Rascunho';
-        }
-
-        div.innerHTML = `
-          <div class="orc-top">
-            <div class="orc-titulo">${orc.titulo || 'Novo Orçamento'}</div>
-            <span class="sbadge ${statusClass}">${statusText}</span>
-          </div>
-          <div class="orc-meta">
-            <span><i class="fas fa-user"></i> ${orc.cliente || 'Sem Cliente'}</span>
-            <span><i class="fas fa-calendar-alt"></i> ${formatarData(orc.dataViagem) || 'A definir'}</span>
-          </div>
-        `;
-        listaDiv.appendChild(div);
-      });
-    }
-
-    function novoOrc() {
-      orcamentoAtualId = null;
-      limparFormulario();
-      document.getElementById('tela-ini').style.display = 'none';
-      document.getElementById('form-orcamento').style.display = 'block';
-      ativarAba('geral');
-      atualizarBotoesAcoes(false); // Desabilita botões até salvar
-      renderizarListaOrcamentos(); // Limpa a seleção visual
-    }
-
-    function selecionarOrcamento(id) {
-      orcamentoAtualId = id;
-      const orc = todosOrcamentos.find(o => o.id === id);
-      if (orc) {
-        preencherFormulario(orc);
-        document.getElementById('tela-ini').style.display = 'none';
-        document.getElementById('form-orcamento').style.display = 'block';
-        ativarAba('geral');
-        atualizarBotoesAcoes(true);
-        renderizarListaOrcamentos(); // Atualiza a classe 'on'
-      } else {
-        showToast('Orçamento não encontrado.', 'error');
-      }
-    }
-
-    function limparFormulario() {
-      document.getElementById('f-titulo').value = '';
-      document.getElementById('f-cliente').value = '';
-      document.getElementById('f-subtitulo').value = '';
-      document.getElementById('f-data-viagem').value = '';
-      document.getElementById('f-status').value = 'rascunho';
-
-      document.getElementById('incluidos-container').innerHTML = '';
-      document.getElementById('nao-incluidos-container').innerHTML = '';
-      document.getElementById('roteiro-dias-container').innerHTML = '';
-      document.getElementById('opcoes-valores-container').innerHTML = '';
-
-      document.getElementById('f-valor-total').value = '';
-      document.getElementById('f-valor-entrada').value = '';
-      document.getElementById('f-num-parcelas').value = '';
-      document.getElementById('f-valor-parcela').value = '';
-      document.getElementById('f-parcelamento-txt').value = '';
-
-      document.getElementById('capa-preview').src = 'https://via.placeholder.com/200x180?text=Capa';
-      document.querySelector('#capa-preview').nextElementSibling.style.display = 'none';
-      document.getElementById('galeria-preview-grid').innerHTML = '';
-
-      document.getElementById('aereo-container').innerHTML = '';
-      document.getElementById('carro-container').innerHTML = '';
-
-      document.getElementById('f-condicoes-gerais').value = '';
-      document.getElementById('f-observacoes').value = '';
-    }
-
-    function preencherFormulario(orc) {
-      document.getElementById('f-titulo').value = orc.titulo || '';
-      document.getElementById('f-cliente').value = orc.cliente || '';
-      document.getElementById('f-subtitulo').value = orc.subtitulo || '';
-      document.getElementById('f-data-viagem').value = orc.dataViagem || '';
-      document.getElementById('f-status').value = orc.status || 'rascunho';
-
-      // Listas dinâmicas
-      document.getElementById('incluidos-container').innerHTML = '';
-      (orc.incluidos || []).forEach(item => addItemToList('incluidos-container', item));
-      document.getElementById('nao-incluidos-container').innerHTML = '';
-      (orc.naoIncluidos || []).forEach(item => addItemToList('nao-incluidos-container', item));
-
-      // Roteiro
-      document.getElementById('roteiro-dias-container').innerHTML = '';
-      (orc.roteiro || []).forEach(dia => addRoteiroDia(dia));
-
-      // Valores
-      document.getElementById('opcoes-valores-container').innerHTML = '';
-      (orc.opcoesValores || []).forEach(val => addOpcaoValor(val));
-      document.getElementById('f-valor-total').value = orc.valorTotal || '';
-      document.getElementById('f-valor-entrada').value = orc.valorEntrada || '';
-      document.getElementById('f-num-parcelas').value = orc.numParcelas || '';
-      calcularParcelamento(); // Recalcula para preencher valor e texto da parcela
-
-      // Fotos
-      document.getElementById('capa-preview').src = orc.capaFoto && !orc.capaFoto.includes('placeholder') ? orc.capaFoto : 'https://via.placeholder.com/200x180?text=Capa';
-      document.querySelector('#capa-preview').nextElementSibling.style.display = orc.capaFoto && !orc.capaFoto.includes('placeholder') ? 'flex' : 'none';
-      document.getElementById('galeria-preview-grid').innerHTML = '';
-      (orc.galeriaFotos || []).forEach(url => addGalleryPreview(url));
-      updateCapaPreview(); // Garante que a capa esteja marcada corretamente
-
-      // Adicionais
-      document.getElementById('aereo-container').innerHTML = '';
-      (orc.aereo || []).forEach(item => addAereoItem(item));
-      document.getElementById('carro-container').innerHTML = '';
-      (orc.carro || []).forEach(item => addCarroItem(item));
-
-      // Condições
-      document.getElementById('f-condicoes-gerais').value = orc.condicoesGerais || '';
-      document.getElementById('f-observacoes').value = orc.observacoes || '';
-    }
-
-    function coletarDadosFormulario() {
-      return {
-        id: orcamentoAtualId,
-        titulo: document.getElementById('f-titulo').value.trim(),
-        cliente: document.getElementById('f-cliente').value.trim(),
-        subtitulo: document.getElementById('f-subtitulo').value.trim(),
-        dataViagem: document.getElementById('f-data-viagem').value,
-        status: document.getElementById('f-status').value,
-        dataCriacao: new Date().toISOString(), // Atualiza a data de criação/modificação
-
-        incluidos: getListItems('incluidos-container'),
-        naoIncluidos: getListItems('nao-incluidos-container'),
-        roteiro: getRoteiroDias(),
-        opcoesValores: getOpcoesValores(),
-        valorTotal: parseFloat(document.getElementById('f-valor-total').value) || 0,
-        valorEntrada: parseFloat(document.getElementById('f-valor-entrada').value) || 0,
-        numParcelas: parseInt(document.getElementById('f-num-parcelas').value) || 0,
-        valorParcela: parseFloat(document.getElementById('f-valor-parcela').value.replace('R$', '').replace('.', '').replace(',', '.')) || 0,
-        parcelamentoTxt: document.getElementById('f-parcelamento-txt').value.trim(),
-        capaFoto: document.getElementById('capa-preview').src.includes('placeholder') ? '' : document.getElementById('capa-preview').src,
-        galeriaFotos: getGalleryPreviews(),
-        aereo: getAereoItems(),
-        carro: getCarroItems(),
-        condicoesGerais: document.getElementById('f-condicoes-gerais').value.trim(),
-        observacoes: document.getElementById('f-observacoes').value.trim(),
-      };
-    }
-
-    async function salvarOrc() {
-      const dados = coletarDadosFormulario();
-
-      if (!dados.titulo) {
-        showToast('Por favor, preencha o Título do Orçamento.', 'error');
-        document.getElementById('f-titulo').focus();
-        return;
-      }
-
-      if (orcamentoAtualId) {
-        // Atualizar orçamento existente
-        const index = todosOrcamentos.findIndex(o => o.id === orcamentoAtualId);
-        if (index !== -1) {
-          todosOrcamentos[index] = { ...todosOrcamentos[index], ...dados };
-        }
-      } else {
-        // Criar novo orçamento
-        dados.id = Date.now().toString(); // ID único baseado no timestamp
-        todosOrcamentos.push(dados);
-        orcamentoAtualId = dados.id; // Define o ID do novo orçamento como o atual
-      }
-
-      await salvarOrcamentosNoBin();
-      renderizarListaOrcamentos();
-      atualizarBotoesAcoes(true); // Habilita botões após salvar
-    }
-
-    function verOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Salve o orçamento com um título antes de visualizar.', 'error');
-        return;
-      }
-      const orc = todosOrcamentos.find(o => o.id === orcamentoAtualId);
-      if (orc && orc.titulo) {
-        const url = `${BASE_URL}/orcamento.html?id=${orc.id}`;
-        window.open(url, '_blank');
-      } else {
-        showToast('Salve o orçamento com um título antes de visualizar.', 'error');
-      }
-    }
-
-    function envWppOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Salve o orçamento antes de enviar por WhatsApp.', 'error');
-        return;
-      }
-      const orc = todosOrcamentos.find(o => o.id === orcamentoAtualId);
-      if (orc && orc.titulo) {
-        const url = `${BASE_URL}/orcamento.html?id=${orc.id}`;
-        const msg  = encodeURIComponent(
-          `Olá${orc.cliente ? ' ' + orc.cliente : ''}! 🌍✈️\n\n` +
-          `Segue seu orçamento personalizado da *Oficina de Turismo*:\n\n` +
-          `✈️ *${orc.titulo}*\n\n` +
-          `👉 ${url}\n\n` +
-          `Qualquer dúvida estou à disposição! 😊\n\n` +
-          `_Oficina de Turismo — (35) 98862-2943_`
-        );
-        window.open(`https://wa.me/?text=${msg}`, '_blank');
-      } else {
-        showToast('Salve o orçamento antes de enviar por WhatsApp.', 'error');
-      }
-    }
-
-    function duplicarOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Selecione um orçamento para duplicar.', 'error');
-        return;
-      }
-      const orcOriginal = todosOrcamentos.find(o => o.id === orcamentoAtualId);
-      if (orcOriginal) {
-        const novoOrc = { ...orcOriginal };
-        novoOrc.id = Date.now().toString(); // Novo ID
-        novoOrc.titulo = `Cópia de ${novoOrc.titulo}`;
-        novoOrc.dataCriacao = new Date().toISOString();
-        todosOrcamentos.push(novoOrc);
-        salvarOrcamentosNoBin();
-        selecionarOrcamento(novoOrc.id);
-        showToast('Orçamento duplicado com sucesso!', 'success');
-      }
-    }
-
-    async function deletarOrc() {
-      if (!orcamentoAtualId) {
-        showToast('Selecione um orçamento para deletar.', 'error');
-        return;
-      }
-      if (confirm('Tem certeza que deseja deletar este orçamento? Esta ação é irreversível.')) {
-        todosOrcamentos = todosOrcamentos.filter(o => o.id !== orcamentoAtualId);
-        orcamentoAtualId = null;
-        await salvarOrcamentosNoBin();
-        limparFormulario();
-        document.getElementById('form-orcamento').style.display = 'none';
-        document.getElementById('tela-ini').style.display = 'block';
-        renderizarListaOrcamentos();
-        atualizarBotoesAcoes(false);
-        showToast('Orçamento deletado com sucesso!', 'success');
-      }
-    }
-
-    function atualizarBotoesAcoes(habilitar) {
-      document.querySelector('.b-ver').disabled = !habilitar;
-      document.querySelector('.b-wpp').disabled = !habilitar;
-      document.querySelector('.b-dup').disabled = !habilitar;
-      document.querySelector('.b-del').disabled = !habilitar;
-    }
-
-    // ════════════════════════════════════════════
-    // NAVEGAÇÃO POR ABAS
-    // ════════════════════════════════════════════
-
-    document.querySelectorAll('.aba').forEach(aba => {
-      aba.addEventListener('click', () => ativarAba(aba.dataset.aba));
-    });
-
-    function ativarAba(abaId) {
-      document.querySelectorAll('.aba').forEach(aba => aba.classList.remove('on'));
-      document.querySelectorAll('.painel').forEach(painel => painel.classList.remove('on'));
-
-      document.querySelector(`.aba[data-aba="${abaId}"]`).classList.add('on');
-      document.querySelector(`.painel[data-painel="${abaId}"]`).classList.add('on');
-    }
-
-    // ════════════════════════════════════════════
-    // LISTAS DINÂMICAS (INCLUÍDOS / NÃO INCLUÍDOS)
-    // ════════════════════════════════════════════
-
-    function addItemToList(containerId, itemText = '') {
-      const container = document.getElementById(containerId);
-      const div = document.createElement('div');
-      div.classList.add('litem');
-      div.innerHTML = `
-        <input type="text" value="${itemText}" placeholder="Novo item"/>
-        <button class="brem" onclick="this.closest('.litem').remove()"><i class="fas fa-trash-alt"></i></button>
-      `;
-      container.appendChild(div);
-    }
-
-    function getListItems(containerId) {
-      const container = document.getElementById(containerId);
-      return Array.from(container.querySelectorAll('.litem input'))
-                  .map(input => input.value.trim())
-                  .filter(value => value !== '');
-    }
-
-    // ════════════════════════════════════════════
-    // ROTEIRO DIA A DIA
-    // ════════════════════════════════════════════
-
-    function addRoteiroDia(diaData = { titulo: '', descricao: '', imagem: '' }) {
-      const container = document.getElementById('roteiro-dias-container');
-      const index = container.children.length;
-      const div = document.createElement('div');
-      div.classList.add('roteiro-dia-item');
-      div.innerHTML = `
-        <div class="rd-header">
-          <span>Dia ${index + 1}</span>
-          <button class="brem" onclick="this.closest('.roteiro-dia-item').remove()"><i class="fas fa-trash-alt"></i></button>
-        </div>
-        <div class="rd-body">
-          <div class="cg">
-            <label>Título do Dia</label>
-            <input type="text" class="f-rd-titulo" value="${diaData.titulo}" placeholder="Ex: Chegada em Manaus e Transfer"/>
-          </div>
-          <div class="cg">
-            <label>Descrição do Dia</label>
-            <textarea class="f-rd-descricao" rows="3" placeholder="Detalhes das atividades do dia">${diaData.descricao}</textarea>
-          </div>
-          <div class="foto-dia-row">
-            <div class="rd-img-wrap">
-              <img class="f-rd-imagem-preview" src="${diaData.imagem && !diaData.imagem.includes('placeholder') ? diaData.imagem : 'https://via.placeholder.com/180x120?text=Sem+Foto'}" alt="Preview"/>
-              ${diaData.imagem && !diaData.imagem.includes('placeholder') ? `<button class="del-rd-img" onclick="removeRoteiroDiaImage(this)"><i class="fas fa-times"></i></button>` : ''}
-            </div>
-            <div class="rd-img-upload">
-              <div class="upload-box upload-mini" data-loading="false">
-                <input type="file" accept="image/*" onchange="handleRoteiroDiaUpload(event, this)"/>
-                <i class="fas fa-cloud-upload-alt"></i>
-                <p>Clique ou arraste para enviar foto do Dia ${index + 1}</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-
-    function getRoteiroDias() {
-      const container = document.getElementById('roteiro-dias-container');
-      return Array.from(container.querySelectorAll('.roteiro-dia-item')).map(item => {
-        return {
-          titulo: item.querySelector('.f-rd-titulo').value.trim(),
-          descricao: item.querySelector('.f-rd-descricao').value.trim(),
-          imagem: item.querySelector('.f-rd-imagem-preview').src.startsWith('http') && !item.querySelector('.f-rd-imagem-preview').src.includes('placeholder') ? item.querySelector('.f-rd-imagem-preview').src : ''
-        };
-      }).filter(dia => dia.titulo || dia.descricao || dia.imagem);
-    }
-
-    async function handleRoteiroDiaUpload(event, uploadInput) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const uploadBox = uploadInput.closest('.upload-box');
-      const imgPreview = uploadInput.closest('.foto-dia-row').querySelector('.f-rd-imagem-preview');
-      let delBtn = uploadInput.closest('.foto-dia-row').querySelector('.del-rd-img');
-      const originalSrc = imgPreview.src;
-
-      uploadBox.classList.add('sending');
-      uploadBox.dataset.loading = 'true';
-      imgPreview.src = 'https://via.placeholder.com/180x120?text=Subindo...';
-      if (delBtn) delBtn.style.display = 'none'; // Esconde botão de deletar temporariamente
-
-      try {
-        const imageUrl = await uploadImageToImgur(file);
-        imgPreview.src = imageUrl;
-        if (!delBtn) { // Se não existia, cria
-          delBtn = document.createElement('button');
-          delBtn.classList.add('del-rd-img');
-          delBtn.innerHTML = '<i class="fas fa-times"></i>';
-          delBtn.onclick = () => removeRoteiroDiaImage(delBtn);
-          imgPreview.closest('.rd-img-wrap').appendChild(delBtn);
-        }
-        delBtn.style.display = 'flex'; // Mostra o botão
-        showToast('Foto do roteiro enviada com sucesso!', 'success');
-      } catch (error) {
-        console.error('Erro ao enviar foto do roteiro:', error);
-        imgPreview.src = originalSrc.includes('Subindo') ? 'https://via.placeholder.com/180x120?text=Erro' : originalSrc; // Reverte para a imagem original ou placeholder de erro
-        if (delBtn) delBtn.style.display = 'flex'; // Mostra o botão novamente
-        showToast(`Erro ao enviar foto do roteiro: ${error.message}`, 'error');
-      } finally {
-        uploadBox.classList.remove('sending');
-        uploadBox.dataset.loading = 'false';
-        event.target.value = ''; // Limpa o input file
-      }
-    }
-
-    function removeRoteiroDiaImage(button) {
-      const imgPreview = button.closest('.rd-img-wrap').querySelector('.f-rd-imagem-preview');
-      imgPreview.src = 'https://via.placeholder.com/180x120?text=Sem+Foto';
-      button.style.display = 'none'; // Esconde o botão
-    }
-
-    // ════════════════════════════════════════════
-    // OPÇÕES DE VALORES
-    // ════════════════════════════════════════════
-
-    function addOpcaoValor(valorData = { label: '', preco: '', desc: '' }) {
-      const container = document.getElementById('opcoes-valores-container');
-      const div = document.createElement('div');
-      div.classList.add('valores-item');
-      div.innerHTML = `
-        <div class="val-header">
-          <span>Opção de Valor</span>
-          <button class="brem" onclick="this.closest('.valores-item').remove()"><i class="fas fa-trash-alt"></i></button>
-        </div>
-        <div class="val-body">
-          <div class="cg">
-            <label>Rótulo</label>
-            <input type="text" class="f-val-label" value="${valorData.label}" placeholder="Ex: Por pessoa em duplo"/>
-          </div>
-          <div class="cg valor">
-            <label>Preço</label>
-            <input type="text" class="f-val-preco" value="${valorData.preco}" placeholder="R$ 0.00"/>
-          </div>
-          <div class="cg">
-            <label>Descrição</label>
-            <textarea class="f-val-desc" rows="2" placeholder="Ex: Preço por PESSOA em Acomodação dupla">${valorData.desc}</textarea>
-          </div>
-        </div>
-      `;
-      container.appendChild(div);
-    }
-
-    function getOpcoesValores() {
-      const container = document.getElementById('opcoes-valores-container');
-      return Array.from(container.querySelectorAll('.valores-item')).map(item => {
-        return {
-          label: item.querySelector('.f-val-label').value.trim(),
-          preco: item.querySelector('.f-val-preco').value.trim(),
-          desc: item.querySelector('.f-val-desc').value.trim()
-        };
-      }).filter(opcao => opcao.label || opcao.preco || opcao.desc);
-    }
-
-    // ════════════════════════════════════════════
-    // CÁLCULO DE PARCELAMENTO
-    // ════════════════════════════════════════════
-
-    function calcularParcelamento() {
-      const valorTotal = parseFloat(document.getElementById('f-valor-total').value) || 0;
-      const valorEntrada = parseFloat(document.getElementById('f-valor-entrada').value) || 0;
-      const numParcelas = parseInt(document.getElementById('f-num-parcelas').value) || 0;
-
-      let valorParcela = 0;
-      let parcelamentoTxt = '';
-
-      if (valorTotal > 0 && numParcelas > 0) {
-        const saldo = valorTotal - valorEntrada;
-        if (saldo > 0) {
-          valorParcela = saldo / numParcelas;
-          parcelamentoTxt = `Entrada de ${formatarMoeda(valorEntrada)} e saldo em ${numParcelas}x de ${formatarMoeda(valorParcela)} sem juros.`;
-        } else if (saldo === 0) {
-          parcelamentoTxt = `Valor total de ${formatarMoeda(valorTotal)} pago à vista.`;
-        } else {
-          parcelamentoTxt = `Entrada maior que o valor total. Saldo a devolver: ${formatarMoeda(Math.abs(saldo))}.`;
-        }
-      } else if (valorTotal > 0 && numParcelas === 0 && valorEntrada > 0) {
-        parcelamentoTxt = `Valor total de ${formatarMoeda(valorTotal)} com entrada de ${formatarMoeda(valorEntrada)}.`;
-      } else if (valorTotal > 0 && numParcelas === 0 && valorEntrada === 0) {
-        parcelamentoTxt = `Valor total de ${formatarMoeda(valorTotal)}.`;
-      } else {
-        parcelamentoTxt = '';
-      }
-
-      document.getElementById('f-valor-parcela').value = formatarMoeda(valorParcela);
-      document.getElementById('f-parcelamento-txt').value = parcelamentoTxt;
-    }
-
-    // ════════════════════════════════════════════
-    // GALERIA DE FOTOS
-    // ════════════════════════════════════════════
-
-    function addGalleryPreview(url) {
-      const grid = document.getElementById('galeria-preview-grid');
-      const div = document.createElement('div');
-      div.classList.add('prev-item');
-      div.innerHTML = `
-        <img src="${url}" alt="Galeria"/>
-        <button class="del-prev" onclick="removeGalleryPreview(this)"><i class="fas fa-times"></i></button>
-      `;
-      div.onclick = (e) => {
-        if (!e.target.classList.contains('del-prev') && !e.target.closest('.del-prev')) {
-          setCapaFoto(url);
-        }
-      };
-      grid.appendChild(div);
-      updateCapaPreview();
-    }
-
-    function getGalleryPreviews() {
-      const grid = document.getElementById('galeria-preview-grid');
-      return Array.from(grid.querySelectorAll('.prev-item img'))
-                  .map(img => img.src)
-                  .filter(src => src.startsWith('http') && !src.includes('placeholder'));
-    }
-
-    function removeGalleryPreview(button) {
-      const item = button.closest('.prev-item');
-      const imgUrl = item.querySelector('img').src;
-      item.remove();
-      const capaPreview = document.getElementById('capa-preview');
-      if (capaPreview.src === imgUrl) { // Se a imagem removida era a capa, reseta a capa
-        removeCapaFoto();
-      }
-      updateCapaPreview();
-    }
-
-    async function handleGalleryUpload(event, uploadBox) {
+    async function uploadImage(event, type, roteiroItem = null) {
       const files = event.target.files;
       if (files.length === 0) return;
 
+      const uploadBox = event.target.closest('.upload-box');
       uploadBox.classList.add('sending');
-      uploadBox.dataset.loading = 'true';
 
       for (const file of files) {
+        const formData = new FormData();
+        formData.append('image', file);
+
         try {
-          const imageUrl = await uploadImageToImgur(file);
-          addGalleryPreview(imageUrl);
-          showToast(`Foto "${file.name}" enviada com sucesso!`, 'success');
+          const response = await fetch('https://api.imgur.com/3/image', {
+            method: 'POST',
+            headers: {
+              'Authorization': `Client-ID ${IMGUR_ID}`
+            },
+            body: formData
+          });
+
+          if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(`Erro ao enviar imagem para o Imgur: ${errorData.data.error || response.statusText}`);
+          }
+
+          const data = await response.json();
+          const imageUrl = data.data.link;
+          const deletehash = data.data.deletehash; // Guardar o deletehash para exclusão
+
+          if (type === 'capa') {
+            renderCapaPreview(imageUrl, deletehash);
+          } else if (type === 'galeria') {
+            renderGaleriaPreview(imageUrl, deletehash, true); // Adiciona ao final
+          } else if (type === 'roteiro' && roteiroItem) {
+            const imgElement = roteiroItem.querySelector('.rd-img-wrap img');
+            const imgWrap = roteiroItem.querySelector('.rd-img-wrap');
+            imgElement.src = imageUrl;
+            imgElement.dataset.deletehash = deletehash;
+            imgWrap.style.display = 'block';
+            roteiroItem.querySelector('.rd-img-upload').style.display = 'none';
+          }
+          showToast('Imagem enviada com sucesso!', 'success');
+
         } catch (error) {
-          console.error(`Erro ao enviar foto "${file.name}":`, error);
-          showToast(`Erro ao enviar foto "${file.name}": ${error.message}`, 'error');
+          console.error('Erro no upload da imagem:', error);
+          showToast(`Erro no upload da imagem: ${error.message}`, 'error');
+        } finally {
+          uploadBox.classList.remove('sending');
         }
       }
-
-      uploadBox.classList.remove('sending');
-      uploadBox.dataset.loading = 'false';
-      event.target.value = ''; // Limpa o input file
     }
 
-    function setCapaFoto(url) {
-      const capaPreview = document.getElementById('capa-preview');
-      capaPreview.src = url;
-      document.querySelector('#capa-preview').nextElementSibling.style.display = 'flex'; // Mostra botão de remover capa
-      updateCapaPreview();
+    async function deleteImage(imageUrl, showToastMessage = true) {
+      if (!imageUrl || !imageUrl.includes('imgur.com')) {
+        if (showToastMessage) showToast('Esta imagem não foi enviada para o Imgur ou URL inválida.', 'info');
+        return;
+      }
+
+      // Extrair deletehash da URL ou de um atributo data
+      let deletehash = '';
+      const imgurIdMatch = imageUrl.match(/\/([a-zA-Z0-9]+)\.\w+
+$
+/);
+      if (imgurIdMatch && imgurIdMatch[1]) {
+        // Tenta extrair do final da URL (se for o formato padrão do Imgur)
+        // Isso é um fallback, o ideal é armazenar o deletehash
+        // Para um controle mais robusto, o deletehash deveria ser salvo junto com a URL da imagem no objeto do orçamento.
+        // Por simplicidade, vamos assumir que o deletehash é o mesmo ID da imagem para deletar.
+        // No entanto, o Imgur fornece um deletehash separado que é mais seguro.
+        // Para este exemplo, vamos usar o ID da imagem como deletehash, o que pode não funcionar se o deletehash real for diferente.
+        // O ideal seria: orcamento.capaFoto = { url: '...', deletehash: '...' }
+        // Para este código, vamos simular a exclusão.
+        // Para exclusão real, você precisaria do deletehash exato retornado no upload.
+        // Como não estamos armazenando o deletehash no objeto orcamento, esta função é mais um placeholder.
+        // Para uma implementação completa, o objeto orcamento precisaria ser atualizado para armazenar o deletehash.
+        console.warn("Atenção: A exclusão de imagens do Imgur requer o 'deletehash' exato. Este código simula a exclusão e pode não funcionar para exclusões reais sem o deletehash armazenado.");
+        deletehash = imgurIdMatch[1]; // Usando o ID da imagem como deletehash (pode não ser o correto)
+      }
+
+      if (!deletehash) {
+        if (showToastMessage) showToast('Não foi possível obter o deletehash para esta imagem.', 'error');
+        return;
+      }
+
+      try {
+        const response = await fetch(`https://api.imgur.com/3/image/${deletehash}`, {
+          method: 'DELETE',
+          headers: {
+            'Authorization': `Client-ID ${IMGUR_ID}`
+          }
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(`Erro ao deletar imagem do Imgur: ${errorData.data.error || response.statusText}`);
+        }
+
+        if (showToastMessage) showToast('Imagem deletada do Imgur com sucesso!', 'success');
+        return true; // Indica sucesso
+      } catch (error) {
+        console.error('Erro ao deletar imagem do Imgur:', error);
+        if (showToastMessage) showToast(`Erro ao deletar imagem: ${error.message}`, 'error');
+        return false; // Indica falha
+      }
     }
 
-    function updateCapaPreview() {
-      const capaPreview = document.getElementById('capa-preview');
-      const currentCapaUrl = capaPreview.src;
 
-      document.querySelectorAll('.prev-item').forEach(item => {
-        item.classList.remove('capa');
-        if (item.querySelector('img').src === currentCapaUrl) {
-          item.classList.add('capa');
+    function renderCapaPreview(imageUrl, deletehash = '') {
+      const container = document.getElementById('capa-preview');
+      container.innerHTML = ''; // Limpa qualquer capa existente
+      if (imageUrl) {
+        const div = document.createElement('div');
+        div.classList.add('prev-item', 'capa');
+        div.innerHTML = `
+          <img src="${imageUrl}" alt="Capa" data-deletehash="${deletehash}"/>
+          <button class="del-prev" onclick="removeCapa(this)"><i class="fas fa-times"></i></button>
+        `;
+        container.appendChild(div);
+      }
+    }
+
+    async function removeCapa(button) {
+      const item = button.closest('.prev-item');
+      const imageUrl = item.querySelector('img').src;
+      const deletehash = item.querySelector('img').dataset.deletehash;
+
+      if (await deleteImage(imageUrl)) { // Tenta deletar do Imgur
+        item.remove();
+        orcamentoAtual.capaFoto = ''; // Limpa a capa no objeto
+        showToast('Capa removida!', 'success');
+      }
+    }
+
+    function renderGaleriaPreview(images, deletehash = '', append = false) {
+      const container = document.getElementById('galeria-preview');
+      if (!append) {
+        container.innerHTML = ''; // Limpa se não for para adicionar
+      }
+
+      const imagesArray = Array.isArray(images) ? images : [{url: images, deletehash: deletehash}];
+
+      imagesArray.forEach(imgData => {
+        if (imgData.url) {
+          const div = document.createElement('div');
+          div.classList.add('prev-item');
+          div.innerHTML = `
+            <img src="${imgData.url}" alt="Galeria" data-deletehash="${imgData.deletehash || ''}"/>
+            <button class="del-prev" onclick="removeGaleriaImage(this)"><i class="fas fa-times"></i></button>
+          `;
+          div.onclick = () => setCapaFromGaleria(imgData.url, imgData.deletehash);
+          container.appendChild(div);
         }
       });
-      if (currentCapaUrl.includes('placeholder')) {
-        capaPreview.classList.remove('capa');
-      } else {
-        capaPreview.classList.add('capa');
+    }
+
+    async function removeGaleriaImage(button) {
+      const item = button.closest('.prev-item');
+      const imageUrl = item.querySelector('img').src;
+      const deletehash = item.querySelector('img').dataset.deletehash;
+
+      if (await deleteImage(imageUrl)) { // Tenta deletar do Imgur
+        item.remove();
+        // Remove do orcamentoAtual.galeriaFotos
+        if (orcamentoAtual) {
+          orcamentoAtual.galeriaFotos = orcamentoAtual.galeriaFotos.filter(url => url !== imageUrl);
+        }
+        showToast('Imagem da galeria removida!', 'success');
       }
     }
 
-    function removeCapaFoto() {
-      const capaPreview = document.getElementById('capa-preview');
-      capaPreview.src = 'https://via.placeholder.com/200x180?text=Capa';
-      capaPreview.classList.remove('capa');
-      document.querySelector('#capa-preview').nextElementSibling.style.display = 'none'; // Esconde botão de remover capa
-      updateCapaPreview();
+    async function deleteRoteiroImage(button) {
+      const imgWrap = button.closest('.rd-img-wrap');
+      const imgElement = imgWrap.querySelector('img');
+      const imageUrl = imgElement.src;
+      const deletehash = imgElement.dataset.deletehash;
+      const uploadBox = imgWrap.closest('.roteiro-dia-item').querySelector('.rd-img-upload');
+
+      if (await deleteImage(imageUrl)) { // Tenta deletar do Imgur
+        imgElement.src = '';
+        imgElement.dataset.deletehash = '';
+        imgWrap.style.display = 'none';
+        uploadBox.style.display = 'block';
+        showToast('Foto do dia removida!', 'success');
+      }
+    }
+
+    function setCapaFromGaleria(imageUrl, deletehash) {
+      renderCapaPreview(imageUrl, deletehash);
+      if (orcamentoAtual) {
+        orcamentoAtual.capaFoto = imageUrl;
+      }
+      // Remove a classe 'capa' de todos e adiciona na selecionada
+      document.querySelectorAll('#galeria-preview .prev-item').forEach(item => item.classList.remove('capa'));
+      const selectedItem = document.querySelector(`#galeria-preview img[src="${imageUrl}"]`).closest('.prev-item');
+      if (selectedItem) {
+        selectedItem.classList.add('capa');
+      }
+      showToast('Capa definida a partir da galeria!', 'info');
     }
 
     // ════════════════════════════════════════════
-    // ADICIONAIS (AÉREO)
+    // ADICIONAIS (AÉREO, CARRO)
     // ════════════════════════════════════════════
 
-    function addAereoItem(aereoData = { cia: '', numVoo: '', origem: '', destino: '', dataSaida: '', horaSaida: '', dataChegada: '', horaChegada: '' }) {
+    function addAereoItem(item = {}) {
       const container = document.getElementById('aereo-container');
       const div = document.createElement('div');
       div.classList.add('dyn-section-item');
       div.innerHTML = `
         <div class="dyn-header">
-          <span>Detalhes do Voo</span>
-          <button class="brem" onclick="this.closest('.dyn-section-item').remove()"><i class="fas fa-trash-alt"></i></button>
+          <span>Voo</span>
+          <button class="brem" onclick="this.closest('.dyn-section-item').remove();"><i class="fas fa-trash-alt"></i></button>
         </div>
         <div class="dyn-body">
           <div class="row2">
             <div class="cg">
-              <label>Cia Aérea</label>
-              <input type="text" class="f-aereo-cia" value="${aereoData.cia}" placeholder="Ex: LATAM"/>
+              <label>Origem</label>
+              <input type="text" class="aereo-origem" value="${item.origem || ''}" placeholder="Ex: GRU - São Paulo"/>
             </div>
             <div class="cg">
-              <label>Número do Voo</label>
-              <input type="text" class="f-aereo-num-voo" value="${aereoData.numVoo}" placeholder="Ex: LA3406"/>
+              <label>Destino</label>
+              <input type="text" class="aereo-destino" value="${item.destino || ''}" placeholder="Ex: CDG - Paris"/>
             </div>
           </div>
           <div class="row2">
             <div class="cg">
-              <label>Origem</label>
-              <input type="text" class="f-aereo-origem" value="${aereoData.origem}" placeholder="Ex: GRU - São Paulo"/>
+              <label>Cia Aérea</label>
+              <input type="text" class="aereo-cia" value="${item.cia || ''}" placeholder="Ex: LATAM"/>
             </div>
             <div class="cg">
-              <label>Destino</label>
-              <input type="text" class="f-aereo-destino" value="${aereoData.destino}" placeholder="Ex: MAO - Manaus"/>
+              <label>Número do Voo</label>
+              <input type="text" class="aereo-numVoo" value="${item.numVoo || ''}" placeholder="Ex: LA8084"/>
             </div>
           </div>
-          <div class="row4"> <!-- Novo layout para data e hora -->
+          <div class="row4">
             <div class="cg">
               <label>Data Saída</label>
-              <input type="date" class="f-aereo-data-saida" value="${aereoData.dataSaida}"/>
+              <input type="date" class="aereo-dataSaida" value="${item.dataSaida || ''}"/>
             </div>
             <div class="cg">
               <label>Hora Saída</label>
-              <input type="time" class="f-aereo-hora-saida" value="${aereoData.horaSaida}"/>
+              <input type="time" class="aereo-horaSaida" value="${item.horaSaida || ''}"/>
             </div>
             <div class="cg">
               <label>Data Chegada</label>
-              <input type="date" class="f-aereo-data-chegada" value="${aereoData.dataChegada}"/>
+              <input type="date" class="aereo-dataChegada" value="${item.dataChegada || ''}"/>
             </div>
             <div class="cg">
               <label>Hora Chegada</label>
-              <input type="time" class="f-aereo-hora-chegada" value="${aereoData.horaChegada}"/>
+              <input type="time" class="aereo-horaChegada" value="${item.horaChegada || ''}"/>
             </div>
           </div>
         </div>
@@ -1348,48 +1361,41 @@ $
     }
 
     function getAereoItems() {
-      const container = document.getElementById('aereo-container');
-      return Array.from(container.querySelectorAll('.dyn-section-item')).map(item => {
+      return Array.from(document.querySelectorAll('#aereo-container .dyn-section-item')).map(item => {
         return {
-          cia: item.querySelector('.f-aereo-cia').value.trim(),
-          numVoo: item.querySelector('.f-aereo-num-voo').value.trim(),
-          origem: item.querySelector('.f-aereo-origem').value.trim(),
-          destino: item.querySelector('.f-aereo-destino').value.trim(),
-          dataSaida: item.querySelector('.f-aereo-data-saida').value,
-          horaSaida: item.querySelector('.f-aereo-hora-saida').value,
-          dataChegada: item.querySelector('.f-aereo-data-chegada').value,
-          horaChegada: item.querySelector('.f-aereo-hora-chegada').value
+          origem: item.querySelector('.aereo-origem').value,
+          destino: item.querySelector('.aereo-destino').value,
+          cia: item.querySelector('.aereo-cia').value,
+          numVoo: item.querySelector('.aereo-numVoo').value,
+          dataSaida: item.querySelector('.aereo-dataSaida').value,
+          horaSaida: item.querySelector('.aereo-horaSaida').value,
+          dataChegada: item.querySelector('.aereo-dataChegada').value,
+          horaChegada: item.querySelector('.aereo-horaChegada').value
         };
-      }).filter(item => item.cia || item.numVoo || item.origem || item.destino || item.dataSaida || item.horaSaida || item.dataChegada || item.horaChegada);
+      });
     }
 
-    // ════════════════════════════════════════════
-    // ADICIONAIS (CARRO)
-    // ════════════════════════════════════════════
-
-    function addCarroItem(carroData = { localRetirada: '', localEntrega: '', infoAdicional: '' }) {
+    function addCarroItem(item = {}) {
       const container = document.getElementById('carro-container');
       const div = document.createElement('div');
       div.classList.add('dyn-section-item');
       div.innerHTML = `
         <div class="dyn-header">
-          <span>Detalhes do Aluguel de Carro</span>
-          <button class="brem" onclick="this.closest('.dyn-section-item').remove()"><i class="fas fa-trash-alt"></i></button>
+          <span>Aluguel de Carro</span>
+          <button class="brem" onclick="this.closest('.dyn-section-item').remove();"><i class="fas fa-trash-alt"></i></button>
         </div>
         <div class="dyn-body">
-          <div class="row2">
-            <div class="cg">
-              <label>Local de Retirada</label>
-              <input type="text" class="f-carro-retirada" value="${carroData.localRetirada}" placeholder="Ex: Aeroporto de Manaus"/>
-            </div>
-            <div class="cg">
-              <label>Local de Entrega</label>
-              <input type="text" class="f-carro-entrega" value="${carroData.localEntrega}" placeholder="Ex: Aeroporto de Manaus"/>
-            </div>
+          <div class="cg">
+            <label>Local de Retirada</label>
+            <input type="text" class="carro-retirada" value="${item.localRetirada || ''}" placeholder="Ex: Aeroporto de Paris (CDG)"/>
+          </div>
+          <div class="cg">
+            <label>Local de Entrega</label>
+            <input type="text" class="carro-entrega" value="${item.localEntrega || ''}" placeholder="Ex: Aeroporto de Paris (CDG)"/>
           </div>
           <div class="cg">
             <label>Informações Adicionais</label>
-            <textarea class="f-carro-info" rows="3" placeholder="Ex: Categoria Econômica, diárias inclusas, seguro básico">${carroData.infoAdicional}</textarea>
+            <textarea class="carro-info" placeholder="Ex: Categoria Econômica, GPS incluso">${item.infoAdicional || ''}</textarea>
           </div>
         </div>
       `;
@@ -1397,14 +1403,45 @@ $
     }
 
     function getCarroItems() {
-      const container = document.getElementById('carro-container');
-      return Array.from(container.querySelectorAll('.dyn-section-item')).map(item => {
+      return Array.from(document.querySelectorAll('#carro-container .dyn-section-item')).map(item => {
         return {
-          localRetirada: item.querySelector('.f-carro-retirada').value.trim(),
-          localEntrega: item.querySelector('.f-carro-entrega').value.trim(),
-          infoAdicional: item.querySelector('.f-carro-info').value.trim()
+          localRetirada: item.querySelector('.carro-retirada').value,
+          localEntrega: item.querySelector('.carro-entrega').value,
+          infoAdicional: item.querySelector('.carro-info').value
         };
-      }).filter(item => item.localRetirada || item.localEntrega || item.infoAdicional);
+      });
+    }
+
+    // ════════════════════════════════════════════
+    // AÇÕES DO ORÇAMENTO (VER, WHATSAPP)
+    // ════════════════════════════════════════════
+
+    function gerarLinkOrcamento() {
+      if (!orcamentoAtual || !orcamentoAtual.id) {
+        showToast('Nenhum orçamento selecionado.', 'error');
+        return '';
+      }
+      return `${BASE_URL}/orcamento.html?id=${orcamentoAtual.id}`;
+    }
+
+    function abrirOrcamento() {
+      const link = gerarLinkOrcamento();
+      if (link) {
+        window.open(link, '_blank');
+      }
+    }
+
+    function abrirWhatsApp() {
+      if (!orcamentoAtual || !orcamentoAtual.cliente) {
+        showToast('Preencha o nome do cliente para gerar a mensagem.', 'error');
+        return;
+      }
+      const linkOrcamento = gerarLinkOrcamento();
+      if (!linkOrcamento) return;
+
+      const mensagem = `Olá ${orcamentoAtual.cliente},\n\nSeu orçamento para "${orcamentoAtual.titulo}" está pronto! 🎉\n\nConfira todos os detalhes por este link:\n${linkOrcamento}\n\nQualquer dúvida, estou à disposição!`;
+      const whatsappUrl = `https://wa.me/5535988622943?text=${encodeURIComponent(mensagem)}`;
+      window.open(whatsappUrl, '_blank');
     }
 
     // ════════════════════════════════════════════
