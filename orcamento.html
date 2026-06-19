@@ -7,168 +7,17 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
   <!-- Adicione o CSS do Swiper aqui -->
   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
- <style>
+  <style>
     :root{
-      --azul: #346299; /* Azul mais suave */
-      --azul2: #5B8DCF; /* Azul claro */
-      --verde: #50997A; /* Verde mais suave */
-      --verde2: #7AC2A5; /* Verde claro */
-      --dourado: #D4AF37; /* Dourado um pouco mais suave */
-      --dourado2: #CBB060; /* Dourado claro */
-      --cinza: #F8F9FA; /* Cinza bem claro para fundo */
-      --branco: #FFFFFF; /* Branco puro */
-      --sombra: 0 4px 20px rgba(0, 0, 0, 0.08); /* Sombra mais leve */
-      --radius: 12px;
-      --texto-principal: #333333; /* Cor de texto mais suave */
-      --texto-secundario: #666666; /* Cor de texto secundário */
-      --borda-clara: #E0E0E0; /* Borda mais clara */
+      --azul:#1B3A6B;--azul2:#2E5FA3;--verde:#2D6A4F;--verde2:#40916C;
+      --dourado:#C9A84C;--dourado2:#b8941f;--cinza:#F5F6FA;--branco:#fff;
+      --sombra:0 4px 20px rgba(0,0,0,.10);--radius:12px;
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cinza);color:var(--texto-principal);line-height:1.6;}
+    body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cinza);color:#444;line-height:1.6;}
     a{text-decoration:none;color:inherit;}
     img{max-width:100%;height:auto;display:block;}
-/* ══ BASE LAYOUT ══ */
-.container{max-width:960px;margin:0 auto;padding:20px;}
-.section{background:var(--branco);border-radius:var(--radius);box-shadow:var(--sombra);margin-bottom:20px;padding:25px;}
 
-/* ══ HEADER ══ */
-.orc-header{
-  background:linear-gradient(135deg,var(--azul) 0%,var(--verde) 100%);
-  color:var(--branco);padding:40px 20px;text-align:center;
-  position:relative;overflow:hidden;border-radius:0 0 var(--radius) var(--radius);
-  margin-bottom:20px;
-}
-.orc-header::before{
-  content:'';position:absolute;inset:0;
-  background-image:url('https://source.unsplash.com/random/1920x1080/?travel,landscape'); /* Placeholder */
-  background-size:cover;background-position:center;
-  opacity:.2;filter:grayscale(50%);
-  z-index:0;
-}
-.orc-header-content{position:relative;z-index:1;}
-.orc-header h1{font-size:2.5rem;margin-bottom:10px;font-weight:700;}
-.orc-header h2{font-size:1.4rem;font-weight:400;opacity:.9;}
-.orc-header .meta{font-size:.9rem;opacity:.8;margin-top:15px;}
-
-/* ══ STATUS MESSAGES ══ */
-.status-message{
-  background:var(--branco);color:var(--texto-secundario);padding:20px;
-  border-radius:var(--radius);box-shadow:var(--sombra);text-align:center;
-  margin-top:50px;
-}
-.status-message i{font-size:3rem;color:var(--dourado);margin-bottom:15px;}
-.status-message h3{font-size:1.5rem;margin-bottom:10px;}
-.status-message p{font-size:1rem;}
-
-/* ══ SECTIONS ══ */
-.section h3{
-  font-size:1.3rem;color:var(--azul);margin-bottom:20px;padding-bottom:10px;
-  border-bottom:1px solid var(--borda-clara);display:flex;align-items:center;gap:10px;
-}
-.section h3 i{color:var(--dourado);}
-
-/* ══ GALERIA ══ */
-.swiper-container{width:100%;height:350px;border-radius:var(--radius);overflow:hidden;}
-.swiper-slide img{width:100%;height:100%;object-fit:cover;}
-.swiper-button-next, .swiper-button-prev{
-  color:var(--branco);background-color:rgba(0,0,0,.3);border-radius:50%;
-  width:40px;height:40px;
-}
-.swiper-button-next::after, .swiper-button-prev::after{font-size:1.2rem;}
-.swiper-pagination-bullet-active{background-color:var(--dourado);}
-
-/* ══ LISTAS DE ITENS (INCLUÍDOS/NÃO INCLUÍDOS) ══ */
-.lista-itens ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid; /* Usa Grid para layout em colunas */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colunas responsivas */
-  gap: 10px; /* Espaçamento entre os itens */
-}
-
-.lista-itens li {
-  background-color: var(--cinza); /* Fundo suave para cada item */
-  padding: 10px 15px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: var(--texto-principal);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve */
-}
-
-.lista-itens.incluidos li i {
-  color: var(--verde); /* Ícone verde para incluídos */
-}
-
-.lista-itens.nao-incluidos li i {
-  color: #dc3545; /* Ícone vermelho para não incluídos */
-}
-
-/* ══ ROTEIRO DIA A DIA ══ */
-.roteiro-dia{
-  border-bottom:1px dashed var(--borda-clara);padding-bottom:15px;margin-bottom:15px;
-}
-.roteiro-dia:last-child{border-bottom:none;margin-bottom:0;}
-.roteiro-dia h4{font-size:1.1rem;color:var(--azul2);margin-bottom:8px;}
-.roteiro-dia p{margin-bottom:10px;}
-.roteiro-dia img{border-radius:8px;margin-top:10px;max-height:250px;object-fit:cover;}
-
-/* ══ VALORES E INVESTIMENTO ══ */
-.opcoes-valores-grid{display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:20px;}
-.valor-opcao{
-  background:var(--cinza);padding:20px;border-radius:var(--radius);
-  text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-.valor-opcao h4{font-size:1.2rem;color:var(--azul);margin-bottom:10px;}
-.valor-opcao .preco{font-size:2rem;font-weight:700;color:var(--dourado);margin-bottom:10px;}
-.valor-opcao .descricao{font-size:.9rem;color:var(--texto-secundario);}
-.detalhes-pagamento{margin-top:20px;font-size:.95rem;}
-.detalhes-pagamento strong{color:var(--azul);}
-
-/* ══ ADICIONAIS (AÉREO, CARRO) ══ */
-.adicional-item{
-  background:var(--cinza);padding:15px;border-radius:var(--radius);
-  margin-bottom:15px;box-shadow:0 2px 8px rgba(0,0,0,.05);
-}
-.adicional-item h4{font-size:1.1rem;color:var(--azul);margin-bottom:8px;}
-.adicional-item p{font-size:.9rem;margin-bottom:5px;}
-.adicional-item p strong{color:var(--azul2);}
-
-/* ══ CONDIÇÕES E OBSERVAÇÕES ══ */
-.condicoes-gerais p, .observacoes p{font-size:.95rem;white-space:pre-wrap;}
-
-/* ══ FOOTER ══ */
-.orc-footer{
-  background:#f0f0f0;color:var(--texto-secundario);padding:20px;
-  text-align:center;font-size:.85rem;border-radius:var(--radius) var(--radius) 0 0;
-  margin-top:20px;
-}
-.orc-footer .contatos{margin-top:10px;display:flex;flex-wrap:wrap;justify-content:center;gap:15px;}
-.orc-footer .contatos a{color:var(--azul);transition:color .2s;}
-.orc-footer .contatos a:hover{color:var(--dourado);}
-
-/* ══ RESPONSIVIDADE ══ */
-@media (max-width: 768px) {
-  .container{padding:15px;}
-  .orc-header{padding:30px 15px;}
-  .orc-header h1{font-size:2rem;}
-  .orc-header h2{font-size:1.2rem;}
-  .section{padding:20px;}
-  .section h3{font-size:1.1rem;}
-  .swiper-container{height:250px;}
-  .valor-opcao .preco{font-size:1.8rem;}
-}
-@media (max-width: 480px) {
-  .orc-header h1{font-size:1.8rem;}
-  .orc-header h2{font-size:1rem;}
-  .section h3{font-size:1rem;}
-  .lista-itens li{font-size:.85rem;}
-  .orc-footer .contatos{flex-direction:column;gap:8px;}
-}
-  </style>
     /* ══ HEADER ══ */
     .orc-header{
       background:linear-gradient(135deg,var(--azul) 0%,var(--verde) 100%);
@@ -203,35 +52,16 @@
     /* ══ GALERIA ══ */
     /* Removido galeria-grid padrão para usar Swiper */
 
-   /* Estilos para listas de itens (incluídos e não incluídos) */
-.lista-itens ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-  display: grid; /* Usa Grid para layout em colunas */
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Colunas responsivas */
-  gap: 10px; /* Espaçamento entre os itens */
-}
-
-.lista-itens li {
-  background-color: var(--cinza); /* Fundo suave para cada item */
-  padding: 10px 15px;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
-  color: var(--texto-principal);
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* Sombra leve */
-}
-
-.lista-itens.incluidos li i {
-  color: var(--verde); /* Ícone verde para incluídos */
-}
-
-.lista-itens.nao-incluidos li i {
-  color: #dc3545; /* Ícone vermelho para não incluídos */
-}
+    /* ══ INCLUÍDOS / NÃO INCLUÍDOS ══ */
+    .lista-itens ul{list-style:none;padding-left:0;}
+    .lista-itens li{
+      margin-bottom:8px;
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      flex-direction: row; /* Garante que o ícone e o texto fiquem na mesma linha */
+      flex-wrap: nowrap; /* Impede que o texto quebre para a linha de baixo do ícone */
+    }
     .lista-itens li i{font-size:1.1rem;flex-shrink:0;}
     .lista-itens.incluidos li i{color:var(--verde);}
     .lista-itens.nao-incluidos li i{color:#e74c3c;}
@@ -447,31 +277,31 @@
   </div>
 
   <!-- Swiper JS -->
- <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
   <script>
     // ════════════════════════════════════════════
-    // CONFIGURAÇÕES GLOBAIS (MANTENHA SEUS VALORES AQUI)
+    // CONFIGURAÇÕES GLOBAIS
     // ════════════════════════════════════════════
     const JSONBIN_ID  = '6a318e1eda38895dfecb475a'; // Seu BIN ID do JSONBin.io
     const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09Rdqj.'; // Sua chave de acesso ao JSONBin.io
     const BASE_URL    = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2'; // URL base do seu GitHub Pages
-// ════════════════════════════════════════════
-// HELPERS
-// ════════════════════════════════════════════
 
-function formatarMoeda(valor) {
-  return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
-}
+    // ════════════════════════════════════════════
+    // HELPERS
+    // ════════════════════════════════════════════
 
-function formatarData(data) {
-  if (!data) return '';
-  // Adiciona 'T00:00:00' para garantir que a data seja interpretada como UTC e não haja problemas de fuso horário
-  return new Date(data + 'T00:00:00').toLocaleDateString('pt-BR', {
-    day: '2-digit', month: '2-digit', year: 'numeric'
-  });
-}
+    function formatarMoeda(valor) {
+      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+    }
 
-function slugify(text) {
+    function formatarData(data) {
+      if (!data) return '';
+      return new Date(data + 'T00:00:00').toLocaleDateString('pt-BR', {
+        day: '2-digit', month: '2-digit', year: 'numeric'
+      });
+    }
+
+    function slugify(text) {
   return text.toString().toLowerCase()
     .replace(/\s+/g, '-')           // Substitui espaços por -
     .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
@@ -480,243 +310,245 @@ function slugify(text) {
     .replace(/-+$/, '');            // Remove - do final
 }
 
-// ════════════════════════════════════════════
-// CARREGAMENTO DO ORÇAMENTO
-// ════════════════════════════════════════════
+    // ════════════════════════════════════════════
+    // CARREGAMENTO DO ORÇAMENTO
+    // ════════════════════════════════════════════
 
-async function carregarOrcamento() {
-  const urlParams = new URLSearchParams(window.location.search);
-  const orcamentoId = urlParams.get('id');
+    async function carregarOrcamento() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const orcamentoId = urlParams.get('id');
 
-  if (!orcamentoId) {
-    document.getElementById('loading-message').style.display = 'none';
-    document.getElementById('error-message').style.display = 'block';
-    document.getElementById('error-message').querySelector('p').textContent = 'ID do orçamento não encontrado na URL.';
-    return;
-  }
-
-  try {
-    const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
-      headers: {
-        'X-Master-Key': JSONBIN_KEY
+      if (!orcamentoId) {
+        document.getElementById('loading-message').style.display = 'none';
+        document.getElementById('error-message').style.display = 'block';
+        document.getElementById('error-message').querySelector('p').textContent = 'ID do orçamento não encontrado na URL.';
+        return;
       }
-    });
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Erro ao carregar do JSONBin: ${response.status} - ${errorText}`);
-    }
-    const data = await response.json();
-    const todosOrcamentos = data.record || [];
-    const orcamento = todosOrcamentos.find(o =&gt; o.id === orcamentoId);
-if (orcamento) {
-  renderizarOrcamento(orcamento);
-  document.getElementById('loading-message').style.display = 'none';
-  document.getElementById('orcamento-content').style.display = 'block';
-  document.title = `Orçamento: ${orcamento.titulo || 'Sem Título'} — Oficina de Turismo`;
-} else {
-  document.getElementById('loading-message').style.display = 'none';
-  document.getElementById('error-message').style.display = 'block';
-  document.getElementById('error-message').querySelector('p').textContent = 'Orçamento não encontrado.';
-}
-  } catch (error) {
-    console.error('Erro ao carregar orçamento:', error);
-    document.getElementById('loading-message').style.display = 'none';
-    document.getElementById('error-message').style.display = 'block';
-    document.getElementById('error-message').querySelector('p').textContent = `Erro ao carregar orçamento: ${error.message}`;
-  }
-}
 
-function renderizarOrcamento(orcamento) {
-  document.getElementById('orc-titulo').textContent = orcamento.titulo || 'Orçamento de Viagem';
-  document.getElementById('orc-subtitulo').textContent = orcamento.subtitulo || '';
-  document.getElementById('orc-meta').textContent = `Para: ${orcamento.cliente || 'Cliente'} | Data da Viagem: ${formatarData(orcamento.dataViagem) || 'A definir'}`;
+      try {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+          headers: {
+            'X-Master-Key': JSONBIN_KEY
+          }
+        });
+        if (!response.ok) {
+          const errorText = await response.text();
+          throw new Error(`Erro ao carregar do JSONBin: ${response.status} - ${errorText}`);
+        }
+        const data = await response.json();
+        const todosOrcamentos = data.record || [];
+        const orcamento = todosOrcamentos.find(o => o.id === orcamentoId);
 
-  // Capa de Fundo no Header
-  const capaBg = document.getElementById('capa-bg');
-  if (orcamento.capaFoto &amp;&amp; !orcamento.capaFoto.includes('placeholder')) {
-    capaBg.style.backgroundImage = `url('${orcamento.capaFoto}')`;
-  } else {
-    capaBg.style.backgroundImage = `url('${BASE_URL}/assets/images/placeholder-capa.jpg')`; // Use BASE_URL para o placeholder
-  }
+        if (orcamento) {
+          renderizarOrcamento(orcamento);
+          document.getElementById('loading-message').style.display = 'none';
+          document.getElementById('orcamento-content').style.display = 'block';
+          document.title = `Orçamento: ${orcamento.titulo || 'Sem Título'} — Oficina de Turismo`;
+        } else {
+          document.getElementById('loading-message').style.display = 'none';
+          document.getElementById('error-message').style.display = 'block';
+          document.getElementById('error-message').querySelector('p').textContent = 'Orçamento não encontrado.';
+        }
 
-  // Galeria de Fotos (agora com Swiper)
-  const galeriaGrid = document.getElementById('galeria-grid'); // Este é o swiper-wrapper
-  const imagensParaCarrossel = [];
-
-  // Adiciona a capa à galeria se ela não for um placeholder
-  if (orcamento.capaFoto &amp;&amp; !orcamento.capaFoto.includes('placeholder')) {
-    imagensParaCarrossel.push(orcamento.capaFoto);
-  }
-
-  // Adiciona as fotos da galeria
-  if (orcamento.galeriaFotos &amp;&amp; orcamento.galeriaFotos.length &gt; 0) {
-    orcamento.galeriaFotos.forEach(url =&gt; {
-      // Evita adicionar placeholders da galeria e duplicar a capa se já foi adicionada
-      if (!url.includes('placeholder') &amp;&amp; url !== orcamento.capaFoto) {
-        imagensParaCarrossel.push(url);
+      } catch (error) {
+        console.error('Erro ao carregar orçamento:', error);
+        document.getElementById('loading-message').style.display = 'none';
+        document.getElementById('error-message').style.display = 'block';
+        document.getElementById('error-message').querySelector('p').textContent = `Erro ao carregar orçamento: ${error.message}`;
       }
-    });
-  }
-
-  if (imagensParaCarrossel.length &gt; 0) {
-    document.getElementById('galeria-section').style.display = 'block';
-    galeriaGrid.innerHTML = ''; // Limpa antes de adicionar
-    imagensParaCarrossel.forEach(url =&gt; {
-      const div = document.createElement('div');
-      div.classList.add('swiper-slide');
-      div.innerHTML = `&lt;img src="${url}" alt="Foto da Viagem"/&gt;`;
-      galeriaGrid.appendChild(div);
-    });
-// Inicializa o Swiper APÓS adicionar os slides
-setTimeout(() =&amp;gt; { // Pequeno delay para garantir que o DOM esteja pronto
-  new Swiper('#orcamento-swiper', {
-    loop: true,
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    autoplay: {
-      delay: 5000,
-      disableOnInteraction: false,
-    },
-    effect: 'fade', // Efeito de transição
-    fadeEffect: {
-      crossFade: true,
-    },
-  });
-}, 100); // Ajuste o delay se necessário
-  } else {
-    document.getElementById('galeria-section').style.display = 'none';
-  }
-
-
-  // Incluídos
-  const incluidosLista = document.getElementById('incluidos-lista').querySelector('ul');
-  if (orcamento.incluidos &amp;&amp; orcamento.incluidos.length &gt; 0) {
-    document.getElementById('incluidos-section').style.display = 'block';
-    incluidosLista.innerHTML = ''; // Limpa antes de adicionar
-    orcamento.incluidos.forEach(item =&gt; {
-      const li = document.createElement('li');
-      li.innerHTML = `&lt;i class="fas fa-check"&gt;&lt;/i&gt; ${item}`;
-      incluidosLista.appendChild(li);
-    });
-  }
-
-  // Não Incluídos
-  const naoIncluidosLista = document.getElementById('nao-incluidos-lista').querySelector('ul');
-  if (orcamento.naoIncluidos &amp;&amp; orcamento.naoIncluidos.length &gt; 0) {
-    document.getElementById('nao-incluidos-section').style.display = 'block';
-    naoIncluidosLista.innerHTML = ''; // Limpa antes de adicionar
-    orcamento.naoIncluidos.forEach(item =&gt; {
-      const li = document.createElement('li');
-      li.innerHTML = `&lt;i class="fas fa-times"&gt;&lt;/i&gt; ${item}`;
-      naoIncluidosLista.appendChild(li);
-    });
-  }
-
-  // Roteiro Dia a Dia
-  const roteiroDiasContainer = document.getElementById('roteiro-dias-container');
-  if (orcamento.roteiro &amp;&amp; orcamento.roteiro.length &gt; 0) {
-    document.getElementById('roteiro-section').style.display = 'block';
-    roteiroDiasContainer.innerHTML = ''; // Limpa antes de adicionar
-    orcamento.roteiro.forEach((dia, index) =&gt; {
-      const div = document.createElement('div');
-      div.classList.add('roteiro-dia');
-      div.innerHTML = `
-        &lt;h4&gt;Dia ${index + 1}: ${dia.titulo || 'Atividade'}&lt;/h4&gt;
-        &lt;p&gt;${dia.descricao || 'Descrição do dia.'}&lt;/p&gt;
-        ${dia.imagem ? `&lt;img src="${dia.imagem}" alt="Foto do Dia ${index + 1}"/&gt;` : ''}
-      `;
-      roteiroDiasContainer.appendChild(div);
-    });
-  }
-
-  // Valores e Investimento
-  const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
-  const detalhesPagamento = document.getElementById('detalhes-pagamento');
-  if ((orcamento.opcoesValores &amp;&amp; orcamento.opcoesValores.length &gt; 0) || orcamento.parcelamentoTxt) {
-    document.getElementById('valores-section').style.display = 'block';
-    opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
-    detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
-if (orcamento.opcoesValores &amp;amp;&amp;amp; orcamento.opcoesValores.length &amp;gt; 0) {
-  orcamento.opcoesValores.forEach(opcao =&amp;gt; {
-    const div = document.createElement('div');
-    div.classList.add('valor-opcao');
-    div.innerHTML = `
-      &amp;lt;h4&amp;gt;${opcao.label || 'Opção de Valor'}&amp;lt;/h4&amp;gt;
-      &amp;lt;p class="preco"&amp;gt;${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}&amp;lt;/p&amp;gt;
-      &amp;lt;p class="descricao"&amp;gt;${opcao.desc || ''}&amp;lt;/p&amp;gt;
-    `;
-    opcoesValoresContainer.appendChild(div);
-  });
-}
-
-if (orcamento.parcelamentoTxt) {
-  const p = document.createElement('p');
-  p.innerHTML = `&amp;lt;strong&amp;gt;Forma de Pagamento:&amp;lt;/strong&amp;gt; ${orcamento.parcelamentoTxt}`;
-  detalhesPagamento.appendChild(p);
-} else if (orcamento.valorTotal) {
-  const pTotal = document.createElement('p');
-  pTotal.innerHTML = `&amp;lt;strong&amp;gt;Valor Total:&amp;lt;/strong&amp;gt; ${formatarMoeda(orcamento.valorTotal)}`;
-  detalhesPagamento.appendChild(pTotal);
-}    
     }
-  // Parte Aérea
-  const aereoContainer = document.getElementById('aereo-container');
-  if (orcamento.aereo &amp;&amp; orcamento.aereo.length &gt; 0) {
-    document.getElementById('aereo-section').style.display = 'block';
-    aereoContainer.innerHTML = ''; // Limpa antes de adicionar
-    orcamento.aereo.forEach(item =&gt; {
-      const div = document.createElement('div');
-      div.classList.add('adicional-item');
-      div.innerHTML = `
-        &lt;h4&gt;Voo: ${item.origem || ''} &amp;rarr; ${item.destino || ''}&lt;/h4&gt;
-        &lt;p&gt;&lt;strong&gt;Cia Aérea:&lt;/strong&gt; ${item.cia || ''}&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Número do Voo:&lt;/strong&gt; ${item.numVoo || ''}&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Saída:&lt;/strong&gt; ${formatarData(item.dataSaida)} às ${item.horaSaida || ''}&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Chegada:&lt;/strong&gt; ${formatarData(item.dataChegada)} às ${item.horaChegada || ''}&lt;/p&gt;
-      `;
-      aereoContainer.appendChild(div);
-    });
-  }
 
-  // Aluguel de Carro
-  const carroContainer = document.getElementById('carro-container');
-  if (orcamento.carro &amp;&amp; orcamento.carro.length &gt; 0) {
-    document.getElementById('carro-section').style.display = 'block';
-    carroContainer.innerHTML = ''; // Limpa antes de adicionar
-    orcamento.carro.forEach(item =&gt; {
-      const div = document.createElement('div');
-      div.classList.add('adicional-item');
-      div.innerHTML = `
-        &lt;h4&gt;Aluguel de Carro&lt;/h4&gt;
-        &lt;p&gt;&lt;strong&gt;Retirada:&lt;/strong&gt; ${item.localRetirada || ''}&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Entrega:&lt;/strong&gt; ${item.localEntrega || ''}&lt;/p&gt;
-        &lt;p&gt;&lt;strong&gt;Informações:&lt;/strong&gt; ${item.infoAdicional || ''}&lt;/p&gt;
-      `;
-      carroContainer.appendChild(div);
-    });
-  }
+    function renderizarOrcamento(orcamento) {
+      document.getElementById('orc-titulo').textContent = orcamento.titulo || 'Orçamento de Viagem';
+      document.getElementById('orc-subtitulo').textContent = orcamento.subtitulo || '';
+      document.getElementById('orc-meta').textContent = `Para: ${orcamento.cliente || 'Cliente'} | Data da Viagem: ${formatarData(orcamento.dataViagem) || 'A definir'}`;
 
-  // Condições Gerais
-  const condicoesGeraisDiv = document.getElementById('condicoes-gerais');
-  if (orcamento.condicoesGerais) {
-    document.getElementById('condicoes-section').style.display = 'block';
-    condicoesGeraisDiv.innerHTML = `&lt;p&gt;${orcamento.condicoesGerais.replace(/\n/g, '&lt;br&gt;')}&lt;/p&gt;`;
-  }
+      // Capa de Fundo no Header
+      const capaBg = document.getElementById('capa-bg');
+      if (orcamento.capaFoto && !orcamento.capaFoto.includes('placeholder')) {
+        capaBg.style.backgroundImage = `url('${orcamento.capaFoto}')`;
+      } else {
+        capaBg.style.backgroundImage = `url('${BASE_URL}/assets/images/placeholder-capa.jpg')`; // Use BASE_URL para o placeholder
+      }
 
-  // Observações Importantes
-  const observacoesDiv = document.getElementById('observacoes');
-  if (orcamento.observacoes) {
-    document.getElementById('observacoes-section').style.display = 'block';
-    observacoesDiv.innerHTML = `&lt;p&gt;${orcamento.observacoes.replace(/\n/g, '&lt;br&gt;')}&lt;/p&gt;`;
-  }
-}
+      // Galeria de Fotos (agora com Swiper)
+      const galeriaGrid = document.getElementById('galeria-grid'); // Este é o swiper-wrapper
+      const imagensParaCarrossel = [];
 
+      // Adiciona a capa à galeria se ela não for um placeholder
+      if (orcamento.capaFoto && !orcamento.capaFoto.includes('placeholder')) {
+        imagensParaCarrossel.push(orcamento.capaFoto);
+      }
+
+      // Adiciona as fotos da galeria
+      if (orcamento.galeriaFotos && orcamento.galeriaFotos.length > 0) {
+        orcamento.galeriaFotos.forEach(url => {
+          if (!url.includes('placeholder')) { // Evita adicionar placeholders da galeria
+            imagensParaCarrossel.push(url);
+          }
+        });
+      }
+
+      if (imagensParaCarrossel.length > 0) {
+        document.getElementById('galeria-section').style.display = 'block';
+        galeriaGrid.innerHTML = ''; // Limpa antes de adicionar
+        imagensParaCarrossel.forEach(url => {
+          const div = document.createElement('div');
+          div.classList.add('swiper-slide');
+          div.innerHTML = `<img src="${url}" alt="Foto da Viagem"/>`;
+          galeriaGrid.appendChild(div);
+        });
+
+        // Inicializa o Swiper APÓS adicionar os slides
+        setTimeout(() => { // Pequeno delay para garantir que o DOM esteja pronto
+          new Swiper('#orcamento-swiper', {
+            loop: true,
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+              delay: 5000,
+              disableOnInteraction: false,
+            },
+            effect: 'fade', // Efeito de transição
+            fadeEffect: {
+              crossFade: true,
+            },
+          });
+        }, 100); // Ajuste o delay se necessário
+      } else {
+        document.getElementById('galeria-section').style.display = 'none';
+      }
+
+
+      // Incluídos
+      const incluidosLista = document.getElementById('incluidos-lista').querySelector('ul');
+      if (orcamento.incluidos && orcamento.incluidos.length > 0) {
+        document.getElementById('incluidos-section').style.display = 'block';
+        incluidosLista.innerHTML = ''; // Limpa antes de adicionar
+        orcamento.incluidos.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<i class="fas fa-check"></i> ${item}`;
+          incluidosLista.appendChild(li);
+        });
+      }
+
+      // Não Incluídos
+      const naoIncluidosLista = document.getElementById('nao-incluidos-lista').querySelector('ul');
+      if (orcamento.naoIncluidos && orcamento.naoIncluidos.length > 0) {
+        document.getElementById('nao-incluidos-section').style.display = 'block';
+        naoIncluidosLista.innerHTML = ''; // Limpa antes de adicionar
+        orcamento.naoIncluidos.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<i class="fas fa-times"></i> ${item}`;
+          naoIncluidosLista.appendChild(li);
+        });
+      }
+
+      // Roteiro Dia a Dia
+      const roteiroDiasContainer = document.getElementById('roteiro-dias-container');
+      if (orcamento.roteiro && orcamento.roteiro.length > 0) {
+        document.getElementById('roteiro-section').style.display = 'block';
+        roteiroDiasContainer.innerHTML = ''; // Limpa antes de adicionar
+        orcamento.roteiro.forEach((dia, index) => {
+          const div = document.createElement('div');
+          div.classList.add('roteiro-dia');
+          div.innerHTML = `
+            <h4>Dia ${index + 1}: ${dia.titulo || 'Atividade'}</h4>
+            <p>${dia.descricao || 'Descrição do dia.'}</p>
+            ${dia.imagem ? `<img src="${dia.imagem}" alt="Foto do Dia ${index + 1}"/>` : ''}
+          `;
+          roteiroDiasContainer.appendChild(div);
+        });
+      }
+
+      // Valores e Investimento
+      const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
+      const detalhesPagamento = document.getElementById('detalhes-pagamento');
+      if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt) {
+        document.getElementById('valores-section').style.display = 'block';
+        opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
+        detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
+
+        if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
+          orcamento.opcoesValores.forEach(opcao => {
+            const div = document.createElement('div');
+            div.classList.add('valor-opcao');
+            div.innerHTML = `
+              <h4>${opcao.label || 'Opção de Valor'}</h4>
+              <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
+              <p class="descricao">${opcao.desc || ''}</p>
+            `;
+            opcoesValoresContainer.appendChild(div);
+          });
+        }
+
+        if (orcamento.parcelamentoTxt) {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
+          detalhesPagamento.appendChild(p);
+        } else if (orcamento.valorTotal) {
+          const pTotal = document.createElement('p');
+          pTotal.innerHTML = `<strong>Valor Total:</strong> ${formatarMoeda(orcamento.valorTotal)}`;
+          detalhesPagamento.appendChild(pTotal);
+        }
+      }
+
+      // Parte Aérea
+      const aereoContainer = document.getElementById('aereo-container');
+      if (orcamento.aereo && orcamento.aereo.length > 0) {
+        document.getElementById('aereo-section').style.display = 'block';
+        aereoContainer.innerHTML = ''; // Limpa antes de adicionar
+        orcamento.aereo.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('adicional-item');
+          div.innerHTML = `
+            <h4>Voo: ${item.origem || ''} &rarr; ${item.destino || ''}</h4>
+            <p><strong>Cia Aérea:</strong> ${item.cia || ''}</p>
+            <p><strong>Número do Voo:</strong> ${item.numVoo || ''}</p>
+            <p><strong>Horários:</strong> ${item.horarios || ''}</p>
+          `;
+          aereoContainer.appendChild(div);
+        });
+      }
+
+      // Aluguel de Carro
+      const carroContainer = document.getElementById('carro-container');
+      if (orcamento.carro && orcamento.carro.length > 0) {
+        document.getElementById('carro-section').style.display = 'block';
+        carroContainer.innerHTML = ''; // Limpa antes de adicionar
+        orcamento.carro.forEach(item => {
+          const div = document.createElement('div');
+          div.classList.add('adicional-item');
+          div.innerHTML = `
+            <h4>Aluguel de Carro</h4>
+            <p><strong>Retirada:</strong> ${item.localRetirada || ''}</p>
+            <p><strong>Entrega:</strong> ${item.localEntrega || ''}</p>
+            <p><strong>Informações:</strong> ${item.infoAdicional || ''}</p>
+          `;
+          carroContainer.appendChild(div);
+        });
+      }
+
+      // Condições Gerais
+      const condicoesGeraisDiv = document.getElementById('condicoes-gerais');
+      if (orcamento.condicoesGerais) {
+        document.getElementById('condicoes-section').style.display = 'block';
+        condicoesGeraisDiv.innerHTML = `<p>${orcamento.condicoesGerais.replace(/\n/g, '<br>')}</p>`;
+      }
+
+      // Observações Importantes
+      const observacoesDiv = document.getElementById('observacoes');
+      if (orcamento.observacoes) {
+        document.getElementById('observacoes-section').style.display = 'block';
+        observacoesDiv.innerHTML = `<p>${orcamento.observacoes.replace(/\n/g, '<br>')}</p>`;
+      }
+    }
 
     // ════════════════════════════════════════════
     // INICIALIZAÇÃO
