@@ -780,6 +780,8 @@
       document.getElementById('f-subtitulo').value = orc.subtitulo || '';
       document.getElementById('f-data-viagem').value = orc.dataViagem || '';
       document.getElementById('f-status').value = orc.status || 'rascunho';
+       document.getElementById('aereo-container').innerHTML = '';
+  (orc.aereo || []).forEach(item => addAereoItem(item));
 
       // Listas dinâmicas
       document.getElementById('incluidos-container').innerHTML = '';
@@ -1259,57 +1261,73 @@
     // ADICIONAIS (AÉREO)
     // ════════════════════════════════════════════
 
-    function addAereoItem(aereoData = { cia: '', numVoo: '', origem: '', destino: '', horarios: '' }) {
-      const container = document.getElementById('aereo-container');
-      const div = document.createElement('div');
-      div.classList.add('dyn-section-item');
-      div.innerHTML = `
-        <div class="dyn-header">
-          <span>Detalhes do Voo</span>
-          <button class="brem" onclick="this.closest('.dyn-section-item').remove()"><i class="fas fa-trash-alt"></i></button>
-        </div>
-        <div class="dyn-body">
-          <div class="row2">
-            <div class="cg">
-              <label>Cia Aérea</label>
-              <input type="text" class="f-aereo-cia" value="${aereoData.cia}" placeholder="Ex: LATAM"/>
-            </div>
-            <div class="cg">
-              <label>Número do Voo</label>
-              <input type="text" class="f-aereo-num-voo" value="${aereoData.numVoo}" placeholder="Ex: LA3406"/>
-            </div>
-          </div>
-          <div class="row2">
-            <div class="cg">
-              <label>Origem</label>
-              <input type="text" class="f-aereo-origem" value="${aereoData.origem}" placeholder="Ex: GRU - São Paulo"/>
-            </div>
-            <div class="cg">
-              <label>Destino</label>
-              <input type="text" class="f-aereo-destino" value="${aereoData.destino}" placeholder="Ex: MAO - Manaus"/>
-            </div>
+    function addAereoItem(item = {}) {
+    const container = document.getElementById('aereo-container');
+    const div = document.createElement('div');
+    div.classList.add('dyn-section-item');
+    div.innerHTML = `
+      <div class="dyn-header">
+        <span>Detalhes do Voo</span>
+        <button class="brem" onclick="this.closest('.dyn-section-item').remove();"><i class="fas fa-trash-alt"></i></button>
+      </div>
+      <div class="dyn-body">
+        <div class="row2">
+          <div class="cg">
+            <label>Cia Aérea</label>
+            <input type="text" class="aereo-cia" value="${item.cia || ''}" placeholder="Ex: LATAM"/>
           </div>
           <div class="cg">
-            <label>Horários</label>
-            <input type="text" class="f-aereo-horarios" value="${aereoData.horarios}" placeholder="Ex: Saída 08:00 / Chegada 11:00"/>
+            <label>Número do Voo</label>
+            <input type="text" class="aereo-numVoo" value="${item.numVoo || ''}" placeholder="Ex: LA3406"/>
           </div>
         </div>
-      `;
-      container.appendChild(div);
-    }
+        <div class="row2">
+          <div class="cg">
+            <label>Origem</label>
+            <input type="text" class="aereo-origem" value="${item.origem || ''}" placeholder="Ex: GRU - São Paulo"/>
+          </div>
+          <div class="cg">
+            <label>Destino</label>
+            <input type="text" class="aereo-destino" value="${item.destino || ''}" placeholder="Ex: MAO - Manaus"/>
+          </div>
+        </div>
+        <div class="row4"> <!-- Usando row4 para 4 campos em linha -->
+          <div class="cg">
+            <label>Data Saída</label>
+            <input type="date" class="aereo-dataSaida" value="${item.dataSaida || ''}"/>
+          </div>
+          <div class="cg">
+            <label>Hora Saída</label>
+            <input type="time" class="aereo-horaSaida" value="${item.horaSaida || ''}"/>
+          </div>
+          <div class="cg">
+            <label>Data Chegada</label>
+            <input type="date" class="aereo-dataChegada" value="${item.dataChegada || ''}"/>
+          </div>
+          <div class="cg">
+            <label>Hora Chegada</label>
+            <input type="time" class="aereo-horaChegada" value="${item.horaChegada || ''}"/>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(div);
+  }
 
     function getAereoItems() {
-      const container = document.getElementById('aereo-container');
-      return Array.from(container.querySelectorAll('.dyn-section-item')).map(item => {
-        return {
-          cia: item.querySelector('.f-aereo-cia').value.trim(),
-          numVoo: item.querySelector('.f-aereo-num-voo').value.trim(),
-          origem: item.querySelector('.f-aereo-origem').value.trim(),
-          destino: item.querySelector('.f-aereo-destino').value.trim(),
-          horarios: item.querySelector('.f-aereo-horarios').value.trim()
-        };
-      }).filter(item => item.cia || item.numVoo || item.origem || item.destino || item.horarios);
-    }
+    return Array.from(document.querySelectorAll('#aereo-container .dyn-section-item')).map(item => {
+      return {
+        origem: item.querySelector('.aereo-origem').value,
+        destino: item.querySelector('.aereo-destino').value,
+        cia: item.querySelector('.aereo-cia').value,
+        numVoo: item.querySelector('.aereo-numVoo').value,
+        dataSaida: item.querySelector('.aereo-dataSaida').value,
+        horaSaida: item.querySelector('.aereo-horaSaida').value,
+        dataChegada: item.querySelector('.aereo-dataChegada').value,
+        horaChegada: item.querySelector('.aereo-horaChegada').value
+      };
+    });
+  }
 
     // ════════════════════════════════════════════
     // ADICIONAIS (CARRO)
