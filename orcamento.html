@@ -479,21 +479,18 @@
         });
       }
 
-      // Valores e Investimento
+      // Seção de Valores e Investimento
       const valoresSection = document.getElementById('valores-section');
       const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
       const detalhesPagamentoContainer = document.getElementById('detalhes-pagamento-container');
-
-      // Limpa os containers antes de adicionar novos elementos
-      opcoesValoresContainer.innerHTML = '';
-      detalhesPagamentoContainer.innerHTML = '';
-
       let hasContentInValuesSection = false;
 
-      // 1. Renderiza as Opções de Valores (se existirem)
+      opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
+      detalhesPagamentoContainer.innerHTML = ''; // Limpa antes de adicionar
+
+      // 1. Renderiza as Opções de Valores (se houver)
       if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
         hasContentInValuesSection = true;
-        opcoesValoresContainer.innerHTML += '<div class="section-content"><h3>Opções de Investimento</h3></div>'; // Título para as opções
         orcamento.opcoesValores.forEach(opcao => {
           const div = document.createElement('div');
           div.classList.add('valor-opcao');
