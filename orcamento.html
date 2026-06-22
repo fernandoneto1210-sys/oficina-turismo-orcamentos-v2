@@ -543,19 +543,19 @@ $
           // Formatação para exibir Data e Hora de forma clara
           const dataSaidaFormatada = item.dataSaida ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR') : '';
           const dataChegadaFormatada = item.dataChegada ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR') : '';
-          li.innerHTML = `
-            <div class="aereo-item-card">
-              <div class="aereo-header">
-                <strong>${item.cia || 'Cia. Não Informada'}</strong> - Voo ${item.numVoo || 'N/A'}
-              </div>
-              <div class="aereo-body">
-                <p><strong>Origem:</strong> ${item.origem || 'Não Informada'}</p>
-                <p><strong>Destino:</strong> ${item.destino || 'Não Informado'}</p>
-                <p><strong>Saída:</strong> ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}</p>
-                <p><strong>Chegada:</strong> ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}</p>
-              </div>
-            </div>
-          `;
+          lli.innerHTML = `
+   <div class="aereo-item-card">
+     <div class="aereo-header">
+       <strong>${item.cia || 'Cia. Não Informada'}</strong> - Voo ${item.numVoo || 'N/A'}
+     </div>
+     <div class="aereo-body">
+       <p><strong>Origem:</strong> ${item.origem || 'Não Informada'}</p>
+       <p><strong>Destino:</strong> ${item.destino || 'Não Informado'}</p>
+       <p><strong>Saída:</strong> ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}</p>
+       <p><strong>Chegada:</strong> ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}</p>
+     </div>
+   </div>
+ `;
           aereoList.appendChild(li);
         });
       } else {
