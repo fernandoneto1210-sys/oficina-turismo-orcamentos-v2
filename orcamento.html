@@ -286,7 +286,7 @@
     const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09Rdqj.'; // Sua chave de acesso ao JSONBin.io
     const BASE_URL    = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2'; // URL base do seu GitHub Pages
 
-    // ════════════════════════════════════════════
+      // ════════════════════════════════════════════
     // HELPERS
     // ════════════════════════════════════════════
 
@@ -302,13 +302,28 @@
     }
 
     function slugify(text) {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Substitui espaços por -
-    .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
-    .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
-    .replace(/^-+/, '')             // Remove - do início
-    .replace(/-+$/, '');            // Remove - do final
-}
+      return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Substitui espaços por -
+        .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
+        .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
+        .replace(/
+^
+-+/, '')             // Remove - do início
+        .replace(/-+
+$
+/, '');            // Remove - do final
+    }
+
+    // Tenta extrair número de string que contenha "R$ 3.690,00" ou "3690"
+    function parseCurrencyToNumber(input) {
+      if (input === null || input === undefined) return null;
+      if (typeof input === 'number') return input;
+      let s = String(input).trim();
+      // Remove "R$" e espaços, troca pontos por nada, vírgula por ponto
+      s = s.replace(/\s/g,'').replace(/[Rr]\$/g,'').replace(/\./g,'').replace(/\,/g,'.');
+      const n = Number(s);
+      return isNaN(n) ? null : n;
+    }
 
     // ════════════════════════════════════════════
     // CARREGAMENTO DO ORÇAMENTO
