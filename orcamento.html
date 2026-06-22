@@ -1,4 +1,3 @@
-orcamento
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -468,27 +467,52 @@ orcamento
         });
       }
 
-      // Valores e Investimento
-      const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
-      const detalhesPagamento = document.getElementById('detalhes-pagamento');
-      if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt) {
-        document.getElementById('valores-section').style.display = 'block';
-        opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
-        detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
+     // Valores e Investimento
+const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
+const detalhesPagamento = document.getElementById('detalhes-pagamento');
+if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt || orcamento.entrada) { // Adicionado orcamento.entrada
+  document.getElementById('valores-section').style.display = 'block';
+  opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
+  detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
 
-        if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
-          orcamento.opcoesValores.forEach(opcao => {
-            const div = document.createElement('div');
-            div.classList.add('valor-opcao');
-            div.innerHTML = `
-              <h4>${opcao.label || 'Opção de Valor'}</h4>
-              <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
-              <p class="descricao">${opcao.desc || ''}</p>
-            `;
-            opcoesValoresContainer.appendChild(div);
-          });
-        }
+  // Se houver opções de valores (como "Opção 1", "Opção 2"), exibe-as
+  if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
+    orcamento.opcoesValores.forEach(opcao => {
+      const div = document.createElement('div');
+      div.classList.add('valor-opcao');
+      div.innerHTML = `
+        <h4>${opcao.label || 'Opção de Valor'}</h4>
+        <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
+        <p class="descricao">${opcao.desc || ''}</p>
+      `;
+      opcoesValoresContainer.appendChild(div);
+    });
+  }
 
+  // Agora, a parte que você quer focar: Entrada e Parcelamento
+  let pagamentoHtml = '';
+  if (orcamento.entrada && orcamento.parcelamentoTxt) {
+    pagamentoHtml = `<p><strong>Entrada de ${formatarMoeda(parseFloat(orcamento.entrada.replace('R$', '').replace('.', '').replace(',', '.')))}</strong> e saldo ${orcamento.parcelamentoTxt}</p>`;
+  } else if (orcamento.entrada) {
+    pagamentoHtml = `<p><strong>Entrada de ${formatarMoeda(parseFloat(orcamento.entrada.replace('R$', '').replace('.', '').replace(',', '.')))}</strong></p>`;
+  } else if (orcamento.parcelamentoTxt) {
+    pagamentoHtml = `<p>Saldo ${orcamento.parcelamentoTxt}</p>`;
+  }
+
+  if (pagamentoHtml) {
+    detalhesPagamento.innerHTML = `
+      <div class="section-content">
+        <h3>Forma de Pagamento</h3>
+        ${pagamentoHtml}
+      </div>
+    `;
+  } else {
+    detalhesPagamento.innerHTML = '<p class="info-message">Detalhes de pagamento não especificados.</p>';
+  }
+
+} else {
+  document.getElementById('valores-section').style.display = 'none';
+}
         if (orcamento.parcelamentoTxt) {
           const p = document.createElement('p');
           p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
