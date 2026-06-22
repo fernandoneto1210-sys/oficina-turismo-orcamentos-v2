@@ -12,36 +12,38 @@
       --azul:#1B3A6B;--azul2:#2E5FA3;--verde:#2D6A4F;--verde2:#40916C;
       --dourado:#C9A84C;--dourado2:#b8941f;--cinza:#F5F6FA;--branco:#fff;
       --sombra:0 4px 20px rgba(0,0,0,.10);--radius:12px;
+      --borda-clara: #e8e8e8; /* Adicionado para consistência */
+      --texto-principal: #444; /* Adicionado para consistência */
     }
     *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
     body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cinza);color:#444;line-height:1.6;}
     a{text-decoration:none;color:inherit;}
     img{max-width:100%;height:auto;display:block;}
      /* Estilos para os itens de Aéreo na página do orçamento */
- .aereo-item-card {
-   background-color: var(--branco);
-   border: 1px solid var(--borda-clara);
-   border-radius: var(--radius);
-   padding: 15px;
-   margin-bottom: 10px;
-   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
- }
- .aereo-item-card .aereo-header {
-   font-size: 1.1rem;
-   font-weight: 700;
-   color: var(--azul);
-   margin-bottom: 10px;
-   border-bottom: 1px solid var(--borda-clara);
-   padding-bottom: 8px;
- }
- .aereo-item-card .aereo-body p {
-   margin-bottom: 5px;
-   font-size: 0.95rem;
-   color: var(--texto-principal);
- }
- .aereo-item-card .aereo-body p strong {
-   color: var(--azul2);
- }
+    .aereo-item-card {
+      background-color: var(--branco);
+      border: 1px solid var(--borda-clara);
+      border-radius: var(--radius);
+      padding: 15px;
+      margin-bottom: 10px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+    .aereo-item-card .aereo-header {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--azul);
+      margin-bottom: 10px;
+      border-bottom: 1px solid var(--borda-clara);
+      padding-bottom: 8px;
+    }
+    .aereo-item-card .aereo-body p {
+      margin-bottom: 5px;
+      font-size: 0.95rem;
+      color: var(--texto-principal);
+    }
+    .aereo-item-card .aereo-body p strong {
+      color: var(--azul2);
+    }
 
     /* ══ HEADER ══ */
     .orc-header{
@@ -263,7 +265,9 @@
       <section id="aereo-section" class="section" style="display:none;">
         <h3><i class="fas fa-plane"></i> Parte Aérea</h3>
         <div id="aereo-container">
-          <!-- Detalhes de aéreo serão carregados aqui -->
+          <ul id="aereo-list">
+            <!-- Detalhes de aéreo serão carregados aqui -->
+          </ul>
         </div>
       </section>
 
@@ -327,13 +331,17 @@
     }
 
     function slugify(text) {
-  return text.toString().toLowerCase()
-    .replace(/\s+/g, '-')           // Substitui espaços por -
-    .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
-    .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
-    .replace(/^-+/, '')             // Remove - do início
-    .replace(/-+$/, '');            // Remove - do final
-}
+      return text.toString().toLowerCase()
+        .replace(/\s+/g, '-')           // Substitui espaços por -
+        .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
+        .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
+        .replace(/
+^
+-+/, '')             // Remove - do início
+        .replace(/-+
+$
+/, '');            // Remove - do final
+    }
 
     // ════════════════════════════════════════════
     // CARREGAMENTO DO ORÇAMENTO
@@ -525,34 +533,34 @@
       }
 
        // Exibir Aéreo
- const aereoSection = document.getElementById('aereo-section');
- if (orcamento.aereo && orcamento.aereo.length > 0) {
-   aereoSection.style.display = 'block';
-   const aereoList = document.getElementById('aereo-list');
-   aereoList.innerHTML = '';
-   orcamento.aereo.forEach(item => {
-     const li = document.createElement('li');
-     // Formatação para exibir Data e Hora de forma clara
-     const dataSaidaFormatada = item.dataSaida ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR') : '';
-     const dataChegadaFormatada = item.dataChegada ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR') : '';
- li.innerHTML = `
-   &lt;div class="aereo-item-card"&gt;
-     &lt;div class="aereo-header"&gt;
-       &lt;strong&gt;${item.cia || 'Cia. Não Informada'}&lt;/strong&gt; - Voo ${item.numVoo || 'N/A'}
-     &lt;/div&gt;
-     &lt;div class="aereo-body"&gt;
-       &lt;p&gt;&lt;strong&gt;Origem:&lt;/strong&gt; ${item.origem || 'Não Informada'}&lt;/p&gt;
-       &lt;p&gt;&lt;strong&gt;Destino:&lt;/strong&gt; ${item.destino || 'Não Informado'}&lt;/p&gt;
-       &lt;p&gt;&lt;strong&gt;Saída:&lt;/strong&gt; ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}&lt;/p&gt;
-       &lt;p&gt;&lt;strong&gt;Chegada:&lt;/strong&gt; ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}&lt;/p&gt;
-     &lt;/div&gt;
-   &lt;/div&gt;
- `;
- aereoList.appendChild(li);
-   });
- } else {
-   aereoSection.style.display = 'none';
- }
+      const aereoSection = document.getElementById('aereo-section');
+      const aereoList = document.getElementById('aereo-list'); // Agora existe!
+      if (orcamento.aereo && orcamento.aereo.length > 0) {
+        aereoSection.style.display = 'block';
+        aereoList.innerHTML = ''; // Limpa antes de adicionar
+        orcamento.aereo.forEach(item => {
+          const li = document.createElement('li');
+          // Formatação para exibir Data e Hora de forma clara
+          const dataSaidaFormatada = item.dataSaida ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR') : '';
+          const dataChegadaFormatada = item.dataChegada ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR') : '';
+          li.innerHTML = `
+            <div class="aereo-item-card">
+              <div class="aereo-header">
+                <strong>${item.cia || 'Cia. Não Informada'}</strong> - Voo ${item.numVoo || 'N/A'}
+              </div>
+              <div class="aereo-body">
+                <p><strong>Origem:</strong> ${item.origem || 'Não Informada'}</p>
+                <p><strong>Destino:</strong> ${item.destino || 'Não Informado'}</p>
+                <p><strong>Saída:</strong> ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}</p>
+                <p><strong>Chegada:</strong> ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}</p>
+              </div>
+            </div>
+          `;
+          aereoList.appendChild(li);
+        });
+      } else {
+        aereoSection.style.display = 'none';
+      }
 
       // Aluguel de Carro
       const carroContainer = document.getElementById('carro-container');
