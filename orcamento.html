@@ -36,7 +36,7 @@
     .orc-header .header-content{
       position:relative;z-index:1; /* Conteúdo acima da capa */
     }
-    .orc-header .logo{height:160px;margin-bottom:15px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));}
+    .orc-header .logo{height:80px;margin-bottom:15px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.3));}
     .orc-header h1{font-size:2.2rem;margin-bottom:10px;font-weight:700;}
     .orc-header h2{font-size:1.3rem;font-weight:400;opacity:.9;}
     .orc-header .meta{font-size:.9rem;margin-top:15px;opacity:.8;}
@@ -302,28 +302,13 @@
     }
 
     function slugify(text) {
-      return text.toString().toLowerCase()
-        .replace(/\s+/g, '-')           // Substitui espaços por -
-        .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
-        .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
-        .replace(/
-^
--+/, '')             // Remove - do início
-        .replace(/-+
-$
-/, '');            // Remove - do final
-    }
-
-    // Tenta extrair número de string que contenha "R$ 3.690,00" ou "3690"
-    function parseCurrencyToNumber(input) {
-      if (input === null || input === undefined) return null;
-      if (typeof input === 'number') return input;
-      let s = String(input).trim();
-      // Remove "R$" e espaços, troca pontos por nada, vírgula por ponto
-      s = s.replace(/\s/g,'').replace(/[Rr]\$/g,'').replace(/\./g,'').replace(/\,/g,'.');
-      const n = Number(s);
-      return isNaN(n) ? null : n;
-    }
+  return text.toString().toLowerCase()
+    .replace(/\s+/g, '-')           // Substitui espaços por -
+    .replace(/[^\w\-]+/g, '')       // Remove caracteres não-palavra
+    .replace(/\-\-+/g, '-')         // Substitui múltiplos - por um único -
+    .replace(/^-+/, '')             // Remove - do início
+    .replace(/-+$/, '');            // Remove - do final
+}
 
     // ════════════════════════════════════════════
     // CARREGAMENTO DO ORÇAMENTO
@@ -485,101 +470,32 @@ $
       // Valores e Investimento
       const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
       const detalhesPagamento = document.getElementById('detalhes-pagamento');
-      if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt || orcamento.valorTotal || orcamento.entrada) {
+      if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt) {
         document.getElementById('valores-section').style.display = 'block';
         opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
         detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
 
-        // Se houver opções explícitas, renderiza cada uma
         if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
           orcamento.opcoesValores.forEach(opcao => {
             const div = document.createElement('div');
             div.classList.add('valor-opcao');
             div.innerHTML = `
               <h4>${opcao.label || 'Opção de Valor'}</h4>
-              <p class="preco">${opcao.preco ? formatarMoeda(parseCurrencyToNumber(opcao.preco)) : 'A consultar'}</p>
+              <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
               <p class="descricao">${opcao.desc || ''}</p>
             `;
             opcoesValoresContainer.appendChild(div);
           });
-          // Se houver parcelamentoTxt, exibe abaixo das opções
-          if (orcamento.parcelamentoTxt) {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
-            detalhesPagamento.appendChild(p);
-          } else if (orcamento.valorTotal) {
-            const pTotal = document.createElement('p');
-            pTotal.innerHTML = `<strong>Valor Total:</strong> ${formatarMoeda(parseCurrencyToNumber(orcamento.valorTotal))}`;
-            detalhesPagamento.appendChild(pTotal);
-          }
-        } else {
-          // Não há opcoesValores: monta o texto conforme solicitado pelo usuário.
-          // Mostra o título de preço por pessoa e o preço (usando valorTotal se disponível)
-          const titulo = document.createElement('h4');
-          titulo.textContent = 'Preço por pessoa em acomodação dupla';
-          titulo.style.marginBottom = '10px';
-          opcoesValoresContainer.appendChild(titulo);
+        }
 
-          let valorPorPessoa = null;
-          if (orcamento.valorPorPessoa) {
-            valorPorPessoa = parseCurrencyToNumber(orcamento.valorPorPessoa);
-          } else if (orcamento.valorTotal) {
-            const total = parseCurrencyToNumber(orcamento.valorTotal);
-            const pessoas = parseCurrencyToNumber(orcamento.numeroDePessoas || orcamento.passageiros); // Tenta pegar número de pessoas
-            if (total !== null && pessoas !== null && pessoas > 0) {
-              valorPorPessoa = total / pessoas;
-            } else if (total !== null) {
-              valorPorPessoa = total; // Se não tem pessoas, assume que o total já é por pessoa
-            }
-          }
-
-          const precoP = document.createElement('p');
-          precoP.classList.add('preco');
-          if (valorPorPessoa !== null && !isNaN(valorPorPessoa)) {
-            precoP.textContent = formatarMoeda(valorPorPessoa);
-          } else {
-            precoP.textContent = 'A consultar';
-          }
-          opcoesValoresContainer.appendChild(precoP);
-
-          // Agora adiciona a linha com a forma de pagamento exatamente como você pediu, caso exista parcelamentoTxt.
-          if (orcamento.parcelamentoTxt) {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
-            detalhesPagamento.appendChild(p);
-          } else {
-            const entrada = parseCurrencyToNumber(orcamento.entrada);
-            const valorTotal = parseCurrencyToNumber(orcamento.valorTotal);
-            const numeroParcelas = parseCurrencyToNumber(orcamento.numeroParcelas);
-            const valorParcelas = parseCurrencyToNumber(orcamento.valorParcelas);
-
-            let pagamentoTexto = '';
-
-            if (entrada !== null && numeroParcelas !== null && numeroParcelas > 0) {
-              let saldoRestante = valorTotal !== null ? valorTotal - entrada : null;
-              let parcelaCalculada = null;
-
-              if (valorParcelas !== null) {
-                parcelaCalculada = valorParcelas;
-              } else if (saldoRestante !== null) {
-                parcelaCalculada = saldoRestante / numeroParcelas;
-              }
-
-              if (parcelaCalculada !== null) {
-                pagamentoTexto = `Entrada de ${formatarMoeda(entrada)} e saldo em ${numeroParcelas}x de ${formatarMoeda(parcelaCalculada)} sem juros.`;
-              } else {
-                pagamentoTexto = `Entrada de ${formatarMoeda(entrada)} e saldo em ${numeroParcelas}x (valor da parcela a consultar).`;
-              }
-            } else if (valorTotal !== null) {
-              pagamentoTexto = `Valor Total: ${formatarMoeda(valorTotal)}`;
-            }
-
-            if (pagamentoTexto) {
-              const p = document.createElement('p');
-              p.innerHTML = `<strong>Forma de Pagamento:</strong> ${pagamentoTexto}`;
-              detalhesPagamento.appendChild(p);
-            }
-          }
+        if (orcamento.parcelamentoTxt) {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
+          detalhesPagamento.appendChild(p);
+        } else if (orcamento.valorTotal) {
+          const pTotal = document.createElement('p');
+          pTotal.innerHTML = `<strong>Valor Total:</strong> ${formatarMoeda(orcamento.valorTotal)}`;
+          detalhesPagamento.appendChild(pTotal);
         }
       }
 
