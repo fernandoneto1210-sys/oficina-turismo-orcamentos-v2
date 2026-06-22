@@ -53,550 +53,468 @@
       color: var(--branco);
     }
 
-    .orc-header .logo img {
+    .orc-header-left {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .orc-logo {
       height: 70px;
+      width: auto;
+      object-fit: contain;
       filter: drop-shadow(0 2px 8px rgba(0, 0, 0, .3));
     }
 
-    .orc-header .contato {
-      text-align: right;
-      font-size: 0.9rem;
-    }
-
-    .orc-header .contato p {
+    .orc-titulo-principal {
+      font-size: 1.6rem;
+      font-weight: 700;
       margin: 0;
     }
 
-    .orc-header .contato a {
-      color: var(--dourado);
-      font-weight: 600;
-    }
-
-    /* ══ MAIN CONTENT ══ */
-    .container {
-      max-width: 1000px;
-      margin: 30px auto;
-      padding: 0 20px;
-    }
-
-    .card {
-      background: var(--branco);
-      border-radius: var(--radius);
-      box-shadow: var(--sombra);
-      margin-bottom: 25px;
-      overflow: hidden;
-    }
-
-    .card-header {
-      background: var(--cinza);
-      padding: 15px 20px;
-      border-bottom: 1px solid var(--borda-clara);
+    .orc-header-right {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .card-header h2 {
-      font-size: 1.2rem;
-      color: var(--azul);
-      margin: 0;
+    .orc-status {
+      background: rgba(255, 255, 255, 0.2);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.3);
     }
 
-    .card-body {
-      padding: 20px;
+    .orc-status.ativo {
+      background: #d4edda;
+      color: #155724;
+      border-color: #c3e6cb;
     }
 
-    /* ══ SEÇÃO DE DESTAQUE (Capa e Título) ══ */
-    .hero-section {
-      position: relative;
-      height: 350px;
-      border-radius: var(--radius);
-      overflow: hidden;
-      margin-bottom: 30px;
-      box-shadow: var(--sombra);
+    .orc-status.rascunho {
+      background: #fff3cd;
+      color: #856404;
+      border-color: #ffeeba;
     }
 
-    .hero-section img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      filter: brightness(0.7);
+    .orc-status.expirado {
+      background: #f8d7da;
+      color: #721c24;
+      border-color: #f5c6cb;
     }
 
-    .hero-content {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      padding: 25px;
-      color: var(--branco);
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0));
+    /* ══ MAIN CONTENT ══ */
+    .container {
+      max-width: 900px;
+      margin: 30px auto;
+      padding: 0 20px;
     }
 
-    .hero-content h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .hero-content p {
-      font-size: 1.1rem;
-      font-weight: 300;
-    }
-
-    /* ══ CARROSSEL DE IMAGENS ══ */
-    .carousel-container {
-      position: relative;
-      max-width: 100%;
-      margin: 20px auto;
-      border-radius: var(--radius);
-      overflow: hidden;
-      box-shadow: var(--sombra);
-    }
-
-    .carousel-slide {
-      display: none;
-      width: 100%;
-      height: 400px; /* Altura fixa para o carrossel */
-      object-fit: cover;
-    }
-
-    .carousel-slide.active {
-      display: block;
-    }
-
-    .carousel-btn {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background-color: rgba(0, 0, 0, 0.5);
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      cursor: pointer;
-      font-size: 1.5rem;
-      z-index: 10;
-      border-radius: 5px;
-    }
-
-    .carousel-btn.prev {
-      left: 10px;
-    }
-
-    .carousel-btn.next {
-      right: 10px;
-    }
-
-    .carousel-dots {
-      text-align: center;
-      padding: 10px 0;
+    .section {
       background: var(--branco);
-      border-bottom-left-radius: var(--radius);
-      border-bottom-right-radius: var(--radius);
-    }
-
-    .dot {
-      height: 10px;
-      width: 10px;
-      margin: 0 5px;
-      background-color: var(--borda-clara);
-      border-radius: 50%;
-      display: inline-block;
-      transition: background-color 0.6s ease;
-      cursor: pointer;
-    }
-
-    .dot.active {
-      background-color: var(--azul);
-    }
-
-    /* ══ SEÇÕES GERAIS ══ */
-    .info-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      margin-bottom: 20px;
-    }
-
-    .info-item {
-      background: var(--cinza);
-      padding: 15px;
       border-radius: var(--radius);
+      box-shadow: var(--sombra);
+      margin-bottom: 25px;
+      padding: 25px;
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      color: var(--azul);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--borda-clara);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .section-title i {
+      color: var(--dourado);
+    }
+
+    .section-content p {
+      margin-bottom: 15px;
+      color: var(--texto-principal);
+    }
+
+    .section-content ul {
+      list-style: none;
+      padding-left: 0;
+      margin-bottom: 15px;
+    }
+
+    .section-content ul li {
+      margin-bottom: 8px;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      color: var(--texto-principal);
+    }
+
+    .section-content ul li i {
+      color: var(--verde);
+      margin-top: 3px;
+      flex-shrink: 0;
+    }
+
+    .section-content ul li.nao-incluido i {
+      color: #e74c3c;
+    }
+
+    .grid-2-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    /* ══ DETALHES GERAIS ══ */
+    .detalhes-gerais p {
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+    }
+
+    .detalhes-gerais p strong {
+      color: var(--azul);
+    }
+
+    /* ══ ROTEIRO ══ */
+    .roteiro-item {
+      background: var(--cinza);
+      border-radius: 8px;
+      padding: 15px;
+      margin-bottom: 15px;
       border: 1px solid var(--borda-clara);
     }
 
-    .info-item h3 {
-      font-size: 1rem;
+    .roteiro-item h3 {
+      font-size: 1.1rem;
       color: var(--azul);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      margin-bottom: 10px;
     }
 
-    .info-item p {
+    .roteiro-item p {
       font-size: 0.9rem;
       color: var(--texto-secundario);
     }
 
-    /* ══ LISTAS (Incluídos/Não Incluídos) ══ */
-    .list-columns {
-      display: grid;
-      grid-template-columns: 1fr; /* Padrão para mobile */
-      gap: 20px;
-    }
-
-    @media (min-width: 768px) {
-      .list-columns {
-        grid-template-columns: 1fr 1fr; /* Duas colunas para desktop */
-      }
-    }
-
-    .list-item {
-      display: flex;
-      align-items: flex-start;
-      margin-bottom: 8px;
-      font-size: 0.95rem;
-    }
-
-    .list-item i {
-      margin-right: 10px;
-      font-size: 1.1rem;
-      flex-shrink: 0;
-    }
-
-    .list-item.incluido i {
-      color: var(--verde);
-    }
-
-    .list-item.nao-incluido i {
-      color: #e74c3c; /* Vermelho para não incluído */
-    }
-
     /* ══ AÉREO ══ */
-    .aereo-item-card {
+    .aereo-item {
       background: var(--cinza);
-      border-radius: var(--radius);
-      border: 1px solid var(--borda-clara);
+      border-radius: 8px;
       padding: 15px;
       margin-bottom: 15px;
+      border: 1px solid var(--borda-clara);
     }
 
-    .aereo-item-card .aereo-header {
-      font-size: 1rem;
-      font-weight: 700;
+    .aereo-item h3 {
+      font-size: 1.1rem;
       color: var(--azul);
       margin-bottom: 10px;
-      border-bottom: 1px solid var(--borda-clara);
-      padding-bottom: 8px;
     }
 
-    .aereo-item-card .aereo-body p {
+    .aereo-item p {
+      font-size: 0.9rem;
+      color: var(--texto-secundario);
       margin-bottom: 5px;
-      font-size: 0.95rem;
-      color: var(--texto-principal);
     }
 
-    .aereo-item-card .aereo-body p strong {
+    .aereo-item p strong {
       color: var(--azul2);
     }
 
     /* ══ CARRO ══ */
-    .carro-item-card {
+    .carro-item {
       background: var(--cinza);
-      border-radius: var(--radius);
-      border: 1px solid var(--borda-clara);
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .carro-item-card .carro-header {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--azul);
-      margin-bottom: 10px;
-      border-bottom: 1px solid var(--borda-clara);
-      padding-bottom: 8px;
-    }
-
-    .carro-item-card .carro-body p {
-      margin-bottom: 5px;
-      font-size: 0.95rem;
-      color: var(--texto-principal);
-    }
-
-    .carro-item-card .carro-body p strong {
-      color: var(--azul2);
-    }
-
-    /* ══ ROTEIRO DIA A DIA ══ */
-    .roteiro-dia-card {
-      background: var(--cinza);
-      border-radius: var(--radius);
-      border: 1px solid var(--borda-clara);
-      padding: 15px;
-      margin-bottom: 15px;
-    }
-
-    .roteiro-dia-card .roteiro-header {
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--azul);
-      margin-bottom: 10px;
-      border-bottom: 1px solid var(--borda-clara);
-      padding-bottom: 8px;
-    }
-
-    .roteiro-dia-card .roteiro-body p {
-      margin-bottom: 5px;
-      font-size: 0.95rem;
-      color: var(--texto-principal);
-    }
-
-    .roteiro-dia-card .roteiro-body img {
-      max-width: 100%;
-      height: auto;
       border-radius: 8px;
-      margin-top: 10px;
-    }
-
-    /* ══ VALORES POR PESSOA ══ */
-    .valores-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 15px;
-    }
-
-    .valores-table th, .valores-table td {
+      padding: 15px;
+      margin-bottom: 15px;
       border: 1px solid var(--borda-clara);
-      padding: 10px;
-      text-align: left;
-      font-size: 0.95rem;
     }
 
-    .valores-table th {
-      background: var(--cinza);
+    .carro-item h3 {
+      font-size: 1.1rem;
       color: var(--azul);
-      font-weight: 700;
+      margin-bottom: 10px;
     }
 
-    .valores-table tr:nth-child(even) {
-      background: #f2f2f2;
+    .carro-item p {
+      font-size: 0.9rem;
+      color: var(--texto-secundario);
+      margin-bottom: 5px;
     }
 
-    .valores-table td:last-child {
-      text-align: right;
-      font-weight: 600;
+    .carro-item p strong {
       color: var(--azul2);
+    }
+
+    /* ══ VALORES ══ */
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .valor-item {
+      background: var(--cinza);
+      border-radius: 8px;
+      padding: 15px;
+      border: 1px solid var(--borda-clara);
+      text-align: center;
+    }
+
+    .valor-item h3 {
+      font-size: 1rem;
+      color: var(--azul);
+      margin-bottom: 8px;
+    }
+
+    .valor-item p {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--dourado);
+    }
+
+    /* ══ GALERIA ══ */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .gallery-item {
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease;
+    }
+
+    .gallery-item:hover {
+      transform: translateY(-3px);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 120px;
+      object-fit: cover;
+      display: block;
     }
 
     /* ══ RODAPÉ ══ */
     .orc-footer {
       text-align: center;
-      padding: 25px;
-      margin-top: 40px;
-      background: var(--azul);
-      color: rgba(255, 255, 255, 0.8);
+      padding: 20px;
+      margin-top: 30px;
       font-size: 0.85rem;
+      color: var(--texto-secundario);
+      border-top: 1px solid var(--borda-clara);
     }
 
-    .orc-footer a {
-      color: var(--dourado);
-      font-weight: 600;
+    /* ══ ESTILOS DE ERRO/CARREGAMENTO ══ */
+    .loading-message, .error-message {
+      text-align: center;
+      padding: 50px;
+      font-size: 1.2rem;
+      color: var(--texto-secundario);
     }
 
-    /* ══ UTILITÁRIOS ══ */
-    .text-center { text-align: center; }
-    .hidden { display: none !important; }
+    .error-message {
+      color: #e74c3c;
+    }
+
+    /* ══ RESPONSIVIDADE ══ */
+    @media (max-width: 768px) {
+      .orc-header {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .orc-header-left {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .orc-titulo-principal {
+        font-size: 1.4rem;
+      }
+
+      .orc-header-right {
+        margin-top: 10px;
+      }
+
+      .grid-2-cols {
+        grid-template-columns: 1fr;
+      }
+
+      .valores-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+      }
+    }
   </style>
 </head>
 <body>
 
   <header class="orc-header">
-    <div class="logo">
-      <img src="https://i.imgur.com/your-logo-here.png" alt="Oficina de Turismo"> <!-- Substitua pelo seu logo -->
+    <div class="orc-header-left">
+      <img src="https://i.imgur.com/seu-logo-aqui.png" alt="Logo Oficina de Turismo" class="orc-logo"> <!-- Substitua pelo seu logo -->
+      <h1 class="orc-titulo-principal" id="orcamento-titulo">Carregando Orçamento...</h1>
     </div>
-    <div class="contato">
-      <p>Oficina de Turismo</p>
-      <p>Telefone: <a href="tel:+5511999999999">+55 11 99999-9999</a></p>
-      <p>Email: <a href="mailto:contato@oficinadeturismo.com">contato@oficinadeturismo.com</a></p>
+    <div class="orc-header-right">
+      <span class="orc-status" id="orcamento-status"></span>
+      <span class="orc-status" id="orcamento-data"></span>
     </div>
   </header>
 
   <main class="container">
+    <div id="loading" class="loading-message">
+      <i class="fas fa-spinner fa-spin"></i> Carregando orçamento...
+    </div>
+    <div id="error" class="error-message" style="display: none;">
+      <i class="fas fa-exclamation-triangle"></i> Erro ao carregar o orçamento. Verifique o ID ou tente novamente.
+    </div>
 
-    <!-- SEÇÃO DE DESTAQUE (Capa e Título) -->
-    <section class="hero-section" id="hero-section">
-      <img id="capa-img" src="https://via.placeholder.com/1000x350?text=Carregando..." alt="Capa do Orçamento">
-      <div class="hero-content">
-        <h1 id="titulo-viagem">Carregando Orçamento...</h1>
-        <p id="datas-viagem"></p>
-      </div>
-    </section>
-
-    <!-- CARROSSEL DE IMAGENS -->
-    <section class="carousel-container hidden" id="carousel-section">
-      <div id="carousel-inner">
-        <!-- Imagens do carrossel serão inseridas aqui pelo JS -->
-      </div>
-      <button class="carousel-btn prev" onclick="plusSlides(-1)">&#10094;</button>
-      <button class="carousel-btn next" onclick="plusSlides(1)">&#10095;</button>
-      <div class="carousel-dots" id="carousel-dots">
-        <!-- Dots serão inseridos aqui pelo JS -->
-      </div>
-    </section>
-
-    <!-- INFORMAÇÕES GERAIS -->
-    <section class="card" id="info-gerais-section">
-      <div class="card-header">
-        <i class="fas fa-info-circle"></i>
-        <h2>Informações Gerais</h2>
-      </div>
-      <div class="card-body info-grid">
-        <div class="info-item">
-          <h3><i class="fas fa-user"></i> Cliente</h3>
-          <p id="cliente-nome">Carregando...</p>
+    <div id="orcamento-content" style="display: none;">
+      <!-- Seção de Detalhes Gerais -->
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-info-circle"></i> Detalhes Gerais</h2>
+        <div class="section-content detalhes-gerais">
+          <p><strong>Cliente:</strong> <span id="cliente-nome"></span></p>
+          <p><strong>Período:</strong> <span id="periodo-viagem"></span></p>
+          <p><strong>Número de Viajantes:</strong> <span id="num-viajantes"></span></p>
+          <p><strong>Destino:</strong> <span id="destino-viagem"></span></p>
+          <p><strong>Tipo de Viagem:</strong> <span id="tipo-viagem"></span></p>
         </div>
-        <div class="info-item">
-          <h3><i class="fas fa-calendar-alt"></i> Período</h3>
-          <p id="periodo-viagem">Carregando...</p>
+      </section>
+
+      <!-- Seção de Roteiro -->
+      <section class="section" id="roteiro-section">
+        <h2 class="section-title"><i class="fas fa-map-marked-alt"></i> Roteiro</h2>
+        <div class="section-content" id="roteiro-container">
+          <!-- Roteiro será preenchido aqui pelo JS -->
         </div>
-        <div class="info-item">
-          <h3><i class="fas fa-map-marker-alt"></i> Destino</h3>
-          <p id="destino-viagem">Carregando...</p>
+      </section>
+
+      <!-- Seção de Parte Aérea -->
+      <section class="section" id="aereo-section">
+        <h2 class="section-title"><i class="fas fa-plane"></i> Parte Aérea</h2>
+        <div class="section-content" id="aereo-container">
+          <!-- Voos serão preenchidos aqui pelo JS -->
         </div>
-        <div class="info-item">
-          <h3><i class="fas fa-users"></i> Número de Pessoas</h3>
-          <p id="num-pessoas">Carregando...</p>
+      </section>
+
+      <!-- Seção de Aluguel de Carro -->
+      <section class="section" id="carro-section">
+        <h2 class="section-title"><i class="fas fa-car"></i> Aluguel de Carro</h2>
+        <div class="section-content" id="carro-container">
+          <!-- Carros serão preenchidos aqui pelo JS -->
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- ITENS INCLUÍDOS -->
-    <section class="card hidden" id="incluidos-section">
-      <div class="card-header">
-        <i class="fas fa-check-circle"></i>
-        <h2>O que está incluído</h2>
-      </div>
-      <div class="card-body list-columns" id="incluidos-list">
-        <!-- Itens incluídos serão inseridos aqui pelo JS -->
-      </div>
-    </section>
-
-    <!-- ITENS NÃO INCLUÍDOS -->
-    <section class="card hidden" id="nao-incluidos-section">
-      <div class="card-header">
-        <i class="fas fa-times-circle"></i>
-        <h2>O que não está incluído</h2>
-      </div>
-      <div class="card-body list-columns" id="nao-incluidos-list">
-        <!-- Itens não incluídos serão inseridos aqui pelo JS -->
-      </div>
-    </section>
-
-    <!-- PARTE AÉREA -->
-    <section class="card hidden" id="aereo-section">
-      <div class="card-header">
-        <i class="fas fa-plane"></i>
-        <h2>Parte Aérea</h2>
-      </div>
-      <div class="card-body" id="aereo-details">
-        <!-- Detalhes do aéreo serão inseridos aqui pelo JS -->
-      </div>
-    </section>
-
-    <!-- ALUGUEL DE CARRO -->
-    <section class="card hidden" id="carro-section">
-      <div class="card-header">
-        <i class="fas fa-car"></i>
-        <h2>Aluguel de Carro</h2>
-      </div>
-      <div class="card-body" id="carro-details">
-        <!-- Detalhes do carro serão inseridos aqui pelo JS -->
-      </div>
-    </section>
-
-    <!-- ROTEIRO DIA A DIA -->
-    <section class="card hidden" id="roteiro-section">
-      <div class="card-header">
-        <i class="fas fa-route"></i>
-        <h2>Roteiro Dia a Dia</h2>
-      </div>
-      <div class="card-body" id="roteiro-details">
-        <!-- Detalhes do roteiro serão inseridos aqui pelo JS -->
-      </div>
-    </section>
-
-    <!-- VALORES POR PESSOA -->
-    <section class="card hidden" id="valores-section">
-      <div class="card-header">
-        <i class="fas fa-dollar-sign"></i>
-        <h2>Valores por Pessoa</h2>
-      </div>
-      <div class="card-body">
-        <div id="valores-table-container">
-          <!-- Tabela de valores será inserida aqui pelo JS -->
+      <!-- Seção de Incluídos e Não Incluídos -->
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-check-circle"></i> O que está incluído e não incluído</h2>
+        <div class="section-content grid-2-cols">
+          <div>
+            <h3><i class="fas fa-plus-circle"></i> Incluído</h3>
+            <ul id="incluido-lista">
+              <!-- Itens incluídos serão preenchidos aqui pelo JS -->
+            </ul>
+          </div>
+          <div>
+            <h3><i class="fas fa-minus-circle"></i> Não Incluído</h3>
+            <ul id="nao-incluido-lista">
+              <!-- Itens não incluídos serão preenchidos aqui pelo JS -->
+            </ul>
+          </div>
         </div>
-        <p id="parcelamento-info" style="margin-top: 15px; font-weight: 600; color: var(--azul);"></p>
-      </div>
-    </section>
+      </section>
 
-    <!-- CONDIÇÕES GERAIS -->
-    <section class="card hidden" id="condicoes-gerais-section">
-      <div class="card-header">
-        <i class="fas fa-file-alt"></i>
-        <h2>Condições Gerais</h2>
-      </div>
-      <div class="card-body" id="condicoes-gerais">
-        <!-- Condições gerais serão inseridas aqui pelo JS -->
-      </div>
-    </section>
+      <!-- Seção de Valores -->
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-dollar-sign"></i> Valores</h2>
+        <div class="section-content valores-grid" id="valores-container">
+          <!-- Valores serão preenchidos aqui pelo JS -->
+        </div>
+      </section>
 
-    <!-- OBSERVAÇÕES IMPORTANTES -->
-    <section class="card hidden" id="observacoes-section">
-      <div class="card-header">
-        <i class="fas fa-exclamation-triangle"></i>
-        <h2>Observações Importantes</h2>
-      </div>
-      <div class="card-body" id="observacoes">
-        <!-- Observações serão inseridas aqui pelo JS -->
-      </div>
-    </section>
+      <!-- Seção de Condições Gerais e Observações -->
+      <section class="section">
+        <h2 class="section-title"><i class="fas fa-file-alt"></i> Condições e Observações</h2>
+        <div class="section-content">
+          <h3>Condições Gerais:</h3>
+          <p id="condicoes-gerais"></p>
+          <h3>Observações:</h3>
+          <p id="observacoes"></p>
+        </div>
+      </section>
 
+      <!-- Seção de Galeria de Fotos -->
+      <section class="section" id="galeria-section">
+        <h2 class="section-title"><i class="fas fa-images"></i> Galeria de Fotos</h2>
+        <div class="section-content gallery-grid" id="galeria-container">
+          <!-- Fotos serão preenchidas aqui pelo JS -->
+        </div>
+      </section>
+    </div>
   </main>
 
   <footer class="orc-footer">
-    <p>&copy; 2026 Oficina de Turismo. Todos os direitos reservados.</p>
-    <p>Desenvolvido com <i class="fas fa-heart" style="color: #e74c3c;"></i> por <a href="#" target="_blank">Seu Nome/Empresa</a></p>
+    Oficina de Turismo &copy; 2026 - Todos os direitos reservados.
   </footer>
 
   <script>
-  const JSONBIN_ID  = '6a318e1eda38895dfecb475a'; // Seu BIN ID do JSONBin.io
-    const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09Rdqj.'; // Sua chave de acesso ao JSONBin.io
+    // CONFIGURAÇÕES GLOBAIS
+    // ════════════════════════════════════════════
+    const JSONBIN_ID  = '6a318e1eda38895dfecb475a'; // Seu BIN ID do JSONBin.io
+    const JSONBIN_KEY = '$2a$10$HTy/puCq6iupLHos/RV5DejOrnyU5.Pz18WDA4.dpmLOWJ09Rdqk.'; // Sua chave de acesso ao JSONBin.io
     const BASE_URL    = 'https://fernandoneto1210-sys.github.io/oficina-turismo-orcamentos-v2'; // URL base do seu GitHub Pages
 
-   // ════════════════════════════════════════════
-    // HELPERS
+    // ════════════════════════════════════════════
+    // FUNÇÕES AUXILIARES
     // ════════════════════════════════════════════
 
-    function formatarMoeda(valor) {
-      return new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(valor);
+    // Função para formatar valores monetários
+    function formatCurrency(value) {
+      return new Intl.NumberFormat('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+      }).format(value);
     }
 
-    function formatarData(data) {
-      if (!data) return '';
-      return new Date(data + 'T00:00:00').toLocaleDateString('pt-BR', {
-        day: '2-digit', month: '2-digit', year: 'numeric'
-      });
+    // Função para formatar datas
+    function formatDate(dateString) {
+      if (!dateString) return '';
+      const [year, month, day] = dateString.split('-');
+      return `${day}/${month}/${year}`;
     }
 
-    // Nova função para substituir quebras de linha por <br> sem regex
-    function nl2br(text = '') {
-      return String(text).split('\n').join('<br>');
+    // Função para exibir mensagens de erro ou sucesso
+    function showToast(message, type = 'info') {
+      const toastContainer = document.getElementById('toast-container');
+      if (!toastContainer) {
+        console.warn('Toast container not found. Message:', message);
+        return;
+      }
+
+      const toast = document.createElement('div');
+      toast.classList.add('toast', type);
+      toast.textContent = message;
+      toastContainer.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('hide');
+        toast.addEventListener('transitionend', () => toast.remove());
+      }, 3000);
     }
 
     // ════════════════════════════════════════════
-    // CARREGAMENTO DO ORÇAMENTO
+    // CARREGAMENTO E EXIBIÇÃO DO ORÇAMENTO
     // ════════════════════════════════════════════
 
     async function carregarOrcamento() {
@@ -604,307 +522,177 @@
       const orcamentoId = urlParams.get('id');
 
       if (!orcamentoId) {
-        document.getElementById('loading-message').style.display = 'none';
-        document.getElementById('error-message').style.display = 'block';
-        document.getElementById('error-message').querySelector('p').textContent = 'ID do orçamento não encontrado na URL.';
+        document.getElementById('orcamento-detalhes').innerHTML = '<p class="info-message">Nenhum ID de orçamento fornecido na URL.</p>';
         return;
       }
 
       try {
-        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}/latest`, {
+        const response = await fetch(`https://api.jsonbin.io/v3/b/${JSONBIN_ID}`, {
           headers: {
-            'X-Master-Key': JSONBIN_KEY
+            'X-Master-Key': JSONBIN_KEY,
+            'X-Bin-Meta': false // Para obter apenas os dados do bin
           }
         });
+
         if (!response.ok) {
-          const errorText = await response.text();
-          throw new Error(`Erro ao carregar do JSONBin: ${response.status} - ${errorText}`);
+          throw new Error(`Erro ao carregar orçamentos: ${response.statusText}`);
         }
-        const data = await response.json();
-        const todosOrcamentos = data.record || [];
+
+        const todosOrcamentos = await response.json();
         const orcamento = todosOrcamentos.find(o => o.id === orcamentoId);
 
         if (orcamento) {
           renderizarOrcamento(orcamento);
-          document.getElementById('loading-message').style.display = 'none';
-          document.getElementById('orcamento-content').style.display = 'block';
-          document.title = `Orçamento: ${orcamento.titulo || 'Sem Título'} — Oficina de Turismo`;
         } else {
-          document.getElementById('loading-message').style.display = 'none';
-          document.getElementById('error-message').style.display = 'block';
-          document.getElementById('error-message').querySelector('p').textContent = 'Orçamento não encontrado.';
+          document.getElementById('orcamento-detalhes').innerHTML = '<p class="info-message">Orçamento não encontrado.</p>';
         }
 
       } catch (error) {
         console.error('Erro ao carregar orçamento:', error);
-        document.getElementById('loading-message').style.display = 'none';
-        document.getElementById('error-message').style.display = 'block';
-        document.getElementById('error-message').querySelector('p').textContent = `Erro ao carregar orçamento: ${error.message}`;
+        document.getElementById('orcamento-detalhes').innerHTML = `<p class="error-message">Erro ao carregar orçamento: ${error.message}</p>`;
+        showToast(`Erro ao carregar orçamento: ${error.message}`, 'error');
       }
     }
 
     function renderizarOrcamento(orcamento) {
-      const tituloEl = document.getElementById('orc-titulo');
-      const subtituloEl = document.getElementById('orc-subtitulo');
-      const metaEl = document.getElementById('orc-meta');
-      const capaBg = document.getElementById('capa-bg');
+      document.getElementById('orc-titulo').textContent = orcamento.titulo || 'Orçamento Sem Título';
+      document.getElementById('orc-subtitulo').textContent = orcamento.subtitulo || '';
+      document.getElementById('orc-cliente').textContent = orcamento.cliente || 'Cliente Não Informado';
+      document.getElementById('orc-data-viagem').textContent = orcamento.dataViagem ? `Data da Viagem: ${orcamento.dataViagem}` : '';
+      document.getElementById('orc-status').textContent = orcamento.status || 'Rascunho';
+      document.getElementById('orc-status').className = `status-badge status-${orcamento.status ? orcamento.status.toLowerCase() : 'rascunho'}`;
 
-      if (tituloEl) tituloEl.textContent = orcamento.titulo || 'Orçamento de Viagem';
-      if (subtituloEl) subtituloEl.textContent = orcamento.subtitulo || '';
-      if (metaEl) {
-        metaEl.textContent = `Para: ${orcamento.cliente || 'Cliente'} | Data da Viagem: ${formatarData(orcamento.dataViagem) || 'A definir'}`;
-      }
+      // Capa do Orçamento
+      const capaUrl = orcamento.capaFoto || 'https://via.placeholder.com/1200x400?text=Capa+do+Orçamento';
+      document.getElementById('orc-capa').style.backgroundImage = `url('${capaUrl}')`;
 
-      if (capaBg) {
-        if (orcamento.capaFoto && !orcamento.capaFoto.includes('placeholder')) {
-          capaBg.style.backgroundImage = `url('${orcamento.capaFoto}')`;
-        } else {
-          capaBg.style.backgroundImage = `url('${BASE_URL}/assets/images/placeholder-capa.jpg')`;
-        }
-      }
-
-      // GALERIA
-      const galeriaSection = document.getElementById('galeria-section');
-      const galeriaGrid = document.getElementById('galeria-grid');
-      const imagensParaCarrossel = [];
-
-      if (orcamento.capaFoto && !orcamento.capaFoto.includes('placeholder')) {
-        imagensParaCarrossel.push(orcamento.capaFoto);
-      }
-
-      if (Array.isArray(orcamento.galeriaFotos)) {
-        orcamento.galeriaFotos.forEach(url => {
-          if (url && !url.includes('placeholder')) {
-            imagensParaCarrossel.push(url);
-          }
+      // Itens Incluídos
+      const incluidosList = document.getElementById('orc-incluidos');
+      incluidosList.innerHTML = '';
+      if (orcamento.incluidos && orcamento.incluidos.length > 0) {
+        orcamento.incluidos.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<i class="fas fa-check-circle"></i> ${item}`;
+          incluidosList.appendChild(li);
         });
+      } else {
+        incluidosList.innerHTML = '<li><i class="fas fa-info-circle"></i> Nenhum item incluído especificado.</li>';
       }
 
-      if (galeriaSection && galeriaGrid) {
-        if (imagensParaCarrossel.length > 0) {
-          galeriaSection.style.display = 'block';
-          galeriaGrid.innerHTML = '';
-
-          imagensParaCarrossel.forEach(url => {
-            const slide = document.createElement('div');
-            slide.className = 'swiper-slide';
-            slide.innerHTML = `<img src="${url}" alt="Foto da Viagem"/>`;
-            galeriaGrid.appendChild(slide);
-          });
-
-          setTimeout(() => {
-            new Swiper('#orcamento-swiper', {
-              loop: true,
-              pagination: {
-                el: '.swiper-pagination',
-                clickable: true
-              },
-              navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev'
-              },
-              autoplay: {
-                delay: 5000,
-                disableOnInteraction: false
-              },
-              effect: 'fade',
-              fadeEffect: {
-                crossFade: true
-              }
-            });
-          }, 100);
-        } else {
-          galeriaSection.style.display = 'none';
-        }
+      // Itens Não Incluídos
+      const naoIncluidosList = document.getElementById('orc-nao-incluidos');
+      naoIncluidosList.innerHTML = '';
+      if (orcamento.naoIncluidos && orcamento.naoIncluidos.length > 0) {
+        orcamento.naoIncluidos.forEach(item => {
+          const li = document.createElement('li');
+          li.innerHTML = `<i class="fas fa-times-circle"></i> ${item}`;
+          naoIncluidosList.appendChild(li);
+        });
+      } else {
+        naoIncluidosList.innerHTML = '<li><i class="fas fa-info-circle"></i> Nenhum item não incluído especificado.</li>';
       }
 
-      // INCLUÍDOS
-      const incluidosSection = document.getElementById('incluidos-section');
-      const incluidosLista = document.getElementById('incluidos-lista')?.querySelector('ul');
-      if (incluidosSection && incluidosLista) {
-        if (Array.isArray(orcamento.incluidos) && orcamento.incluidos.length > 0) {
-          incluidosSection.style.display = 'block';
-          incluidosLista.innerHTML = '';
-          orcamento.incluidos.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `<i class="fas fa-check"></i> ${item}`;
-            incluidosLista.appendChild(li);
-          });
-        } else {
-          incluidosSection.style.display = 'none';
-        }
+      // Roteiro
+      const roteiroContainer = document.getElementById('orc-roteiro-container');
+      roteiroContainer.innerHTML = '';
+      if (orcamento.roteiro && orcamento.roteiro.length > 0) {
+        orcamento.roteiro.forEach(dia => {
+          const diaDiv = document.createElement('div');
+          diaDiv.classList.add('roteiro-dia');
+          diaDiv.innerHTML = `
+            <h3>Dia ${dia.dia}: ${dia.titulo}</h3>
+            <p>${dia.descricao}</p>
+          `;
+          roteiroContainer.appendChild(diaDiv);
+        });
+      } else {
+        roteiroContainer.innerHTML = '<p class="info-message">Nenhum roteiro detalhado.</p>';
       }
 
-      // NÃO INCLUÍDOS
-      const naoIncluidosSection = document.getElementById('nao-incluidos-section');
-      const naoIncluidosLista = document.getElementById('nao-incluidos-lista')?.querySelector('ul');
-      if (naoIncluidosSection && naoIncluidosLista) {
-        if (Array.isArray(orcamento.naoIncluidos) && orcamento.naoIncluidos.length > 0) {
-          naoIncluidosSection.style.display = 'block';
-          naoIncluidosLista.innerHTML = '';
-          orcamento.naoIncluidos.forEach(item => {
-            const li = document.createElement('li');
-            li.innerHTML = `<i class="fas fa-times"></i> ${item}`;
-            naoIncluidosLista.appendChild(li);
-          });
-        } else {
-          naoIncluidosSection.style.display = 'none';
-        }
+      // Valores
+      const valoresContainer = document.getElementById('orc-valores-container');
+      valoresContainer.innerHTML = '';
+      if (orcamento.valores && orcamento.valores.length > 0) {
+        orcamento.valores.forEach(opcao => {
+          const opcaoDiv = document.createElement('div');
+          opcaoDiv.classList.add('valor-opcao');
+          opcaoDiv.innerHTML = `
+            <h4>${opcao.titulo}</h4>
+            <p>${opcao.descricao}</p>
+          `;
+          valoresContainer.appendChild(opcaoDiv);
+        });
+      } else {
+        valoresContainer.innerHTML = '<p class="info-message">Nenhuma opção de valor especificada.</p>';
       }
 
-      // ROTEIRO
-      const roteiroSection = document.getElementById('roteiro-section');
-      const roteiroDiasContainer = document.getElementById('roteiro-dias-container');
-      if (roteiroSection && roteiroDiasContainer) {
-        if (Array.isArray(orcamento.roteiro) && orcamento.roteiro.length > 0) {
-          roteiroSection.style.display = 'block';
-          roteiroDiasContainer.innerHTML = '';
+      // Detalhes de Pagamento
+      document.getElementById('orc-valor-total').textContent = orcamento.valorTotal ? formatCurrency(orcamento.valorTotal) : 'Não informado';
+      document.getElementById('orc-valor-entrada').textContent = orcamento.valorEntrada ? formatCurrency(orcamento.valorEntrada) : 'Não informado';
+      document.getElementById('orc-num-parcelas').textContent = orcamento.numParcelas || 'Não informado';
+      document.getElementById('orc-valor-parcela').textContent = orcamento.valorParcela ? formatCurrency(orcamento.valorParcela) : 'Não informado';
+      document.getElementById('orc-texto-parcelamento').textContent = orcamento.textoParcelamento || 'Condições de parcelamento não especificadas.';
 
-          orcamento.roteiro.forEach((dia, index) => {
-            const div = document.createElement('div');
-            div.className = 'roteiro-dia';
-            div.innerHTML = `
-              <h4>Dia ${index + 1}: ${dia.titulo || 'Atividade'}</h4>
-              <p>${dia.descricao || 'Descrição do dia.'}</p>
-              ${dia.imagem ? `<img src="${dia.imagem}" alt="Foto do Dia ${index + 1}"/>` : ''}
-            `;
-            roteiroDiasContainer.appendChild(div);
-          });
-        } else {
-          roteiroSection.style.display = 'none';
-        }
+      // Fotos
+      const galeriaContainer = document.getElementById('orc-galeria-container');
+      galeriaContainer.innerHTML = '';
+      if (orcamento.fotos && orcamento.fotos.length > 0) {
+        orcamento.fotos.forEach(fotoUrl => {
+          const imgDiv = document.createElement('div');
+          imgDiv.classList.add('galeria-item');
+          imgDiv.innerHTML = `<img src="${fotoUrl}" alt="Foto do Orçamento">`;
+          galeriaContainer.appendChild(imgDiv);
+        });
+      } else {
+        galeriaContainer.innerHTML = '<p class="info-message">Nenhuma foto na galeria.</p>';
       }
 
-      // VALORES
-      const valoresSection = document.getElementById('valores-section');
-      const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
-      const detalhesPagamento = document.getElementById('detalhes-pagamento');
-
-      if (valoresSection && opcoesValoresContainer && detalhesPagamento) {
-        const temValores = Array.isArray(orcamento.opcoesValores) && orcamento.opcoesValores.length > 0;
-        const temPagamento = !!orcamento.parcelamentoTxt || !!orcamento.valorTotal;
-
-        if (temValores || temPagamento) {
-          valoresSection.style.display = 'block';
-          opcoesValoresContainer.innerHTML = '';
-          detalhesPagamento.innerHTML = '';
-
-          if (temValores) {
-            orcamento.opcoesValores.forEach(opcao => {
-              const div = document.createElement('div');
-              div.className = 'valor-opcao';
-              div.innerHTML = `
-                <h4>${opcao.label || 'Opção de Valor'}</h4>
-                <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
-                <p class="descricao">${opcao.desc || ''}</p>
-              `;
-              opcoesValoresContainer.appendChild(div);
-            });
-          }
-
-          if (orcamento.parcelamentoTxt) {
-            const p = document.createElement('p');
-            p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
-            detalhesPagamento.appendChild(p);
-          }
-
-          if (orcamento.valorTotal) {
-            const pTotal = document.createElement('p');
-            pTotal.innerHTML = `<strong>Valor Total:</strong> ${formatarMoeda(Number(orcamento.valorTotal))}`;
-            detalhesPagamento.appendChild(pTotal);
-          }
-        } else {
-          valoresSection.style.display = 'none';
-        }
+      // Parte Aérea (AGORA COM OS NOVOS CAMPOS SEPARADOS!)
+      const aereoContainer = document.getElementById('orc-aereo-container');
+      aereoContainer.innerHTML = '';
+      if (orcamento.aereo && orcamento.aereo.length > 0) {
+        orcamento.aereo.forEach(voo => {
+          const vooDiv = document.createElement('div');
+          vooDiv.classList.add('aereo-item');
+          vooDiv.innerHTML = `
+            <h4>${voo.cia} - Voo ${voo.numVoo}</h4>
+            <p><strong>Origem:</strong> ${voo.origem}</p>
+            <p><strong>Destino:</strong> ${voo.destino}</p>
+            <p><strong>Data Saída:</strong> ${formatDate(voo.dataSaida)}</p>
+            <p><strong>Hora Saída:</strong> ${voo.horaSaida}</p>
+            <p><strong>Data Chegada:</strong> ${formatDate(voo.dataChegada)}</p>
+            <p><strong>Hora Chegada:</strong> ${voo.horaChegada}</p>
+          `;
+          aereoContainer.appendChild(vooDiv);
+        });
+      } else {
+        aereoContainer.innerHTML = '<p class="info-message">Nenhum detalhe de parte aérea.</p>';
       }
 
-      // AÉREO
-      const aereoSection = document.getElementById('aereo-section');
-      const aereoList = document.getElementById('aereo-list');
-      if (aereoSection && aereoList) {
-        if (Array.isArray(orcamento.aereo) && orcamento.aereo.length > 0) {
-          aereoSection.style.display = 'block';
-          aereoList.innerHTML = '';
-
-          orcamento.aereo.forEach(item => {
-            const li = document.createElement('li');
-
-            const dataSaidaFormatada = item.dataSaida
-              ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR')
-              : '';
-
-            const dataChegadaFormatada = item.dataChegada
-              ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR')
-              : '';
-
-            const card = document.createElement('div');
-            card.className = 'aereo-item-card';
-            card.innerHTML = `
-              <div class="aereo-header">
-                <strong>${item.cia || 'Cia. Não Informada'}</strong> - Voo ${item.numVoo || 'N/A'}
-              </div>
-              <div class="aereo-body">
-                <p><strong>Origem:</strong> ${item.origem || 'Não Informada'}</p>
-                <p><strong>Destino:</strong> ${item.destino || 'Não Informado'}</p>
-                <p><strong>Saída:</strong> ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}</p>
-                <p><strong>Chegada:</strong> ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}</p>
-              </div>
-            `;
-            li.appendChild(card);
-            aereoList.appendChild(li);
-          });
-        } else {
-          aereoSection.style.display = 'none';
-        }
+      // Aluguel de Carro
+      const carroContainer = document.getElementById('orc-carro-container');
+      carroContainer.innerHTML = '';
+      if (orcamento.carro && orcamento.carro.length > 0) {
+        orcamento.carro.forEach(carro => {
+          const carroDiv = document.createElement('div');
+          carroDiv.classList.add('carro-item');
+          carroDiv.innerHTML = `
+            <h4>Aluguel de Carro</h4>
+            <p><strong>Retirada:</strong> ${carro.localRetirada}</p>
+            <p><strong>Entrega:</strong> ${carro.localEntrega}</p>
+            <p><strong>Info Adicional:</strong> ${carro.infoAdicional}</p>
+          `;
+          carroContainer.appendChild(carroDiv);
+        });
+      } else {
+        carroContainer.innerHTML = '<p class="info-message">Nenhum detalhe de aluguel de carro.</p>';
       }
 
-      // CARRO
-      const carroSection = document.getElementById('carro-section');
-      const carroContainer = document.getElementById('carro-container');
-      if (carroSection && carroContainer) {
-        if (Array.isArray(orcamento.carro) && orcamento.carro.length > 0) {
-          carroSection.style.display = 'block';
-          carroContainer.innerHTML = '';
+      // Condições Gerais
+      document.getElementById('orc-condicoes-gerais').innerHTML = orcamento.condicoesGerais ? `<p>${orcamento.condicoesGerais.replace(/\n/g, '<br>')}</p>` : '<p class="info-message">Nenhuma condição geral especificada.</p>';
 
-          orcamento.carro.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'adicional-item';
-            div.innerHTML = `
-              <h4>Aluguel de Carro</h4>
-              <p><strong>Retirada:</strong> ${item.localRetirada || ''}</p>
-              <p><strong>Entrega:</strong> ${item.localEntrega || ''}</p>
-              <p><strong>Informações:</strong> ${item.infoAdicional || ''}</p>
-            `;
-            carroContainer.appendChild(div);
-          });
-        } else {
-          carroSection.style.display = 'none';
-        }
-      }
-
-      // CONDIÇÕES
-      const condicoesSection = document.getElementById('condicoes-section');
-      const condicoesGeraisDiv = document.getElementById('condicoes-gerais');
-      if (condicoesSection && condicoesGeraisDiv) {
-        if (orcamento.condicoesGerais) {
-          condicoesSection.style.display = 'block';
-          condicoesGeraisDiv.innerHTML = `<p>${nl2br(orcamento.condicoesGerais)}</p>`;
-        } else {
-          condicoesSection.style.display = 'none';
-        }
-      }
-
-      // OBSERVAÇÕES
-      const observacoesSection = document.getElementById('observacoes-section');
-      const observacoesDiv = document.getElementById('observacoes');
-      if (observacoesSection && observacoesDiv) {
-        if (orcamento.observacoes) {
-          observacoesSection.style.display = 'block';
-          observacoesDiv.innerHTML = `<p>${nl2br(orcamento.observacoes)}</p>`;
-        } else {
-          observacoesSection.style.display = 'none';
-        }
-      }
+      // Observações Importantes
+      document.getElementById('orc-observacoes').innerHTML = orcamento.observacoes ? `<p>${orcamento.observacoes.replace(/\n/g, '<br>')}</p>` : '<p class="info-message">Nenhuma observação importante.</p>';
     }
 
     // ════════════════════════════════════════════
@@ -915,3 +703,6 @@
   </script>
 </body>
 </html>
+
+  
+
