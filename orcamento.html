@@ -532,36 +532,45 @@ $
         }
       }
 
-       // Exibir Aéreo
-      const aereoSection = document.getElementById('aereo-section');
-      const aereoList = document.getElementById('aereo-list'); // Agora existe!
-      if (orcamento.aereo && orcamento.aereo.length > 0) {
-        aereoSection.style.display = 'block';
-        aereoList.innerHTML = ''; // Limpa antes de adicionar
-        orcamento.aereo.forEach(item => {
-          const li = document.createElement('li');
-          // Formatação para exibir Data e Hora de forma clara
-          const dataSaidaFormatada = item.dataSaida ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR') : '';
-          const dataChegadaFormatada = item.dataChegada ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR') : '';
-          lli.innerHTML = `
-   <div class="aereo-item-card">
-     <div class="aereo-header">
-       <strong>${item.cia || 'Cia. Não Informada'}</strong> - Voo ${item.numVoo || 'N/A'}
-     </div>
-     <div class="aereo-body">
-       <p><strong>Origem:</strong> ${item.origem || 'Não Informada'}</p>
-       <p><strong>Destino:</strong> ${item.destino || 'Não Informado'}</p>
-       <p><strong>Saída:</strong> ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}</p>
-       <p><strong>Chegada:</strong> ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}</p>
-     </div>
-   </div>
- `;
-          aereoList.appendChild(li);
-        });
-      } else {
-        aereoSection.style.display = 'none';
-      }
+      // Exibir Aéreo
+const aereoSection = document.getElementById('aereo-section');
+const aereoList = document.getElementById('aereo-list');
 
+if (orcamento.aereo && orcamento.aereo.length > 0) {
+  aereoSection.style.display = 'block';
+  aereoList.innerHTML = '';
+
+  orcamento.aereo.forEach(item => {
+    const li = document.createElement('li');
+
+    const dataSaidaFormatada = item.dataSaida
+      ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR')
+      : '';
+
+    const dataChegadaFormatada = item.dataChegada
+      ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR')
+      : '';
+
+    const card = document.createElement('div');
+    card.className = 'aereo-item-card';
+
+    card.innerHTML = `
+      <div class="aereo-header">
+        <strong>${item.cia || 'Cia. Não Informada'}</strong> - Voo ${item.numVoo || 'N/A'}
+      </div>
+      <div class="aereo-body">
+        <p><strong>Origem:</strong> ${item.origem || 'Não Informada'}</p>
+        <p><strong>Destino:</strong> ${item.destino || 'Não Informado'}</p>
+        <p><strong>Saída:</strong> ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}</p>
+        <p><strong>Chegada:</strong> ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}</p>
+      </div>
+    `;
+li.appendChild(card);
+    aereoList.appendChild(li);
+  });
+} else {
+  aereoSection.style.display = 'none';
+}
       // Aluguel de Carro
       const carroContainer = document.getElementById('carro-container');
       if (orcamento.carro && orcamento.carro.length > 0) {
@@ -584,14 +593,14 @@ $
       const condicoesGeraisDiv = document.getElementById('condicoes-gerais');
       if (orcamento.condicoesGerais) {
         document.getElementById('condicoes-section').style.display = 'block';
-        condicoesGeraisDiv.innerHTML = `<p>${orcamento.condicoesGerais.replace(/\n/g, '<br>')}</p>`;
+        condicoesGeraisDiv.innerHTML = `<p>${orcamento.condicoesGerais.split('\n').join('<br>')}</p>`;
       }
 
       // Observações Importantes
       const observacoesDiv = document.getElementById('observacoes');
       if (orcamento.observacoes) {
         document.getElementById('observacoes-section').style.display = 'block';
-        observacoesDiv.innerHTML = `<p>${orcamento.observacoes.replace(/\n/g, '<br>')}</p>`;
+        observacoesDiv.innerHTML = `<p>${orcamento.observacoes.split('\n').join('<br>')}</p>`;
       }
     }
 
