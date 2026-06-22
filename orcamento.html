@@ -467,26 +467,98 @@
         });
       }
 
-      // Valores e Investimento
+          // Valores e Investimento
       const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
       const detalhesPagamento = document.getElementById('detalhes-pagamento');
-      if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt) {
+
+      // Verifica se há alguma informação de valor para exibir a seção
+      if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt || orcamento.valorTotal || orcamento.entrada || orcamento.valorPorPessoa) {
         document.getElementById('valores-section').style.display = 'block';
         opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
         detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
 
+        // Sempre exibe o título "Preço por pessoa em acomodação dupla"
+        const tituloPorPessoa = document.createElement('h4');
+        tituloPorPessoa.textContent = 'Preço por pessoa em acomodação dupla';
+        tituloPorPessoa.style.marginBottom = '10px';
+        opcoesValoresContainer.appendChild(tituloPorPessoa);
+
+        let valorPorPessoa = null;
+        if (orcamento.valorPorPessoa) {
+          valorPorPessoa = parseCurrencyToNumber(orcamento.valorPorPessoa);
+        } else if (orcamento.valorTotal) {
+          const total = parseCurrencyToNumber(orcamento.valorTotal);
+          const pessoas = parseCurrencyToNumber(orcamento.numeroDePessoas || orcamento.passageiros); // Tenta pegar número de pessoas
+          if (total !== null && pessoas !== null && pessoas > 0) {
+            valorPorPessoa = total / pessoas;
+          } else if (total !== null) {
+            valorPorPessoa = total; // Se não tem pessoas, assume que o total já é por pessoa
+          }
+        }
+
+        const precoP = document.createElement('p');
+        precoP.classList.add('preco');
+        if (valorPorPessoa !== null && !isNaN(valorPorPessoa)) {
+          precoP.textContent = formatarMoeda(valorPorPessoa);
+        } else {
+          precoP.textContent = 'A consultar';
+        }
+        opcoesValoresContainer.appendChild(precoP);
+
+        // Se houver opções de valores adicionais, elas são exibidas abaixo do preço por pessoa
         if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
           orcamento.opcoesValores.forEach(opcao => {
             const div = document.createElement('div');
             div.classList.add('valor-opcao');
             div.innerHTML = `
               <h4>${opcao.label || 'Opção de Valor'}</h4>
-              <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
+              <p class="preco">${opcao.preco ? formatarMoeda(parseCurrencyToNumber(opcao.preco)) : 'A consultar'}</p>
               <p class="descricao">${opcao.desc || ''}</p>
             `;
             opcoesValoresContainer.appendChild(div);
           });
         }
+
+        // Lógica para a Forma de Pagamento (prioriza parcelamentoTxt)
+        if (orcamento.parcelamentoTxt) {
+          const p = document.createElement('p');
+          p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
+          detalhesPagamento.appendChild(p);
+        } else {
+          // Se não houver parcelamentoTxt, tenta montar a frase com base nos outros campos
+          const entrada = parseCurrencyToNumber(orcamento.entrada);
+          const valorTotal = parseCurrencyToNumber(orcamento.valorTotal);
+          const numeroParcelas = parseCurrencyToNumber(orcamento.numeroParcelas);
+          const valorParcelas = parseCurrencyToNumber(orcamento.valorParcelas);
+
+          let pagamentoTexto = '';
+
+          if (entrada !== null && numeroParcelas !== null && numeroParcelas > 0) {
+            let saldoRestante = valorTotal !== null ? valorTotal - entrada : null;
+            let parcelaCalculada = null;
+
+            if (valorParcelas !== null) {
+              parcelaCalculada = valorParcelas;
+            } else if (saldoRestante !== null) {
+              parcelaCalculada = saldoRestante / numeroParcelas;
+            }
+
+            if (parcelaCalculada !== null) {
+              pagamentoTexto = `Entrada de ${formatarMoeda(entrada)} e saldo em ${numeroParcelas}x de ${formatarMoeda(parcelaCalculada)} sem juros.`;
+            } else {
+              pagamentoTexto = `Entrada de ${formatarMoeda(entrada)} e saldo em ${numeroParcelas}x (valor da parcela a consultar).`;
+            }
+          } else if (valorTotal !== null) {
+            pagamentoTexto = `Valor Total: ${formatarMoeda(valorTotal)}`;
+          }
+
+          if (pagamentoTexto) {
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>Forma de Pagamento:</strong> ${pagamentoTexto}`;
+            detalhesPagamento.appendChild(p);
+          }
+        }
+      }
 
         if (orcamento.parcelamentoTxt) {
           const p = document.createElement('p');
