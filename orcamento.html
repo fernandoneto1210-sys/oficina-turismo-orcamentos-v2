@@ -17,6 +17,31 @@
     body{font-family:'Segoe UI',system-ui,sans-serif;background:var(--cinza);color:#444;line-height:1.6;}
     a{text-decoration:none;color:inherit;}
     img{max-width:100%;height:auto;display:block;}
+     /* Estilos para os itens de Aéreo na página do orçamento */
+ .aereo-item-card {
+   background-color: var(--branco);
+   border: 1px solid var(--borda-clara);
+   border-radius: var(--radius);
+   padding: 15px;
+   margin-bottom: 10px;
+   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+ }
+ .aereo-item-card .aereo-header {
+   font-size: 1.1rem;
+   font-weight: 700;
+   color: var(--azul);
+   margin-bottom: 10px;
+   border-bottom: 1px solid var(--borda-clara);
+   padding-bottom: 8px;
+ }
+ .aereo-item-card .aereo-body p {
+   margin-bottom: 5px;
+   font-size: 0.95rem;
+   color: var(--texto-principal);
+ }
+ .aereo-item-card .aereo-body p strong {
+   color: var(--azul2);
+ }
 
     /* ══ HEADER ══ */
     .orc-header{
@@ -499,23 +524,35 @@
         }
       }
 
-      // Parte Aérea
-      const aereoContainer = document.getElementById('aereo-container');
-      if (orcamento.aereo && orcamento.aereo.length > 0) {
-        document.getElementById('aereo-section').style.display = 'block';
-        aereoContainer.innerHTML = ''; // Limpa antes de adicionar
-        orcamento.aereo.forEach(item => {
-          const div = document.createElement('div');
-          div.classList.add('adicional-item');
-          div.innerHTML = `
-            <h4>Voo: ${item.origem || ''} &rarr; ${item.destino || ''}</h4>
-            <p><strong>Cia Aérea:</strong> ${item.cia || ''}</p>
-            <p><strong>Número do Voo:</strong> ${item.numVoo || ''}</p>
-            <p><strong>Horários:</strong> ${item.horarios || ''}</p>
-          `;
-          aereoContainer.appendChild(div);
-        });
-      }
+       // Exibir Aéreo
+ const aereoSection = document.getElementById('aereo-section');
+ if (orcamento.aereo && orcamento.aereo.length > 0) {
+   aereoSection.style.display = 'block';
+   const aereoList = document.getElementById('aereo-list');
+   aereoList.innerHTML = '';
+   orcamento.aereo.forEach(item => {
+     const li = document.createElement('li');
+     // Formatação para exibir Data e Hora de forma clara
+     const dataSaidaFormatada = item.dataSaida ? new Date(item.dataSaida + 'T00:00:00').toLocaleDateString('pt-BR') : '';
+     const dataChegadaFormatada = item.dataChegada ? new Date(item.dataChegada + 'T00:00:00').toLocaleDateString('pt-BR') : '';
+ li.innerHTML = `
+   &lt;div class="aereo-item-card"&gt;
+     &lt;div class="aereo-header"&gt;
+       &lt;strong&gt;${item.cia || 'Cia. Não Informada'}&lt;/strong&gt; - Voo ${item.numVoo || 'N/A'}
+     &lt;/div&gt;
+     &lt;div class="aereo-body"&gt;
+       &lt;p&gt;&lt;strong&gt;Origem:&lt;/strong&gt; ${item.origem || 'Não Informada'}&lt;/p&gt;
+       &lt;p&gt;&lt;strong&gt;Destino:&lt;/strong&gt; ${item.destino || 'Não Informado'}&lt;/p&gt;
+       &lt;p&gt;&lt;strong&gt;Saída:&lt;/strong&gt; ${dataSaidaFormatada} às ${item.horaSaida || 'N/A'}&lt;/p&gt;
+       &lt;p&gt;&lt;strong&gt;Chegada:&lt;/strong&gt; ${dataChegadaFormatada} às ${item.horaChegada || 'N/A'}&lt;/p&gt;
+     &lt;/div&gt;
+   &lt;/div&gt;
+ `;
+ aereoList.appendChild(li);
+   });
+ } else {
+   aereoSection.style.display = 'none';
+ }
 
       // Aluguel de Carro
       const carroContainer = document.getElementById('carro-container');
