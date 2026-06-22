@@ -467,61 +467,61 @@
         });
       }
 
-     // Valores e Investimento
-const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
-const detalhesPagamento = document.getElementById('detalhes-pagamento');
-if ((orcamento.opcoesValores && orcamento.opcoesValores.length > 0) || orcamento.parcelamentoTxt || orcamento.entrada) { // Adicionado orcamento.entrada
-  document.getElementById('valores-section').style.display = 'block';
-  opcoesValoresContainer.innerHTML = ''; // Limpa antes de adicionar
-  detalhesPagamento.innerHTML = ''; // Limpa antes de adicionar
+      // Valores e Investimento
+      const valoresSection = document.getElementById('valores-section');
+      const opcoesValoresContainer = document.getElementById('opcoes-valores-container');
+      const detalhesPagamentoContainer = document.getElementById('detalhes-pagamento-container'); // Renomeado para evitar conflito
 
-  // Se houver opções de valores (como "Opção 1", "Opção 2"), exibe-as
-  if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
-    orcamento.opcoesValores.forEach(opcao => {
-      const div = document.createElement('div');
-      div.classList.add('valor-opcao');
-      div.innerHTML = `
-        <h4>${opcao.label || 'Opção de Valor'}</h4>
-        <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
-        <p class="descricao">${opcao.desc || ''}</p>
-      `;
-      opcoesValoresContainer.appendChild(div);
-    });
-  }
+      // Limpa os containers antes de adicionar novos elementos
+      opcoesValoresContainer.innerHTML = '';
+      detalhesPagamentoContainer.innerHTML = '';
 
-  // Agora, a parte que você quer focar: Entrada e Parcelamento
-  let pagamentoHtml = '';
-  if (orcamento.entrada && orcamento.parcelamentoTxt) {
-    pagamentoHtml = `<p><strong>Entrada de ${formatarMoeda(parseFloat(orcamento.entrada.replace('R$', '').replace('.', '').replace(',', '.')))}</strong> e saldo ${orcamento.parcelamentoTxt}</p>`;
-  } else if (orcamento.entrada) {
-    pagamentoHtml = `<p><strong>Entrada de ${formatarMoeda(parseFloat(orcamento.entrada.replace('R$', '').replace('.', '').replace(',', '.')))}</strong></p>`;
-  } else if (orcamento.parcelamentoTxt) {
-    pagamentoHtml = `<p>Saldo ${orcamento.parcelamentoTxt}</p>`;
-  }
+      let hasContentInValuesSection = false;
 
-  if (pagamentoHtml) {
-    detalhesPagamento.innerHTML = `
-      <div class="section-content">
-        <h3>Forma de Pagamento</h3>
-        ${pagamentoHtml}
-      </div>
-    `;
-  } else {
-    detalhesPagamento.innerHTML = '<p class="info-message">Detalhes de pagamento não especificados.</p>';
-  }
+      // 1. Renderiza as Opções de Valores (se existirem)
+      if (orcamento.opcoesValores && orcamento.opcoesValores.length > 0) {
+        hasContentInValuesSection = true;
+        opcoesValoresContainer.innerHTML += '<h3>Opções de Investimento</h3>'; // Título para as opções
+        orcamento.opcoesValores.forEach(opcao => {
+          const div = document.createElement('div');
+          div.classList.add('valor-opcao');
+          div.innerHTML = `
+            <h4>${opcao.label || 'Opção de Valor'}</h4>
+            <p class="preco">${opcao.preco ? formatarMoeda(parseFloat(opcao.preco.replace('R$', '').replace('.', '').replace(',', '.'))) : 'A consultar'}</p>
+            <p class="descricao">${opcao.desc || ''}</p>
+          `;
+          opcoesValoresContainer.appendChild(div);
+        });
+      }
 
-} else {
-  document.getElementById('valores-section').style.display = 'none';
-}
-        if (orcamento.parcelamentoTxt) {
-          const p = document.createElement('p');
-          p.innerHTML = `<strong>Forma de Pagamento:</strong> ${orcamento.parcelamentoTxt}`;
-          detalhesPagamento.appendChild(p);
-        } else if (orcamento.valorTotal) {
-          const pTotal = document.createElement('p');
-          pTotal.innerHTML = `<strong>Valor Total:</strong> ${formatarMoeda(orcamento.valorTotal)}`;
-          detalhesPagamento.appendChild(pTotal);
-        }
+      // 2. Renderiza a Forma de Pagamento (Entrada e Parcelamento)
+      let pagamentoHtml = '';
+      if (orcamento.entrada && orcamento.parcelamentoTxt) {
+        pagamentoHtml = `<p><strong>Entrada de ${formatarMoeda(parseFloat(orcamento.entrada.replace('R$', '').replace('.', '').replace(',', '.')))}</strong> e saldo ${orcamento.parcelamentoTxt}</p>`;
+      } else if (orcamento.entrada) {
+        pagamentoHtml = `<p><strong>Entrada de ${formatarMoeda(parseFloat(orcamento.entrada.replace('R$', '').replace('.', '').replace(',', '.')))}</strong></p>`;
+      } else if (orcamento.parcelamentoTxt) {
+        pagamentoHtml = `<p>${orcamento.parcelamentoTxt}</p>`; // Não precisa de "Saldo" se for só o parcelamento
+      }
+
+      if (pagamentoHtml) {
+        hasContentInValuesSection = true;
+        detalhesPagamentoContainer.innerHTML = `
+          <div class="section-content">
+            <h3>Forma de Pagamento</h3>
+            ${pagamentoHtml}
+          </div>
+        `;
+      } else if (!orcamento.opcoesValores || orcamento.opcoesValores.length === 0) {
+        // Se não tem opções de valores e nem forma de pagamento, mostra mensagem de não especificado
+        detalhesPagamentoContainer.innerHTML = '<p class="info-message">Detalhes de valores e pagamento não especificados.</p>';
+      }
+
+      // Exibe ou oculta a seção inteira de Valores e Investimento
+      if (hasContentInValuesSection) {
+        valoresSection.style.display = 'block';
+      } else {
+        valoresSection.style.display = 'none';
       }
 
       // Parte Aérea
